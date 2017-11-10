@@ -105,7 +105,7 @@ public class SAConstants {
 	public static final String ON_CAMPUS = "on";
 	public static final String OFF_CAMPUS = "off";
 	public static final String Dorms = "dorms";
-	public static final String ACCESS_TOKEN = "access_token";
+	public static final String ACCESS_TOKEN = "accessToken";
 	public static final String INSTANCE_ID = "instanceId";
 	public static final String USER_HAS_UNIVS = "{\"response\":\"true\"}";
 	public static final String USER_DOES_NOT_HAVE_UNIVS = "{\"response\":\"false\"}";

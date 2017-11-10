@@ -30,7 +30,6 @@ import com.studentAssist.util.SAConstants;
 import com.studentAssist.util.UserVisitedAddsRest;
 
 @RestController
-@RequestMapping("/accommodation")
 public class AccommodationController extends AbstractController {
 
 	@Autowired

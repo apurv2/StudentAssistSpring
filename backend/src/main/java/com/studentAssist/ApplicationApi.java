@@ -13,9 +13,6 @@ import org.springframework.cache.annotation.EnableCaching;
 public class ApplicationApi implements CommandLineRunner {
 
 	public static void main(String[] args) {
-
-		XTrustProvider.install();
-
 		SpringApplication.run(ApplicationApi.class, args);
 	}
 

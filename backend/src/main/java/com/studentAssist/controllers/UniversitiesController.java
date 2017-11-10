@@ -14,7 +14,6 @@ import com.studentAssist.response.RUniversity;
 import com.studentAssist.services.UniversitiesService;
 
 @RestController
-@RequestMapping("/universities")
 public class UniversitiesController extends AbstractController {
 
 	@Autowired

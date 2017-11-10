@@ -14,7 +14,6 @@ import com.studentAssist.services.UserService;
 import com.studentAssist.util.CreateUserDetails;
 
 @RestController
-@RequestMapping("/users")
 public class UserController extends AbstractController {
 
 	@Autowired

@@ -12,7 +12,6 @@ import com.studentAssist.entities.Airport;
 import com.studentAssist.services.AirportService;
 
 @RestController
-@RequestMapping("/airport")
 
 public class AirportController {
 

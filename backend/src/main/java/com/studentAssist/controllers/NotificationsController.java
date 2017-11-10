@@ -12,7 +12,6 @@ import com.studentAssist.response.RNotificationSettings;
 import com.studentAssist.services.NotificationsService;
 
 @RestController
-@RequestMapping("/notifications")
 public class NotificationsController extends AbstractController {
 
 	@Autowired
