@@ -1,8 +1,62 @@
 // The file contents for the current environment will overwrite these during build.
 // The build system defaults to the dev environment which uses `environment.ts`, but if you do
-// `ng build --env=prod` then `environment.prod.ts` will be used instead.
+// `ng build --env:prod` then `environment.prod.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
-};
+  url: 'http://localhost:8080/',
+  production: false,
+  APARTMENT_NAME: "apartmentName",
+  NO_OF_ROOMS: "noOfRooms",
+  VACANCIES: "vacancies",
+  COST: "cost",
+  GENDER: "gender",
+  FBID: "fbId",
+  NOTES: "notes",
+  USER_ID: "userId",
+  POST_ACCOMMODATION: "createAccommodationAddFromFacebook",
+  POST_ACCOMMODATION_INDV: "createAccommodationAdd",
+  ON_CAMPUS: "On-Campus",
+  APARTMENT_TYPE: 'Apartment Type',
+  APARTMENT_NAME2: 'Apartment Name',
+  GENDER_SPINNER: 'Gender',
+  MALE: "Male",
+  FIRST_NAME: "firstName",
+  LAST_NAME: "lastName",
+  POST: "post",
+  GET: "get",
+  PUT: "put",
+  ACCESS_TOKEN: "access_token",
+  INVALID_REQUEST: "invalid request",
+  noOfRooms: ['1 bhk/1 bath', '1 bhk/2 bath', '2 bhk/1 bath', '2 bhk/2 bath',
+    '3 bhk/1 bath', '3 bhk/2 bath', '3 bhk/3 bath', 'Shared', 'Other'],
+  vacancies: ['1', '2', '3', '4', 'Other', 'Lease Transfer'],
+  GENDER_CODES: [{ "Male": 'Male' }, { "Female": 'Female' }, { "Doesnt Matter": 'Doesnt Matter' }],
+  apartmentTypes: [{
+    code: "on",
+    description: "On-Campus"
+  },
+  {
+    code: "off",
+    description: "Off-Campus"
+  },
+  {
+    code: "dorms",
+    description: "Dorms"
+  }],
+  leftSpinnerValues: [{
+    code: "apartmentType",
+    description: "Apartment Type"
+  },
+  {
+    code: "apartmentName",
+    description: "Apartment Name"
+  },
+  {
+    code: "gender",
+    description: "Gender"
+  }],
+  getUniversityDetailsForUser: 'universities/getUniversityDetailsForUser',
+  accessToken : 'access_token'
+
+}

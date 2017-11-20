@@ -1,0 +1,38 @@
+<div class="banner">
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+      <div class="search-panel">
+        <form>
+          <div class="input-group">
+            <span class="input-group-addon padding-0">
+              <button type="button">Search</button>
+            </span>
+            <input type="text" (keyup)="searchTerm$.next($event.target.value)" class=" form-control type-search" placeholder="Type and search">
+            <ul [class.reveal-hide]="searchDropdownToggle" class="search-dropdown-transition search-list">
+              <li *ngFor="let result of results | slice:0:9">
+                <a href="{{ result.latest }}" target="_blank">
+                  {{ result.name }}
+                </a>
+              </li>
+            </ul>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="toggle-menu text-center">
+        <ul>
+          <li class="active">
+            <a href="#">Accomodation</a>
+          </li>
+          <li>
+            <a href="#">Pickup</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
