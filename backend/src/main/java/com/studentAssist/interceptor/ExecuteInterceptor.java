@@ -7,13 +7,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
 import org.apache.log4j.Logger;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.studentAssist.entities.Users;
-import com.studentAssist.exception.StudenAssitException;
 import com.studentAssist.util.FBGraph;
 import com.studentAssist.util.SAConstants;
 

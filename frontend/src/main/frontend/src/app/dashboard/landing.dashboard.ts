@@ -7,7 +7,12 @@ import { Component } from "@angular/core";
 
 export class Dashboard {
 
+    constructor() {
 
+    }
+
+    ngOnInit()
+    { }
 
 
 }

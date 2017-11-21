@@ -4,6 +4,8 @@ package com.studentAssist.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.TypedQuery;
+
 import org.hibernate.FetchMode;
 import org.hibernate.Query;
 import org.hibernate.criterion.Order;
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.studentAssist.entities.Apartments;
 import com.studentAssist.entities.Universities;
 import com.studentAssist.entities.Users;
+import com.studentAssist.response.RUniversity;
 
 @Repository
 @Transactional
@@ -32,6 +35,14 @@ public class UniversitiesDAO extends AbstractDao {
 	public List<Object[]> getUniversityNames(Users currentUser) throws Exception {
 
 		StringBuilder sb = new StringBuilder();
+//		
+//		String queryStr = "select NEW package.RUniversity( a.field1, b.field2, c.field3, c.field4) from a left outer join b on a.id=b.fk left outer join c on b.id=c.fk";
+//		
+//
+//			TypedQuery<RUniversity> query =
+//					getSession().createQuery(queryStr, RUniversity.class);
+//
+//			List<RUniversity> results = query.getResultList();
 
 		sb.append("SELECT");
 		sb.append("  d.*,");

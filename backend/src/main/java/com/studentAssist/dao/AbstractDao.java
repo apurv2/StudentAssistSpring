@@ -2,8 +2,6 @@ package com.studentAssist.dao;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

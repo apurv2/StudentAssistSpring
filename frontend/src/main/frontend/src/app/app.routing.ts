@@ -12,8 +12,8 @@ const appRoutes: Routes = [
         path: 'dashboard',
         component: Dashboard
     },
-    { path: '**', redirectTo: '' }
-    
+    { path: '**', redirectTo: 'dashboard' }
+
 ];
 
-export const routing = RouterModule.forRoot(appRoutes);
+export const routing = RouterModule.forRoot(appRoutes, { useHash: true });
