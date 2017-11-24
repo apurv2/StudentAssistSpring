@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { SharedDataService } from './shared/data/shared.data.service';
 
 @Component({
   selector: 'app-root',
@@ -8,11 +9,13 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'app';
+  showSideNav: boolean;
 
-
-  constructor(private router: Router) {
+  constructor(private router: Router,
+    private sharedDataService: SharedDataService) {
   }
   ngOnInit() {
-    this.router.navigate(['/dashboard/']);
+    this.sharedDataService.getHomePageBackground().
+      subscribe(status => this.showSideNav = status);
   }
 }

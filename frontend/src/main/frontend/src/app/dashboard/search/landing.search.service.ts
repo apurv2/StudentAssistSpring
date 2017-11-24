@@ -19,7 +19,6 @@ export class LandingSearchService {
             .switchMap(term => this.searchEntries(term));
     }
     searchEntries(term) {
-        console.log("term is==="+term);
         return this.http
             .get(this.baseUrl + this.queryUrl + term)
             .map(res => res.json());

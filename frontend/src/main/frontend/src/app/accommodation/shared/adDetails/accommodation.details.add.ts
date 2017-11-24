@@ -3,7 +3,7 @@ import { AccommodationAdd } from "app/accommodation/shared/models/accommodation.
 
 
 @Component({
-    selector: 'advertisement-details',
+    selector: 'accommodation-details',
     templateUrl: 'accommodation.details.add.html'
 })
 

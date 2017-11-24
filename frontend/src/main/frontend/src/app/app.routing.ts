@@ -12,6 +12,10 @@ const appRoutes: Routes = [
         path: 'dashboard',
         component: Dashboard
     },
+    {
+        path: 'simple-search',
+        component: SimpleSearch
+    },
     { path: '**', redirectTo: 'dashboard' }
 
 ];

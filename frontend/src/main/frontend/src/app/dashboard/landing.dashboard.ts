@@ -1,4 +1,6 @@
 import { Component } from "@angular/core";
+import { SharedDataService } from "../shared/data/shared.data.service";
+import { transition } from "@angular/core/src/animation/dsl";
 
 @Component({
     selector: 'dashboard',
@@ -7,12 +9,15 @@ import { Component } from "@angular/core";
 
 export class Dashboard {
 
-    constructor() {
-
+    constructor(private sharedDataService: SharedDataService) {
     }
 
-    ngOnInit()
-    { }
+    ngOnInit() {
+        this.sharedDataService.setHomePageBackground(true);
+    }
 
+    ngOnDestroy() {
+        this.sharedDataService.setHomePageBackground(false);
+    }
 
 }

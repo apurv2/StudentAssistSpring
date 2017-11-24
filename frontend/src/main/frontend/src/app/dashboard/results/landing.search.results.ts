@@ -14,4 +14,10 @@ export class LandingSearchResults {
     ngOnInit() {
     }
 
+    searchResultCardClick() {
+
+        this.router.navigate(['/simple-search/']);
+
+    }
+
 }

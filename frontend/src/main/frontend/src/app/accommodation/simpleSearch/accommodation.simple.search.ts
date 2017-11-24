@@ -1,63 +1,36 @@
-import { environment } from "environments/environment";
-import { SimpleSearchService } from "app/accommodation/simpleSearch/accommodation.simple.search.service";
-import { AccommodationAdd } from "app/accommodation/shared/models/accommodation.model";
 import { Component } from "@angular/core";
 import { FacebookService } from "ngx-facebook";
-import { Aparment } from 'app/accommodation/shared/models/accommodation.apartments';
+import { SharedDataService } from "../../shared/data/shared.data.service";
+import { AccommodationFilterData } from "../shared/models/accommodation.filter.model";
+import { Observable } from "rxjs/Observable";
+import { SimpleSearchService } from "./accommodation.simple.search.service";
+import { AccommodationAdd } from "../shared/models/accommodation.model";
 
 @Component({
-    selector: 'simple-search',
-    templateUrl: 'accommodation.simple.search.html'
-})@Component({
     selector: 'simple-search',
     templateUrl: 'accommodation.simple.search.html'
 })
 
 export class SimpleSearch {
-    leftSpinnerValues: any = environment.leftSpinnerValues;
-    rightSpinnerValues: any;
-    leftSpinner: string;
-    rightSpinner: string;
     selectedAccommodationAdd: AccommodationAdd;
-    apartmentNames: Aparment[];
+    accommodationSearchResults: AccommodationAdd[];
 
     constructor(private simpleSearchService: SimpleSearchService,
-        private facebookService: FacebookService) {
+        private facebookService: FacebookService,
+        private sharedDataservice: SharedDataService) {
 
     }
     ngOnInit() {
-        this.facebookService.getLoginStatus().then(
-            function (response) {
-                if (response.status === 'connected') {
-                    this.leftSpinnerClick(environment.leftSpinnerValues[0].code);
-                } else {
-                    //  $state.go('leftNav.Login');
-                }
-            });
+        this.sharedDataservice.getAccommomdationSearchFilters()
+            .switchMap(filters => this.getSimpleSearchAdds(filters)).
+            subscribe(advertisements => this.accommodationSearchResults = advertisements);
     }
 
-    leftSpinnerClick($event) {
-        if ($event == environment.APARTMENT_TYPE) {
+    getSimpleSearchAdds(filters: AccommodationFilterData): Observable<any> {
 
-            this.rightSpinnerValues = environment.apartmentTypes;
-            this.getSimpleSearchAdds($event, this.rightSpinner);
-        }
-        else if ($event == environment.APARTMENT_NAME) {
-
-            this.simpleSearchService.getAllApartmentnames()
-                .subscribe(res => this.apartmentNames = res.json());
-
-        }
-        else if ($event == environment.GENDER) {
-
-            this.rightSpinnerValues = environment.GENDER_CODES;
-            this.getSimpleSearchAdds($event, this.rightSpinner);
-        }
-
-    }
-    getSimpleSearchAdds(leftSpinner, rightSpinner) {
-        rightSpinner = encodeURIComponent(rightSpinner);
-        this.simpleSearchService.getSimpleSearchAdds();
+        let rightSpinner = encodeURIComponent(filters.rightSpinner);
+        let leftSpinner = encodeURIComponent(filters.leftSpinner);
+        return this.simpleSearchService.getSimpleSearchAdds(leftSpinner, rightSpinner);
     }
 
     makeLink() {

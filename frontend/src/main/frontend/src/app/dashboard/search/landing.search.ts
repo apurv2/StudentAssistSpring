@@ -27,9 +27,7 @@ export class LandingSearch {
   }
 
   search() {
-    console.log("came here");
     this.searchDropdownToggle = !this.searchDropdownToggle;
-
   }
 
 }

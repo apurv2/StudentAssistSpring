@@ -5,6 +5,7 @@ import { FacebookModule, FacebookService, InitParams } from 'ngx-facebook';
 import { TopHeader } from 'app/shared/topHeader/top.header';
 import { LeftNav } from 'app/shared/leftNav/left.nav';
 import { routing } from 'app/app.routing';
+import { FormsModule } from '@angular/forms';
 import { AdvancedSearch } from 'app/accommodation/advancedSearch/accommodation.advanced.search';
 import { SimpleSearch } from 'app/accommodation/simpleSearch/accommodation.simple.search';
 import { AddDetails } from 'app/accommodation/shared/adDetails/accommodation.details.add';
@@ -22,13 +23,24 @@ import { CalendarComponent } from 'app/airport/dashboards/driver/calendar/calend
 import { LandingSearch } from 'app/dashboard/search/landing.search';
 import { LandingSearchService } from 'app/dashboard/search/landing.search.service';
 import { LandingSearchResults } from './dashboard/results/landing.search.results';
+import { SimpleSearchService } from './accommodation/simpleSearch/accommodation.simple.search.service';
+import { SimpleSearchAddsList } from './accommodation/simpleSearch/adsList/simple.search.adds.list';
+import { SimpleSearchAddsFilters } from './accommodation/simpleSearch/filters/simple.search.filters';
+import { SharedDataService } from './shared/data/shared.data.service';
 
 @NgModule({
+  imports: [
+    BrowserModule,
+    FacebookModule.forRoot(),
+    routing,
+    HttpModule,
+    FormsModule
+  ],
   declarations: [
     AppComponent,
     TopHeader,
     LeftNav,
-     SimpleSearch,
+    SimpleSearch,
     AdvancedSearch,
     AddDetails,
     Login,
@@ -39,16 +51,15 @@ import { LandingSearchResults } from './dashboard/results/landing.search.results
     UpcomingComponent,
     CalendarComponent,
     LandingSearch,
-    LandingSearchResults
+    LandingSearchResults,
+    SimpleSearchAddsList,
+    SimpleSearchAddsFilters
   ],
-  imports: [
-    BrowserModule,
-    FacebookModule.forRoot(),
-    routing,
-    HttpModule
-
-  ],
-  providers: [UniversitiesService, HttpInterceptorService,LandingSearchService
+  providers: [UniversitiesService,
+    HttpInterceptorService,
+    LandingSearchService,
+    SimpleSearchService,
+    SharedDataService
 
   ],
   bootstrap: [AppComponent, TopHeader, LeftNav]

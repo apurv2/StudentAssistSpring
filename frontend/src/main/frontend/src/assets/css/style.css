@@ -190,12 +190,15 @@ a:hover, a:focus{
 }
 
 /*banner*/
-.banner{
+.banner-background{
     background: url('../images/index-banner.jpg') no-repeat fixed;
+}
+.banner{
     background-size: cover;
-    height: 425px;
+    height: 375px;
     padding: 30px 0 0 0;
 }
+
 .banner-bottom{
     margin-top: -200px;
 }
@@ -806,6 +809,15 @@ a:hover, a:focus{
    opacity: 0;
    transition: .5s ease-in-out all;
 }
+
+.sa-ease-in-out-transition{
+    transition: .5s ease-in-out all;
+}
+
+.sa-ease-in-out-transition2{
+    transition: .5s ease-in-out all;
+}
+
 
 /*Responsive*/
 @media screen and (min-width:500px) and (max-width:767px){
