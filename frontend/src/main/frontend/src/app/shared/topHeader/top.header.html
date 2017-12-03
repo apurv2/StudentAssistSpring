@@ -1,44 +1,42 @@
-<div class="header-section">
-    <div class="container">
-         <div class="row">
-            <div class="col-sm-3 col-xs-6">
-                <div class="logo">
-                    <img src="./assets/images/logo.png" class="img-responsive" />
-                </div>
-            </div>
-            <div class="col-sm-9 col-xs-6">
-                <div class="menu useraccount margin-top-20">                        
-                  <button class="btn btn-default pull-right" type="button" (click)="openNav()">
-                      <i class="material-icons">menu</i>
-                  </button>                         
-                 </div>
-            </div>
-              <div id="mySidenav" [class.sa-ease-in-out-transition]="showSideNav" class="sidenav useraccount">
-                  <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
-                  <ul class="list-unstyled">
-                    <li>
-                        <div class="media">
-                      <div class="media-left">
-                        <div class="user-thumb red-indicator">
-                            <img src="images/user-thumb.jpg" class="media-object img-responsive img-circle">
-                        </div>
-                      </div>
-                      <div class="media-body">  
-                          <div class="user-name" title="Diego Buchanan">
-                                Diego Buchanan
-                          </div>
-                      </div>
+<div class="container">
+          <!-- Logo & Nav-->
+            <div class="row">
+                <div class="col-sm-3 col-xs-6">
+                    <div class="logo">
+                            <img src="./assets/images/logo.png" class="img-responsive" />
                     </div>
-                      </li>
-                    <li><a href="#" class="active">Edit Profile</a></li>
-                    <li><a href="#">Post Accomodation</a></li>
-                    <li><a href="#">My Posts</a></li>
-                    <li><a href="#">Notifications</a></li>
-                  </ul>
                 </div>
-             
-        </div>
+                <div class="col-sm-9 col-xs-6">
+                        <div class="menu useraccount margin-top-20">                        
+                          <button class="btn btn-default pull-right" type="button" (click)="openNav()">
+                              <i class="material-icons">menu</i>
+                          </button>                         
+                         </div>
+                    </div>
+                      <div id="mySidenav" [class.sa-ease-in-out-transition]="showSideNav" class="sidenav useraccount">
+                          <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
+                          <ul class="list-unstyled">
+                            <li>
+                                <div class="media">
+                              <div class="media-left">
+                                <div class="user-thumb red-indicator">
+                                    <img src="./assets/images/user-thumb.jpg" class="media-object img-responsive img-circle">
+                                </div>
+                              </div>
+                              <div class="media-body">  
+                                  <div class="user-name" title="Diego Buchanan">
+                                        Diego Buchanan
+                                  </div>
+                              </div>
+                            </div>
+                              </li>
+                            <li><a href="#" class="active">Edit Profile</a></li>
+                            <li><a href="#">Post Accomodation</a></li>
+                            <li><a href="#">My Posts</a></li>
+                            <li><a href="#">Notifications</a></li>
+                          </ul>
+                        </div>
+            </div>
+    </div>        
         
-    </div>
-</div>
-<div id="nav-overlay" class="nav-overlap" [class.sa-ease-in-out-transition2]="showSideNav"></div>
+     

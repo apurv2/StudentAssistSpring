@@ -22,6 +22,8 @@ public class ApplicationApi implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
+		XTrustProvider.install();
+
 		System.out.println("DATASOURCE = " + dataSource);
 
 	}

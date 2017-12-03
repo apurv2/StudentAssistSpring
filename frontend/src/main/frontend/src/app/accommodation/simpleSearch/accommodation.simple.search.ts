@@ -24,7 +24,9 @@ export class SimpleSearch {
         this.sharedDataservice.getAccommomdationSearchFilters()
             .switchMap(filters => this.getSimpleSearchAdds(filters)).
             subscribe(advertisements => this.accommodationSearchResults = advertisements);
+
     }
+
 
     getSimpleSearchAdds(filters: AccommodationFilterData): Observable<any> {
 

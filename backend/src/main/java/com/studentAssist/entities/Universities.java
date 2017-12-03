@@ -48,10 +48,21 @@ public class Universities {
 	@OneToMany(mappedBy = "university", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Apartments> apartments = new ArrayList<>();
 
+	@OneToMany(mappedBy = "university", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<AccommodationAdd> accommodationAdds = new ArrayList<>();
+
 	@OneToMany(mappedBy = "universityId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<UniversityPhotos> universityPhotos = new ArrayList<UniversityPhotos>();
 
 	private Date dateAdded;
+
+	public List<AccommodationAdd> getAccommodationAdds() {
+		return accommodationAdds;
+	}
+
+	public void setAccommodationAdds(List<AccommodationAdd> accommodationAdds) {
+		this.accommodationAdds = accommodationAdds;
+	}
 
 	public List<NotificationSettings> getNotificationSettings() {
 		return notificationSettings;

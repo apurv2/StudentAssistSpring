@@ -38,6 +38,10 @@ public class AccommodationAdd {
 	@JoinColumn(name = "APARTMENT_ID")
 	private Apartments apartment;
 
+	@ManyToOne
+	@JoinColumn(name = "UNIVERSITY_ID")
+	private Universities university;
+
 	private Date datePosted;
 
 	@OneToMany(mappedBy = "accommodationAdd", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -48,6 +52,14 @@ public class AccommodationAdd {
 
 	@ElementCollection
 	private List<String> addPhotoIds = new ArrayList<String>();
+
+	public Universities getUniversity() {
+		return university;
+	}
+
+	public void setUniversity(Universities university) {
+		this.university = university;
+	}
 
 	public List<String> getAddPhotoIds() {
 		return addPhotoIds;

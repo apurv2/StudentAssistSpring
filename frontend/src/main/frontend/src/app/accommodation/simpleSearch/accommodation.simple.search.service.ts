@@ -14,7 +14,7 @@ export class SimpleSearchService {
 
     getSimpleSearchAdds(leftSpinner, rightSpinner) {
 
-        return this.http.get(`${environment.baseUrl}${environment.unitInformationPageLoad}`)
+        return this.http.get(environment.url)
             .map(res => this.data = res.json());
 
     }

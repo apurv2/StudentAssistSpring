@@ -4,7 +4,7 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  baseUrl: 'http://localhost:8080/',
+  url: 'http://localhost:8080/',
   production: false,
   APARTMENT_NAME: "apartmentName",
   NO_OF_ROOMS: "noOfRooms",
@@ -60,6 +60,6 @@ export const environment = {
     description: "Gender"
   }],
   getUniversityDetailsForUser: 'universities/getUniversityDetailsForUser',
-  accessToken: 'access_token',
-  getSimpleSearchAdds: 'getSimpleSearchAdds'
+  accessToken: 'access_token'
+
 }

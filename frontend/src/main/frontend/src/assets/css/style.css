@@ -1,6 +1,11 @@
 /*common classes*/
 body{
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+}
+
+.section-body{
+    margin: 40px 0;
 }
 .padding-0{
     padding: 0;
@@ -67,8 +72,8 @@ a{
 .width-80{
     width: 80px;
 }
-.height-310{
-    height: 310px;
+.height-400{
+    height: 400px;
 }
 .vertical-middle .media-left, .vertical-middle .media-body{
     vertical-align: middle;
@@ -81,6 +86,9 @@ a{
 }
 .width-100-per{
     width: 100%;
+}
+.overflow-auto{
+    overflow: auto;
 }
 .overflow-hidden{
     overflow: hidden;
@@ -188,19 +196,50 @@ a:hover, a:focus{
     background-color: #f2f0f4;
     border: 0;
 }
+.container-highlight{
+    box-shadow: 0 0px 20px rgba(0,0,0,.05);
+    background-color: #fff;
+}
+.img-round-mark{
+    border: 3px solid #dbdbdb;
+    padding: 25px 10px;
+    width: 85px;
+    height: 85px;
+    border-radius: 100%;
+    line-height: 25px !important;
+}
+.section-body h3
+{
+    font-size: 30px;
+    margin: 0 0 15px 0;
+font-weight: 600;
+    color: #4A5155;
+}
+.section-body h4 b
+{
+font-size: 24px;
+color: #fb6362;
+letter-spacing: 2px;
+line-height: 24px;
+}
+.sub-section{
+    padding: 20px 0;
+}
+.display-cell{
+    display: table-cell;
+    float: none;
+    vertical-align: middle;
+}
 
 /*banner*/
-.banner-background{
-    background: url('../images/index-banner.jpg') no-repeat fixed;
-}
 .banner{
+    background: url('../images/index-banner.jpg') no-repeat fixed;
     background-size: cover;
-    height: 375px;
-    padding: 30px 0 0 0;
+    height: 500px;
+    padding: 5px 0 0 0;
 }
-
 .banner-bottom{
-    margin-top: -200px;
+    margin-top: -108px;
 }
 .section2{
 
@@ -300,9 +339,9 @@ a:hover, a:focus{
 
 /*search panel*/
 .search-panel{
-    margin: 40px 0 10px;
-    
-    box-shadow: 0 3px 6px rgba(0,0,0,.1);
+    margin: 15px 0 15px;
+    border: 1px solid #dbdbdb;
+    box-shadow: 0 5px 30px rgba(156, 160, 171, 0.25);
 }
 .search-panel .search-list{
     list-style: none;
@@ -311,10 +350,10 @@ a:hover, a:focus{
     top: 0;
     padding: 0;
     background: #fff;
-    z-index: 1;
+    z-index: 10;
     border-radius: 0 0 3px 3px;
     box-shadow: 0 3px 6px rgba(0,0,0,.1);
-    /* display: none; */
+    display: block;
 }
 .search-panel .search-list li{
     padding: 10px 14px;
@@ -329,7 +368,6 @@ a:hover, a:focus{
     background: #f1f1f1;
 }
 .search-panel .input-group{
-    /* overflow: hidden; */
     border-radius: 3px;
 }
 .search-panel button{
@@ -346,12 +384,21 @@ a:hover, a:focus{
 .search-panel .input-group-addon{
     border: 0;
     border-radius: 0;
-    color: #000;
+    color: #ccc;
+    padding: 0 20px;
+    font-size: 20px;
+    font-weight: 300;
+    background: #fff;
 }
 .search-panel input{
     height: 52px;
     border: 0;
-    border-radius: 0;
+    border-radius: 0 !important;
+    padding-left: 0;
+    box-shadow: 0 0 0 transparent;
+}
+.search-panel input:focus{
+    box-shadow: 0 0 0 transparent;   
 }
 
 /*rate & information cards*/
@@ -362,9 +409,10 @@ a:hover, a:focus{
 .card{
     background: #fff;
     border-radius: 3px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.175);
+    box-shadow: 0 2px 4px rgba(161, 60, 60, 0.05);
+    border: 1px solid rgba(0,0,0,.06);
     overflow: hidden;
-    margin-bottom: 30px;
+    margin-bottom: 5px;
 }
 .vertical-card:hover {
     box-shadow: 0 8px 30px rgba(0,0,0,0.1);
@@ -423,7 +471,8 @@ a:hover, a:focus{
 .rating-card {
     background: #fff;
     border-radius: 3px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.175);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border: 1px solid rgba(0,0,0,.06);
     transition: all .1s;
     overflow: hidden;
     padding: 50px 15px 15px;
@@ -528,6 +577,7 @@ a:hover, a:focus{
     display: inline-block;
     list-style: none;
     padding: 0;
+    margin-bottom: 30px !important;
 }
 .toggle-menu ul li{
     float: left;
@@ -800,25 +850,61 @@ a:hover, a:focus{
   -moz-animation:inputHighlighter 0.3s ease;
   animation:inputHighlighter 0.3s ease;
 }
-
-
-.reveal-hide{
-    opacity: 1 !important;
+.card-tag{
+    position: absolute;
+top: 0;
+right: 0;
+z-index: 1;
+display: inline-block;
+background: #fff;
+width: 60px;
+height: 60px;
+border-radius: 100%;
+padding: 10px;
+margin: 2px;
+box-shadow: 0 3px 6px rgba(0,0,0,.2);
+    border: 3px solid #d0d3db;
 }
-.search-dropdown-transition{
-   opacity: 0;
-   transition: .5s ease-in-out all;
+.banner h1 {
+    margin-top: -15px;
 }
-
-.sa-ease-in-out-transition{
-    transition: .5s ease-in-out all;
+.banner h1 span
+{
+    font-size: 30px;
+    color: #fb6362;
+    letter-spacing: 2px;
+    line-height: 26px;
 }
-
-.sa-ease-in-out-transition2{
-    transition: .5s ease-in-out all;
+.banner h1 div
+{
+    font-size: 20px;
+    letter-spacing: 0.8px;
+    line-height: 20px;
 }
-
-
+.form-inline .toggle-menu ul
+{
+    margin-bottom: 10px !important;
+}
+.form-inline .toggle-menu ul li
+{
+ float: none;  
+ margin-top: 10px; 
+}
+.form-inline .toggle-menu ul li:first-child a, .form-inline .toggle-menu ul li:last-child a
+{
+ border-radius: 0px !important;
+}
+.search-container
+{
+    width: 85%;
+    margin: 10px 90px;
+    padding: 0px 10px;
+    background: #fff;
+    border-radius: 3px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border: 1px solid rgba(0,0,0,.06);
+    overflow: hidden;
+}
 /*Responsive*/
 @media screen and (min-width:500px) and (max-width:767px){
     .responsive-50{
@@ -901,6 +987,14 @@ a:hover, a:focus{
     .section2
     {
         padding: 40px 0px 0px 0px;
+    }
+    
+}
+@media (max-width:1023px){
+    .display-cell{
+        display: inherit;
+        float: left;
+        vertical-align: inherit;
     }
 }
 @media (min-width:481px) and (max-width:640px){
