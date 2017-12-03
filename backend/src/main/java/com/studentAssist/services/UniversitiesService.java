@@ -93,4 +93,16 @@ public class UniversitiesService {
 
 	}
 
+	public List<RUniversity> getUniversitiesByName(String searchString) {
+
+		List<Universities> dbUnivs = universitiesDAO.getUniversitiesByName(searchString);
+		List<RUniversity> universities = new ArrayList();
+
+		for (Universities univ : dbUnivs) {
+			universities.add(new RUniversity(univ.getUniversityId(), univ.getUniversityName()));
+		}
+
+		return universities;
+	}
+
 }
