@@ -5,10 +5,12 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.studentAssist.entities.Universities;
 import com.studentAssist.exception.InvalidTokenException;
 import com.studentAssist.response.RUniversity;
 import com.studentAssist.services.UniversitiesService;
@@ -21,6 +23,7 @@ public class UniversitiesController extends AbstractController {
 
 	/**
 	 * Returns only names of Universities
+	 * 
 	 * @return List<String>
 	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/getAllUniversityNames")
@@ -31,8 +34,8 @@ public class UniversitiesController extends AbstractController {
 	}
 
 	/**
-	 * called from UniversitiesActivity when the list of Univs is shown to the
-	 * user for the first time/new user
+	 * called from UniversitiesActivity when the list of Univs is shown to the user
+	 * for the first time/new user
 	 * 
 	 * @param request
 	 * @return
@@ -45,9 +48,9 @@ public class UniversitiesController extends AbstractController {
 	}
 
 	/**
-	 * Returns boolean value of true or false to check if the user has
-	 * universities or not. This is called before displaying the home screen to
-	 * check if the user has univs else redirect him/her to select univs page
+	 * Returns boolean value of true or false to check if the user has universities
+	 * or not. This is called before displaying the home screen to check if the user
+	 * has univs else redirect him/her to select univs page
 	 * 
 	 * @param request
 	 * @return
@@ -60,8 +63,8 @@ public class UniversitiesController extends AbstractController {
 	}
 
 	/**
-	 * Called when the user opens the settings page to populate the univs the
-	 * user has already selected.
+	 * Called when the user opens the settings page to populate the univs the user
+	 * has already selected.
 	 * 
 	 * @param request
 	 * @return
@@ -83,6 +86,19 @@ public class UniversitiesController extends AbstractController {
 	public List<RUniversity> getUniversityNamesWithId(HttpServletRequest request) throws InvalidTokenException {
 
 		return universitiesService.getUniversityNamesWithId(getUserFromRequest(request));
+	}
+
+	/**
+	 * 
+	 * @param request
+	 * @return
+	 * @throws InvalidTokenException
+	 */
+	@RequestMapping(method = RequestMethod.GET, value = "/universityName/{universityName}")
+	public List<RUniversity> searchUniversitiesByName(HttpServletRequest request,
+			@PathVariable("universityName") String universityName) throws InvalidTokenException {
+
+		return universitiesService.getUniversitiesByName(universityName);
 	}
 
 }

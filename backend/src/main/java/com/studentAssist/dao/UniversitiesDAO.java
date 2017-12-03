@@ -24,8 +24,8 @@ import com.studentAssist.response.RUniversity;
 public class UniversitiesDAO extends AbstractDao {
 
 	/**
-	 * 1. here apartment is name of join column in AccommodationAdd JOINS
-	 * Apartments table
+	 * 1. here apartment is name of join column in AccommodationAdd JOINS Apartments
+	 * table
 	 * 
 	 * @param leftSpinner
 	 * @param rightSpinner
@@ -35,14 +35,16 @@ public class UniversitiesDAO extends AbstractDao {
 	public List<Object[]> getUniversityNames(Users currentUser) throws Exception {
 
 		StringBuilder sb = new StringBuilder();
-//		
-//		String queryStr = "select NEW package.RUniversity( a.field1, b.field2, c.field3, c.field4) from a left outer join b on a.id=b.fk left outer join c on b.id=c.fk";
-//		
-//
-//			TypedQuery<RUniversity> query =
-//					getSession().createQuery(queryStr, RUniversity.class);
-//
-//			List<RUniversity> results = query.getResultList();
+		//
+		// String queryStr = "select NEW package.RUniversity( a.field1, b.field2,
+		// c.field3, c.field4) from a left outer join b on a.id=b.fk left outer join c
+		// on b.id=c.fk";
+		//
+		//
+		// TypedQuery<RUniversity> query =
+		// getSession().createQuery(queryStr, RUniversity.class);
+		//
+		// List<RUniversity> results = query.getResultList();
 
 		sb.append("SELECT");
 		sb.append("  d.*,");
@@ -144,6 +146,17 @@ public class UniversitiesDAO extends AbstractDao {
 
 		Query query = getSession().createSQLQuery(queryString.toString());
 		List<Object[]> list = query.list();
+
+		return list;
+
+	}
+
+	public List<Universities> getUniversitiesByName(String searchString) {
+
+		Query query = getSession().createQuery("From Universities univ where univ.universityName  like ?");
+		query.setString(0, "%" + searchString + "%");
+
+		List<Universities> list = query.list();
 
 		return list;
 
