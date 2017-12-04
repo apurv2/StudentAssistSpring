@@ -5,11 +5,14 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
+import { environment } from '../../../environments/environment';
+import { Subject } from 'rxjs/Subject';
+import { University } from '../../accommodation/shared/models/universities.list.model';
+import 'rxjs/add/observable/of';
 
 @Injectable()
 export class LandingSearchService {
-    baseUrl: string = 'https://api.cdnjs.com/libraries';
-    queryUrl: string = '?search=';
+    baseUrl: string = environment.url + environment.universityName;
 
     constructor(private http: Http) { }
 
@@ -19,9 +22,11 @@ export class LandingSearchService {
             .switchMap(term => this.searchEntries(term));
     }
     searchEntries(term) {
-        return this.http
-            .get(this.baseUrl + this.queryUrl + term)
-            .map(res => res.json());
+
+        return term ?
+            this.http.get(this.baseUrl + '/' + term)
+                .map(res => res.json()) : Observable.of([])
+
     }
 
 }

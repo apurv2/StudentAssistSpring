@@ -1,4 +1,4 @@
-import { Aparment } from "app/accommodation/shared/models/accommodation.apartments";
+import { Aparment } from "./accommodation.apartments";
 
 export class UniversityApartments {
     universityName: string;

@@ -98,8 +98,15 @@ public class UniversitiesService {
 		List<Universities> dbUnivs = universitiesDAO.getUniversitiesByName(searchString);
 		List<RUniversity> universities = new ArrayList();
 
+		RUniversity univDTO;
 		for (Universities univ : dbUnivs) {
-			universities.add(new RUniversity(univ.getUniversityId(), univ.getUniversityName()));
+
+			univDTO = new RUniversity();
+			univDTO.setUniversityId(univ.getUniversityId());
+			univDTO.setUniversityName(univ.getUniversityName());
+			univDTO.setUnivAcronym(univ.getUnivAcronym());
+
+			universities.add(univDTO);
 		}
 
 		return universities;

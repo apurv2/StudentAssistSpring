@@ -28,13 +28,21 @@ import { SimpleSearchAddsList } from './accommodation/simpleSearch/adsList/simpl
 import { SimpleSearchAddsFilters } from './accommodation/simpleSearch/filters/simple.search.filters';
 import { SharedDataService } from './shared/data/shared.data.service';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatChipsModule, MatIconModule } from '@angular/material';
+
+import 'hammerjs';
+
 @NgModule({
   imports: [
     BrowserModule,
     FacebookModule.forRoot(),
     routing,
     HttpModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    MatChipsModule,
+    MatIconModule,
   ],
   declarations: [
     AppComponent,

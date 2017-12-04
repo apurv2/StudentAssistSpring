@@ -1,28 +1,42 @@
 <!-- Search panel-->
 <div class="row">
     <div class="col-sm-6 col-sm-offset-3">
-     <h1>
-      <span>Student Assist </span>
-      <div>Book unique homes and experience a city like a local.</div></h1>
+        <h1>
+            <span>Student Assist </span>
+            <div>Book unique homes and experience a city like a local.</div>
+        </h1>
 
         <div class="search-panel">
             <form>
                 <div class="input-group">
                     <span class="input-group-addon padding-0">
                         <!--<button type="button">Search</button>-->
-                    <i class="fa fa-search" aria-hidden="true"></i>
+                        <i class="fa fa-search" aria-hidden="true"></i>
                     </span>
-                    <input type="text" (keyup)="searchTerm$.next($event.target.value)" class=" form-control type-search" placeholder="Type and search">
+
+                    <mat-chip-list #chipList>
+                        <mat-chip *ngFor="let university of selectedUniversities" [selectable]="selectable"
+                         [removable]="removable" (remove)="removeChip(university)">
+                            {{university}}
+                            <mat-icon matChipRemove (click)="removeChip(university)">cancel</mat-icon>
+                        </mat-chip>
+
+                        <input [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                            (keyup)="searchTerm$.next($event.target.value)" class=" form-control type-search" placeholder="Type and search">
+
+                    </mat-chip-list>
+
+
                     <ul [class.reveal-hide]="searchDropdownToggle" class="search-list search-dropdown-transition">
-                      <li *ngFor="let result of results | slice:0:9">
-                        <a href="{{ result.latest }}" target="_blank">
-                          {{ result.name }}
-                        </a>
-                      </li>
+                        <li *ngFor="let university of universityResults | slice:0:9">
+                            <a (click)="addChip(university.univAcronym)" target="_blank">
+                                {{ university.universityName }}
+                            </a>
+                        </li>
                     </ul>
-                    
+
                 </div>
-                 
+
             </form>
         </div>
     </div>
@@ -32,8 +46,12 @@
     <div class="col-xs-12">
         <div class="toggle-menu text-center">
             <ul>
-                <li class="active"><a href="#">Accomodation</a></li>
-                <li><a href="#">Pickup</a></li>
+                <li class="active">
+                    <a href="#">Accomodation</a>
+                </li>
+                <li>
+                    <a href="#">Pickup</a>
+                </li>
             </ul>
         </div>
     </div>

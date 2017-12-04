@@ -19,13 +19,16 @@ public class RUniversity {
 	private int noOfListings;
 
 	private String univAcronym;
-	
+
 	private boolean isSelected;
 
 	public RUniversity(int universitiyId, String universityName) {
 
 		this.universityId = universitiyId;
 		this.universityName = universityName;
+	}
+
+	public RUniversity() {
 	}
 
 	public RUniversity(int universityId, String universityName, String description, String urls, int noOfUsers,

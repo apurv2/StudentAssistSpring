@@ -60,6 +60,7 @@ export const environment = {
     description: "Gender"
   }],
   getUniversityDetailsForUser: 'universities/getUniversityDetailsForUser',
-  accessToken: 'access_token'
+  accessToken: 'access_token',
+  universityName: 'universityName'
 
 }

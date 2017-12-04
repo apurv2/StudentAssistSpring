@@ -4,6 +4,10 @@ body{
     font-size: 16px;
 }
 
+.demo-chip-list {
+    width: 100%;
+  }
+  
 .section-body{
     margin: 40px 0;
 }
