@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.studentAssist.entities.Universities;
 import com.studentAssist.exception.InvalidTokenException;
+import com.studentAssist.response.FlashCardsRequestDTO;
+import com.studentAssist.response.FlashCardsResponseDTO;
 import com.studentAssist.response.RUniversity;
 import com.studentAssist.services.UniversitiesService;
 
@@ -100,5 +102,19 @@ public class UniversitiesController extends AbstractController {
 
 		return universitiesService.getUniversitiesByName(universityName);
 	}
+	
+	/**
+	 * 
+	 * @param request
+	 * @return
+	 * @throws InvalidTokenException
+	 */
+	@RequestMapping(method = RequestMethod.GET, value = "/getFlashCards")
+	public FlashCardsResponseDTO getFlashCards(HttpServletRequest request,
+			FlashCardsRequestDTO flashCardsRequestDTO) throws InvalidTokenException {
+
+		return universitiesService.getFlashCards(flashCardsRequestDTO);
+	}
+	
 
 }

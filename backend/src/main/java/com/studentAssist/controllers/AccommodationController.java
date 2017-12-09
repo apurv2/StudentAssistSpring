@@ -198,7 +198,7 @@ public class AccommodationController extends AbstractController {
 		String addId = userVisited.getAddId();
 
 		if (addId != null && addId != "") {
-			return accommodationService.setUserVisitedAdds(getUserFromRequest(request), Long.parseLong(addId));
+			return accommodationService.setUserVisitedAdds(getUserFromRequest(request), Integer.parseInt(addId));
 		}
 
 		return SAConstants.RESPONSE_FAILURE;
@@ -215,7 +215,9 @@ public class AccommodationController extends AbstractController {
 	@RequestMapping(method = RequestMethod.GET, value = "/getRecentlyViewed")
 	public List<RAccommodationAdd> getRecentlyViewed(@RequestParam("position") int position,
 			HttpServletRequest request) {
+
 		return accommodationService.getRecentlyViewed(getUserFromRequest(request), position);
+
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/getSimpleSearchAddsUnregisteredUser")

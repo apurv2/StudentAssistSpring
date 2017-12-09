@@ -1,3 +1,4 @@
+
 package com.studentAssist.services;
 
 import java.text.SimpleDateFormat;
@@ -5,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.hibernate.SQLQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -208,7 +208,7 @@ public class AccommodationService {
 		return rApartments;
 	}
 
-	public String setUserVisitedAdds(Users user, long addId) throws Exception {
+	public String setUserVisitedAdds(Users user, int addId) throws Exception {
 
 		UserVisitedAdds userVisitedAdds = new UserVisitedAdds();
 		AccommodationAdd accommodationAdd = new AccommodationAdd();

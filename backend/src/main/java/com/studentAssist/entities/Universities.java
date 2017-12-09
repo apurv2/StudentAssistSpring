@@ -36,6 +36,13 @@ public class Universities {
 
 	private String univAcronym;
 
+	public Universities(int selectedUniversityID) {
+		this.universityId = selectedUniversityID;
+	}
+
+	public Universities() {
+	}
+
 	@OneToMany(mappedBy = "universityId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<NotificationSettings> notificationSettings = new ArrayList<>();
 
