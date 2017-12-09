@@ -4,6 +4,7 @@ import { Subject } from 'rxjs/Subject';
 import { LandingSearchService } from 'app/dashboard/search/landing.search.service';
 import { University } from '../../accommodation/shared/models/universities.list.model';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'landing-search',
@@ -17,7 +18,8 @@ export class LandingSearch {
   searchDropdownToggle: boolean;
 
   constructor(private router: Router,
-    private searchService: LandingSearchService) {
+    private searchService: LandingSearchService,
+    public snackBar: MatSnackBar) {
   }
 
   selectedUniversities = new Array<string>();
@@ -38,9 +40,30 @@ export class LandingSearch {
     this.searchDropdownToggle = !this.searchDropdownToggle;
   }
   addChip(universityAcronym) {
-    this.selectedUniversities.push(universityAcronym);
+
+    if (this.selectedUniversities.length == 4) {
+      this.openSnackBar("you can select a max of 4 univs", 'Dismiss');
+      return;
+    }
+
+    if (this.selectedUniversities.indexOf(universityAcronym) == -1) {
+      this.selectedUniversities.push(universityAcronym);
+    }
+    else {
+      this.openSnackBar("Already Selected", universityAcronym);
+
+    }
   }
   removeChip(universityAcronym) {
-    this.selectedUniversities.splice(universityAcronym);
+    let index = this.selectedUniversities.indexOf(universityAcronym);
+
+    if (index >= 0) {
+      this.selectedUniversities.splice(index, 1);
+    }
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, { duration: 2000 });
+
   }
 }

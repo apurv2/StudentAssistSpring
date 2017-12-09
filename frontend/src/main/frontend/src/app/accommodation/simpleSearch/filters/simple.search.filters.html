@@ -1,4 +1,7 @@
 <div class="search-container overflow-inherit">
+        <span class="advance-search pull-right">Search Accomodation</span> 
+    <div class="advance-search-panel">
+                
     <div class="row">
         <div class="col-md-12 filter">
             <form class="form-inline">
@@ -15,26 +18,25 @@
                     </div>
                 </div>
 
+                <mat-form-field>
+                    <mat-select [(ngModel)]="leftSpinnerSelectedItem" (ngModelChange)="leftSpinnerClick($event)" [ngModelOptions]="{standalone: true}">
+                        <mat-option *ngFor="let spinnerValue of leftSpinnerValues" [value]="spinnerValue.description">{{spinnerValue.description}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-select [(ngModel)]="rightSpinnerSelectedItem" (ngModelChange)="leftSpinnerClick($event)" [ngModelOptions]="{standalone: true}">
+                        <mat-option *ngFor="let spinnerValue of rightSpinnerValues" [value]="spinnerValue.description">{{spinnerValue.description}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <input type="text" value="" placeholder="Search...." class="form-control">
 
                 <div class="form-group">
-                    <select class="" [(ngModel)]="leftSpinnerSelectedItem" (ngModelChange)="leftSpinnerClick($event)" [ngModelOptions]="{standalone: true}">
-                        <option *ngFor="let spinnerValue of leftSpinnerValues" [value]="spinnerValue.description">{{spinnerValue.description}}</option>
-                    </select>
-
-                </div>
-                <div class="form-group">
-                    <select class="">
-                        <option *ngFor="let spinnerValue of rightSpinnerValues" [value]="spinnerValue.code">{{spinnerValue.description}}</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <input type="text" value="" placeholder="Search...." class="form-control">
-                </div>
-                <div class="form-group">
-
                     <button type="submit" class="btn btn-success">Search</button>
                 </div>
             </form>
         </div>
     </div>
+    
 </div>

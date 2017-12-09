@@ -1,4 +1,4 @@
-export class AccommodationFilterData {
+export class AccommodationSearchModel {
     
        leftSpinner : string;
        rightSpinner: string;

@@ -18,11 +18,13 @@ import com.cloudinary.Cloudinary;
 import com.google.gson.Gson;
 import com.studentAssist.entities.Users;
 import com.studentAssist.exception.InvalidTokenException;
+import com.studentAssist.response.AccommodationSearchDTO;
 import com.studentAssist.response.RAccommodationAdd;
 import com.studentAssist.response.RAccommodationAddJson;
 import com.studentAssist.response.RApartmentNames;
 import com.studentAssist.response.RApartmentNamesInUnivs;
 import com.studentAssist.response.RApartmentNamesWithType;
+import com.studentAssist.response.UniversityAccommodationDTO;
 import com.studentAssist.services.AccommodationService;
 import com.studentAssist.services.NotificationsService;
 import com.studentAssist.util.InsertApartmentDetails;
@@ -213,9 +215,14 @@ public class AccommodationController extends AbstractController {
 	@RequestMapping(method = RequestMethod.GET, value = "/getRecentlyViewed")
 	public List<RAccommodationAdd> getRecentlyViewed(@RequestParam("position") int position,
 			HttpServletRequest request) {
-
 		return accommodationService.getRecentlyViewed(getUserFromRequest(request), position);
+	}
 
+	@RequestMapping(method = RequestMethod.GET, value = "/getSimpleSearchAddsUnregisteredUser")
+	public List<UniversityAccommodationDTO> getSimpleSearchAddsUnregisteredUser(
+			AccommodationSearchDTO accommodationSearch, HttpServletRequest request) {
+
+		return accommodationService.getSimpleSearchAddsNg(accommodationSearch);
 	}
 
 	@RequestMapping("/getCl")

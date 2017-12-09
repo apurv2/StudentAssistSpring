@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.SQLQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +16,12 @@ import com.studentAssist.entities.Apartments;
 import com.studentAssist.entities.UniversityPhotos;
 import com.studentAssist.entities.UserVisitedAdds;
 import com.studentAssist.entities.Users;
+import com.studentAssist.response.AccommodationSearchDTO;
 import com.studentAssist.response.RAccommodationAdd;
 import com.studentAssist.response.RAccommodationAddJson;
 import com.studentAssist.response.RApartmentNames;
 import com.studentAssist.response.RApartmentNamesWithType;
+import com.studentAssist.response.UniversityAccommodationDTO;
 import com.studentAssist.util.SAConstants;
 import com.studentAssist.util.Utilities;
 
@@ -294,6 +297,13 @@ public class AccommodationService {
 
 		return rAdds;
 
+	}
+
+	public List<UniversityAccommodationDTO> getSimpleSearchAddsNg(AccommodationSearchDTO accommodationSearch) {
+
+		accommmodationDAO.getSimpleSearchAddsNg(accommodationSearch);
+
+		return null;
 	}
 
 }

@@ -8,21 +8,25 @@ import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.type.StandardBasicTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.studentAssist.entities.AccommodationAdd;
 import com.studentAssist.entities.Apartments;
+import com.studentAssist.entities.NotificationSettings;
 import com.studentAssist.entities.Universities;
 import com.studentAssist.entities.UserAccommodationNotifications;
 import com.studentAssist.entities.UserVisitedAdds;
 import com.studentAssist.entities.Users;
+import com.studentAssist.response.AccommodationSearchDTO;
 import com.studentAssist.util.SAConstants;
 
 @Repository
@@ -206,6 +210,68 @@ public class AccommodationDAO extends AbstractDao {
 		// Name"
 
 		for (Universities university : user.getUniversities()) {
+			Criteria criteria = getCriteria(AccommodationAdd.class, "add").add((Criterion) example);
+			if (leftSpinner.equals("gender")) {
+				criteria.setFetchMode("apartment", FetchMode.SELECT).createAlias("apartment", "a")
+						.add(Restrictions.eq("a.university.universityId", university.getUniversityId()));
+			} else {
+				criteria.setFetchMode("apartment", FetchMode.SELECT).createAlias("apartment", "a")
+						.add(Restrictions.eq(secondParameter, rightSpinner)).createAlias("a.university", "b")
+						.add(Restrictions.eq("b.universityId", university.getUniversityId()));
+
+			}
+
+			criteria.addOrder(Order.desc("add.datePosted"));
+			criteria.setFirstResult(0);
+			criteria.setMaxResults(SAConstants.PAGE_SIZE);
+			list1.addAll(criteria.list());
+
+			if (!list1.isEmpty() && SAConstants.APARTMENT_NAME.equals(leftSpinner)) {
+				break;
+			}
+
+		}
+		accommodationAddsList.addAll(list1);
+		lazyLoadAdds(accommodationAddsList);
+
+		return accommodationAddsList;
+	}
+
+	/**
+	 * 1. here apartment is name of join column in AccommodationAdd JOINS
+	 * Apartments table
+	 * 
+	 * @param leftSpinner
+	 * @param rightSpinner
+	 * @param session
+	 * @return
+	 */
+	public List<AccommodationAdd> getSimpleSearchAddsUnregisteredUser(String leftSpinner, String rightSpinner,
+			List<Universities> universities) throws Exception {
+
+		Apartments apt = new Apartments();
+		String secondParameter = "";
+		AccommodationAdd exampleAccAdd = new AccommodationAdd();
+		List list1 = new ArrayList<>();
+
+		List<AccommodationAdd> accommodationAddsList = new ArrayList<>();
+
+		if (SAConstants.APARTMENT_TYPE.equals(leftSpinner)) {
+			apt.setApartmentType(rightSpinner);
+			secondParameter = "a.apartmentType";
+		} else if (SAConstants.APARTMENT_NAME.equals(leftSpinner)) {
+			apt.setApartmentName(rightSpinner);
+			secondParameter = "a.apartmentName";
+		} else if (leftSpinner.equals("gender")) {
+			exampleAccAdd.setGender(rightSpinner);
+		}
+
+		this.addAccommodationAddToApartment(apt, exampleAccAdd);
+		Example example = Example.create((Object) exampleAccAdd);
+
+		// we want the join to Apartments table only for "Apt type" and "Apt
+		// Name"
+		for (Universities university : universities) {
 			Criteria criteria = getCriteria(AccommodationAdd.class, "add").add((Criterion) example);
 			if (leftSpinner.equals("gender")) {
 				criteria.setFetchMode("apartment", FetchMode.SELECT).createAlias("apartment", "a")
@@ -439,6 +505,52 @@ public class AccommodationDAO extends AbstractDao {
 		lazyLoadAdds(accommodationAddsList);
 
 		return accommodationAddsList;
+
+	}
+
+	public void getSimpleSearchAddsNg(AccommodationSearchDTO accommodationSearch) {
+
+		StringBuilder simpleSearchSql = new StringBuilder();
+
+		simpleSearchSql.append("  SELECT");
+		simpleSearchSql.append("    add2.ADD_ID addId,");
+		simpleSearchSql.append("    univ.universityName univName,");
+		simpleSearchSql.append("    apts.apartmentName apartmentName,");
+		simpleSearchSql.append("    univ.universityId,");
+		simpleSearchSql.append("    CASE");
+		simpleSearchSql.append("      WHEN EXISTS (SELECT");
+		simpleSearchSql.append("          NULL");
+		simpleSearchSql.append("        FROM UserVisitedAdds uva");
+		simpleSearchSql.append("        WHERE uva.USER_ID = 1118294135");
+		simpleSearchSql.append("        AND uva.ADD_ID = add2.ADD_ID) THEN 'Y'");
+		simpleSearchSql.append("      ELSE 'N'");
+		simpleSearchSql.append("    END AS userVisited");
+		simpleSearchSql.append("  FROM AccommodationAdd AS add1");
+		simpleSearchSql.append("  INNER JOIN AccommodationAdd AS add2");
+		simpleSearchSql.append("    ON add1.UNIVERSITY_ID = add2.UNIVERSITY_ID");
+		simpleSearchSql.append("    AND add1.datePosted <= add2.datePosted");
+		simpleSearchSql.append("    AND add2.UNIVERSITY_ID = 3");
+		simpleSearchSql.append("  INNER JOIN Apartments apts");
+		simpleSearchSql.append("    ON apts.id = add2.APARTMENT_ID");
+		simpleSearchSql.append("    AND apts.apartmentType = 'on'");
+		simpleSearchSql.append("  LEFT JOIN Universities univ");
+		simpleSearchSql.append("    ON univ.universityId = apts.universityId");
+		simpleSearchSql.append("    AND univ.universityId = add2.UNIVERSITY_ID");
+		simpleSearchSql.append("  GROUP BY add1.ADD_ID");
+		simpleSearchSql.append("  HAVING COUNT(*) <= 10");
+		simpleSearchSql.append("  ORDER BY add1.apartment_Id, add1.datePosted DESC");
+
+		SQLQuery query = getSession().createSQLQuery(simpleSearchSql.toString());
+		query.addScalar("addId", StandardBasicTypes.LONG);
+		// query.addScalar("univName", StandardBasicTypes.STRING);
+		query.addEntity("AccommodationAdd", AccommodationAdd.class);
+
+		@SuppressWarnings("unchecked")
+		List<Object[]> obj = query.list();
+
+		for (Object[] accommodationAdd : obj) {
+			System.out.println(accommodationAdd[0]);
+		}
 
 	}
 

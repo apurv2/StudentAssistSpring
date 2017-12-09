@@ -29,7 +29,7 @@ import { SimpleSearchAddsFilters } from './accommodation/simpleSearch/filters/si
 import { SharedDataService } from './shared/data/shared.data.service';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatChipsModule, MatIconModule } from '@angular/material';
+import { MatChipsModule, MatIconModule, MatSnackBarModule, MatSelectModule,  } from '@angular/material';
 
 import 'hammerjs';
 
@@ -43,6 +43,8 @@ import 'hammerjs';
     BrowserAnimationsModule,
     MatChipsModule,
     MatIconModule,
+    MatSnackBarModule,
+    MatSelectModule
   ],
   declarations: [
     AppComponent,

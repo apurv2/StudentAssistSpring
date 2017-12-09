@@ -909,6 +909,27 @@ box-shadow: 0 3px 6px rgba(0,0,0,.2);
     border: 1px solid rgba(0,0,0,.06);
     overflow: hidden;
 }
+.mat-chip-list-wrapper { 
+       background: white;
+}
+input.mat-chip-input {
+    margin: 0px;
+    }
+    .search-panel .search-list {
+        width: 100%;
+       left: 0;
+   }
+   .advance-search{
+    color: #404a58;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: -32px;
+}
+.advance-search-panel{
+    display: none;
+    padding: 30px 0;
+}
 /*Responsive*/
 @media screen and (min-width:500px) and (max-width:767px){
     .responsive-50{

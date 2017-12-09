@@ -1,5 +1,7 @@
-import { Component } from "@angular/core";
+import { Component, Input } from "@angular/core";
+import { AccommodationAdd } from "../../shared/models/accommodation.model";
 
+declare var $: any;
 
 @Component({
     selector: 'simple-search-list',
@@ -8,11 +10,13 @@ import { Component } from "@angular/core";
 
 export class SimpleSearchAddsList {
 
+    @Input()
+    accommodationSearchResults: AccommodationAdd[];
 
     ngOnInit() {
-
+        $('.collapsible').collapsible();
     }
 
-
+    
 
 }
