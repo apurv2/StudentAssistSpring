@@ -196,7 +196,7 @@ public class AccommodationController extends AbstractController {
 		String addId = userVisited.getAddId();
 
 		if (addId != null && addId != "") {
-			return accommodationService.setUserVisitedAdds(getUserFromRequest(request), Long.parseLong(addId));
+			return accommodationService.setUserVisitedAdds(getUserFromRequest(request), Integer.parseInt(addId));
 		}
 
 		return SAConstants.RESPONSE_FAILURE;

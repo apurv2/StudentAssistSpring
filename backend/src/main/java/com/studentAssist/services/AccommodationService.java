@@ -205,7 +205,7 @@ public class AccommodationService {
 		return rApartments;
 	}
 
-	public String setUserVisitedAdds(Users user, long addId) throws Exception {
+	public String setUserVisitedAdds(Users user, int addId) throws Exception {
 
 		UserVisitedAdds userVisitedAdds = new UserVisitedAdds();
 		AccommodationAdd accommodationAdd = new AccommodationAdd();

@@ -32,7 +32,7 @@ public class AccommodationAdd {
 	@Id
 	@GeneratedValue
 	@Column(name = "ADD_ID")
-	private long addId;
+	private int addId;
 
 	@ManyToOne
 	@JoinColumn(name = "APARTMENT_ID")
@@ -161,11 +161,11 @@ public class AccommodationAdd {
 		this.user = user;
 	}
 
-	public long getAddId() {
+	public int getAddId() {
 		return this.addId;
 	}
 
-	public void setAddId(long addId) {
+	public void setAddId(int addId) {
 		this.addId = addId;
 	}
 

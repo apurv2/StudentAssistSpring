@@ -9,10 +9,12 @@ import org.hibernate.FetchMode;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Subqueries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +26,8 @@ import com.studentAssist.entities.UserAccommodationNotifications;
 import com.studentAssist.entities.UserVisitedAdds;
 import com.studentAssist.entities.Users;
 import com.studentAssist.util.SAConstants;
+
+import javassist.bytecode.stackmap.TypeData.ClassName;
 
 @Repository
 @Transactional
@@ -164,8 +168,8 @@ public class AccommodationDAO extends AbstractDao {
 	}
 
 	/**
-	 * 1. here apartment is name of join column in AccommodationAdd JOINS
-	 * Apartments table
+	 * 1. here apartment is name of join column in AccommodationAdd JOINS Apartments
+	 * table
 	 * 
 	 * @param leftSpinner
 	 * @param rightSpinner
@@ -440,6 +444,33 @@ public class AccommodationDAO extends AbstractDao {
 
 		return accommodationAddsList;
 
+	}
+
+	public AccommodationAdd getRecentAccommodationAdd() {
+
+		DetachedCriteria innerCriteria = DetachedCriteria.forClass(AccommodationAdd.class, "add")
+				.setProjection(Projections.projectionList().add(Projections.max("add.datePosted")));
+
+		Criteria crit = getSession().createCriteria(AccommodationAdd.class, "outer");
+		crit.add(Subqueries.propertyEq("outer.datePosted", innerCriteria));
+
+		List<AccommodationAdd> adds = crit.list();
+
+		AccommodationAdd add = adds.get(0);
+		return add;
+
+	}
+
+	public List<AccommodationAdd> getAccommodationCardsByUniversityId(int selectedUniversityID, int numberOfCards) {
+
+		AccommodationAdd add = new AccommodationAdd();
+		add.setUniversity(new Universities(selectedUniversityID));
+
+		Example example = Example.create((Object) add);
+		Criteria criteria = getSession().createCriteria((Class) AccommodationAdd.class).add((Criterion) example);
+
+		List adds = criteria.list();
+		return adds;
 	}
 
 }
