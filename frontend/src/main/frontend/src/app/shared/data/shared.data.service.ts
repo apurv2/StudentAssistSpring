@@ -1,17 +1,17 @@
 import { Subject } from "rxjs/Subject";
 import { Observable } from "rxjs/Observable";
-import { AccommodationFilterData } from "../../accommodation/shared/models/accommodation.filter.model";
+import { AccommodationSearchModel } from "../../accommodation/shared/models/accommodation.filter.model";
 
 export class SharedDataService {
 
     showHomepageBackground = new Subject<boolean>();
-    accommomdationSearchFilters = new Subject<AccommodationFilterData>();
+    accommomdationSearchFilters = new Subject<AccommodationSearchModel>();
 
-    getAccommomdationSearchFilters(): Subject<AccommodationFilterData>  {
+    getAccommomdationSearchFilters(): Subject<AccommodationSearchModel>  {
         return this.accommomdationSearchFilters;
     }
 
-    setAccommomdationSearchFilters(filterData: AccommodationFilterData){
+    setAccommomdationSearchFilters(filterData: AccommodationSearchModel){
         this.accommomdationSearchFilters.next(filterData);
     }
 

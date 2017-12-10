@@ -22,7 +22,6 @@ import { UpcomingComponent } from 'app/airport/dashboards/driver/upcoming/upcomi
 import { CalendarComponent } from 'app/airport/dashboards/driver/calendar/calendar.rides';
 import { LandingSearch } from 'app/dashboard/search/landing.search';
 import { LandingSearchService } from 'app/dashboard/search/landing.search.service';
-import { LandingSearchResults } from './dashboard/results/landing.search.results';
 import { SimpleSearchService } from './accommodation/simpleSearch/accommodation.simple.search.service';
 import { SimpleSearchAddsList } from './accommodation/simpleSearch/adsList/simple.search.adds.list';
 import { SimpleSearchAddsFilters } from './accommodation/simpleSearch/filters/simple.search.filters';
@@ -32,6 +31,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatChipsModule, MatIconModule, MatSnackBarModule, MatSelectModule,  } from '@angular/material';
 
 import 'hammerjs';
+import { LandingFlashCards } from './dashboard/flashCards/landing.flash.cards';
+import { LandingFlashCardsService } from './dashboard/flashCards/landing.flash.cards.service';
 
 @NgModule({
   imports: [
@@ -61,7 +62,7 @@ import 'hammerjs';
     UpcomingComponent,
     CalendarComponent,
     LandingSearch,
-    LandingSearchResults,
+    LandingFlashCards,
     SimpleSearchAddsList,
     SimpleSearchAddsFilters
   ],
@@ -69,7 +70,8 @@ import 'hammerjs';
     HttpInterceptorService,
     LandingSearchService,
     SimpleSearchService,
-    SharedDataService
+    SharedDataService,
+    LandingFlashCardsService
 
   ],
   bootstrap: [AppComponent, TopHeader, LeftNav]

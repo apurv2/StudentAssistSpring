@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { FacebookService } from "ngx-facebook";
 import { SharedDataService } from "../../shared/data/shared.data.service";
-import { AccommodationFilterData } from "../shared/models/accommodation.filter.model";
+import { AccommodationSearchModel } from "../shared/models/accommodation.filter.model";
 import { Observable } from "rxjs/Observable";
 import { SimpleSearchService } from "./accommodation.simple.search.service";
 import { AccommodationAdd } from "../shared/models/accommodation.model";
@@ -28,7 +28,7 @@ export class SimpleSearch {
     }
 
 
-    getSimpleSearchAdds(filters: AccommodationFilterData): Observable<any> {
+    getSimpleSearchAdds(filters: AccommodationSearchModel): Observable<any> {
 
         let rightSpinner = encodeURIComponent(filters.rightSpinner);
         let leftSpinner = encodeURIComponent(filters.leftSpinner);

@@ -1,0 +1,67 @@
+<div class="container">
+    <div>
+        <div class="row">
+            <div *ngFor="let accommodationCard of flashCardsData?.accomodationCards" class="col-sm-6 col-md-3">
+                <!--single card layout-->
+                <div class="card vertical-card" (click)="searchResultCardClick()">
+                    <div class="card-img-view">
+                        <img src="{{accommodationCard.addPhotoIds[0]}}" />
+                        <span class="card-tag">
+                            <img src="{{accommodationCard.universityPhotoUrl}}" />
+                        </span>
+                        <h4>{{accommodationCard.apartmentName}}</h4>
+                    </div>
+                    <div class="card-content-view text-muted">
+                        <div class="text-right">
+                            <span class="label price-label dark-bg">$ {{accommodationCard.cost}}</span>
+                        </div>
+                        <div class="media">
+                            <div class="media-left">
+                                <i class="material-icons">pin_drop</i>
+                            </div>
+                            <div class="media-body">
+                                <p>102, Mapple Road, texas North main road</p>
+                                <p>
+                                    {{accommodationCard.noOfRooms}}
+                                    <!-- <span class="highlight-text">3</span> Bathroom -->
+                                    </p>
+                            </div>
+                        </div>
+                        <div class="media">
+                            <div class="media-left">
+                                <i class="material-icons">remove_red_eye</i>
+                            </div>
+                            <div class="media-body">
+                                <p>
+                                    <span class="highlight-text">10</span> Views</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-3">
+                <!--single card layout-->
+                <div class="rating-card vertical-card">
+                    <div class="card-usr-img text-center green-indicator">
+                        <img src="./assets/images/card-img-usr-1.jpg" class="img-circle" />
+                    </div>
+                    <div class="card-usr-info text-center">
+                        <h4 class="margin-bottom-3">Diego Buchanan</h4>
+                        <span class="text-muted">Texas</span>
+                        <p class="small text-muted margin-top-10">30 students picked up</p>
+                    </div>
+                    <div class="card-actions">
+                        <div class="star-img pull-left">
+                            <img src="./assets/images/rating-stars.png" class="width-80" />
+                        </div>
+                        <div class="pull-right">
+                            <span class="label price-label pink-bg">free</span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

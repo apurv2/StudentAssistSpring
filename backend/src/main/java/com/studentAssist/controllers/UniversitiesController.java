@@ -109,10 +109,10 @@ public class UniversitiesController extends AbstractController {
 	 * @return
 	 * @throws InvalidTokenException
 	 */
-	@RequestMapping(method = RequestMethod.GET, value = "/getFlashCards")
-	public FlashCardsResponseDTO getFlashCards(HttpServletRequest request) throws InvalidTokenException {
+	@RequestMapping(method = RequestMethod.POST, value = "/getFlashCards")
+	public FlashCardsResponseDTO getFlashCards(HttpServletRequest request,FlashCardsRequestDTO flashCards) throws InvalidTokenException {
 
-		return universitiesService.getFlashCards(new FlashCardsRequestDTO());
+		return universitiesService.getFlashCards(flashCards);
 	}
 	
 
