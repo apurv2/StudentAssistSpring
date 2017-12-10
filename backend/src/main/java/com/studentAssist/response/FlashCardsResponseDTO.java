@@ -4,7 +4,7 @@ import java.util.List;
 
 public class FlashCardsResponseDTO {
 	List<RAccommodationAdd> accomodationCards;
-	RAirportAdd airportCard;
+	AirportDTO airportCard;
 	int currentUniversityID;
 
 	public List<RAccommodationAdd> getAccomodationCards() {
@@ -15,11 +15,11 @@ public class FlashCardsResponseDTO {
 		this.accomodationCards = accomodationCards;
 	}
 
-	public RAirportAdd getAirportCard() {
+	public AirportDTO getAirportCard() {
 		return airportCard;
 	}
 
-	public void setAirportCard(RAirportAdd airportCard) {
+	public void setAirportCard(AirportDTO airportCard) {
 		this.airportCard = airportCard;
 	}
 

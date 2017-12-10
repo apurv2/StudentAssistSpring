@@ -241,22 +241,25 @@ public class AccommodationService {
 
 	}
 
-	private List<RAccommodationAdd> getRAccommodationAdds(List<AccommodationAdd> accommodationAdds, List<Long> addIds) {
+	public List<RAccommodationAdd> getRAccommodationAdds(List<AccommodationAdd> accommodationAdds, List<Long> addIds) {
 
 		List<RAccommodationAdd> rAdds = new ArrayList<RAccommodationAdd>();
 
 		for (AccommodationAdd add : accommodationAdds) {
 
+			String universityPhoto = SAConstants.EmptyText;
+			String universityLogo = SAConstants.EmptyText;
+			List<UniversityPhotos> photos = add.getApartment().getUniversity().getUniversityPhotos();
+			for (UniversityPhotos photo : photos) {
+				if (photo.getPhotoPriority() == 2) {
+					universityPhoto = photo.getPhotoUrl();
+				} else if (photo.getPhotoPriority() == 1) {
+					universityLogo = photo.getPhotoUrl();
+				}
+			}
+
 			Users user = add.getUser();
 			if (addIds != null) {
-
-				String universityPhoto = "";
-				List<UniversityPhotos> photos = add.getApartment().getUniversity().getUniversityPhotos();
-				for (UniversityPhotos photo : photos) {
-					if (photo.getPhotoPriority() == 2) {
-						universityPhoto = photo.getPhotoUrl();
-					}
-				}
 
 				if (addIds.contains(add.getAddId())) {
 					rAdds.add(new RAccommodationAdd(add.getVacancies(), add.getGender(), add.getNoOfRooms(),
@@ -286,8 +289,7 @@ public class AccommodationService {
 						user.getFirstName(), user.getLastName(), user.getEmail(), user.getPhoneNumber(), add.getAddId(),
 						true, new SimpleDateFormat("dd MMM").format(add.getDatePosted()), add.getAddPhotoIds(),
 						add.getApartment().getUniversity().getUniversityId(),
-						add.getApartment().getUniversity().getUniversityName(),
-						add.getApartment().getUniversity().getUniversityPhotos().get(0).getPhotoUrl(),
+						add.getApartment().getUniversity().getUniversityName(), universityLogo,
 						add.getApartment().getUniversity().getUnivAcronym(), add.getApartment().getCity(),
 						add.getApartment().getState(), add.getApartment().getZip()));
 

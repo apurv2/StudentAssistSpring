@@ -14,7 +14,7 @@ public class AirportService {
 	@Autowired
 	AirportDAO airportDAO;
 
-	public List<Airport> getAirportServices() {
-		return airportDAO.getAirportServices();
+	public List<Airport> getAirportServices(int universityID) {
+		return airportDAO.getAirportServices(universityID);
 	}
 }

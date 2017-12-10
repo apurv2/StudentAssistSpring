@@ -4,20 +4,27 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.codehaus.groovy.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.studentAssist.dao.AccommodationDAO;
+import com.studentAssist.dao.AirportDAO;
 import com.studentAssist.dao.UniversitiesDAO;
 import com.studentAssist.entities.AccommodationAdd;
+import com.studentAssist.entities.Airport;
 import com.studentAssist.entities.Universities;
+import com.studentAssist.entities.UniversityPhotos;
 import com.studentAssist.entities.Users;
+import com.studentAssist.response.AirportDTO;
 import com.studentAssist.response.FlashCardsRequestDTO;
 import com.studentAssist.response.FlashCardsResponseDTO;
 import com.studentAssist.response.RAccommodationAdd;
-import com.studentAssist.response.RAirportAdd;
 import com.studentAssist.response.RUniversity;
 import com.studentAssist.util.SAConstants;
+
+import antlr.StringUtils;
+import kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.EMPTY_MEMBER_INDEX;
 
 @Service
 public class UniversitiesService {
@@ -27,6 +34,12 @@ public class UniversitiesService {
 
 	@Autowired
 	AccommodationDAO accommodationDAO;
+
+	@Autowired
+	AccommodationService accommodationService;
+
+	@Autowired
+	AirportService airportService;
 
 	public List<RUniversity> getUniversityNames(Users currentUser) throws Exception {
 
@@ -122,39 +135,59 @@ public class UniversitiesService {
 	}
 
 	public FlashCardsResponseDTO getFlashCards(FlashCardsRequestDTO flashCardsRequestDTO) {
-		// TODO Auto-generated method stub
 		FlashCardsResponseDTO flashCardResponseDTO = new FlashCardsResponseDTO();
 		int selectedUniversityID;
 
-		if (flashCardsRequestDTO.getUniversitiesIDs() == null) {
+		if (flashCardsRequestDTO.getUniversitiesIDs() != null) {
 			selectedUniversityID = getSelectedUniversityID(flashCardsRequestDTO.getUniversitiesIDs());
 		} else {
 			selectedUniversityID = getRecentUniversityID();
 		}
 
-		flashCardResponseDTO.setAccomodationCards(getAccomodationCardsofSelectedUniversity(selectedUniversityID, flashCardsRequestDTO.getNumOfAccomodataionCards()));
+		flashCardResponseDTO.setAccomodationCards(getAccomodationCardsofSelectedUniversity(selectedUniversityID, 3));
 		flashCardResponseDTO.setAirportCard(getAirportCard(selectedUniversityID));
-		// TODO: Assuming the number of Airport cards is 1. Need to change this once we
-		// include
 		flashCardResponseDTO.setCurrentUniversityID(selectedUniversityID);
 
 		return flashCardResponseDTO;
 	}
 
-	private RAirportAdd getAirportCard(int selectedUniversityID) {
-		// TODO Auto-generated method stub
-		return null;
+	private AirportDTO getAirportCard(int selectedUniversityID) {
+
+		List<Airport> airports = airportService.getAirportServices(selectedUniversityID);
+		Airport airport = airports.get(0);
+
+		AirportDTO AirportAdd = new AirportDTO();
+		AirportAdd.setUniversityId(selectedUniversityID);
+
+		AirportAdd.setUnivAcronym(airport.getUniversity().getUnivAcronym());
+		AirportAdd.setUniversityName(airport.getUniversity().getUniversityName());
+
+		List<UniversityPhotos> universityPhotos = airport.getUniversity().getUniversityPhotos();
+
+		String universityLogo = SAConstants.EmptyText;
+		for (UniversityPhotos universityPhoto : universityPhotos) {
+			if (universityPhoto.getPhotoPriority() == 1) {
+				universityLogo = universityPhoto.getPhotoUrl();
+			}
+		}
+
+		AirportAdd.setUniversityPhotoUrl(universityLogo);
+
+		AirportAdd.setUniversityPickupUrl(airport.getGroupLink());
+		return AirportAdd;
 	}
 
-	private List<RAccommodationAdd> getAccomodationCardsofSelectedUniversity(int selectedUniversityID, int numberOfCards) {
+	private List<RAccommodationAdd> getAccomodationCardsofSelectedUniversity(int selectedUniversityID,
+			int numberOfCards) {
 
-		List<AccommodationAdd> accomodationAdds= accommodationDAO.getAccommodationCardsByUniversityId(selectedUniversityID, numberOfCards);
-		List<RAccommodationAdd> rAccomodationAdds = (List<RAccommodationAdd>)(List<?>)accomodationAdds;
-		return rAccomodationAdds;
+		List<AccommodationAdd> accomodationAdds = accommodationDAO
+				.getAccommodationCardsByUniversityId(selectedUniversityID, numberOfCards);
+		return accommodationService.getRAccommodationAdds(accomodationAdds, null);
+
 	}
 
 	private int getRecentUniversityID() {
-		return accommodationDAO.getRecentAccommodationAdd().getAddId();
+		return accommodationDAO.getRecentAccommodationAdd().getUniversity().getUniversityId();
 	}
 
 	private int getSelectedUniversityID(List<Integer> universitiesIDs) {

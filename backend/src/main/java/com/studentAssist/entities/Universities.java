@@ -36,18 +36,11 @@ public class Universities {
 
 	private String univAcronym;
 
-	public Universities(int selectedUniversityID) {
-		this.universityId = selectedUniversityID;
-	}
-
-	public Universities() {
-	}
+	@OneToMany(mappedBy = "university")
+	private List<Airport> airportPickup = new ArrayList<>();
 
 	@OneToMany(mappedBy = "universityId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<NotificationSettings> notificationSettings = new ArrayList<>();
-
-	@ElementCollection
-	private List<String> universityPhotosUrls = new ArrayList<String>();
 
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "universities")
 	private List<Users> users = new ArrayList<>();
@@ -62,6 +55,21 @@ public class Universities {
 	private List<UniversityPhotos> universityPhotos = new ArrayList<UniversityPhotos>();
 
 	private Date dateAdded;
+
+	public List<Airport> getAirportPickup() {
+		return airportPickup;
+	}
+
+	public void setAirportPickup(List<Airport> airportPickup) {
+		this.airportPickup = airportPickup;
+	}
+
+	public Universities(int selectedUniversityID) {
+		this.universityId = selectedUniversityID;
+	}
+
+	public Universities() {
+	}
 
 	public List<AccommodationAdd> getAccommodationAdds() {
 		return accommodationAdds;
@@ -105,14 +113,6 @@ public class Universities {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public List<String> getUniversityPhotosUrls() {
-		return universityPhotosUrls;
-	}
-
-	public void setUniversityPhotosUrls(List<String> universityPhotosUrls) {
-		this.universityPhotosUrls = universityPhotosUrls;
 	}
 
 	public List<Apartments> getApartments() {
