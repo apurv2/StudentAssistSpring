@@ -35,7 +35,7 @@ import { LandingFlashCards } from './dashboard/flashCards/landing.flash.cards';
 import { LandingFlashCardsService } from './dashboard/flashCards/landing.flash.cards.service';
 import { PostAccommodation } from './accommodation/post/accommodation.post';
 import { UserPosts } from './accommodation/post/userPosts/user.posts';
-import { MidSection } from './dashboard/midSection/landing.misection';
+import { MidSection } from './dashboard/midSection/landing.mid.section';
 
 @NgModule({
   imports: [
