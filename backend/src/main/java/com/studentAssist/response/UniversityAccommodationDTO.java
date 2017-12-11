@@ -8,7 +8,7 @@ public class UniversityAccommodationDTO {
 
 	private List<RAccommodationAdd> accommodationAdds;
 
-	private long universityName;
+	private String universityName;
 
 	private String description;
 
@@ -36,11 +36,11 @@ public class UniversityAccommodationDTO {
 		this.accommodationAdds = accommodationAdds;
 	}
 
-	public long getUniversityName() {
+	public String getUniversityName() {
 		return universityName;
 	}
 
-	public void setUniversityName(long universityName) {
+	public void setUniversityName(String universityName) {
 		this.universityName = universityName;
 	}
 

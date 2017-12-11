@@ -8,13 +8,21 @@ public class AccommodationSearchDTO {
 
 	private String rightSpinner;
 
-	private List<Long> universityIds;
+	private List<Integer> universityIds;
 
 	private String apartmentName;
 
 	private String apartmentType;
 
 	private String gender;
+
+	public List<Integer> getUniversityIds() {
+		return universityIds;
+	}
+
+	public void setUniversityIds(List<Integer> universityIds) {
+		this.universityIds = universityIds;
+	}
 
 	public String getApartmentName() {
 		return apartmentName;
@@ -54,14 +62,6 @@ public class AccommodationSearchDTO {
 
 	public void setRightSpinner(String rightSpinner) {
 		this.rightSpinner = rightSpinner;
-	}
-
-	public List<Long> getUniversityIds() {
-		return universityIds;
-	}
-
-	public void setUniversityIds(List<Long> universityIds) {
-		this.universityIds = universityIds;
 	}
 
 }

@@ -122,20 +122,30 @@ public class AccommodationController extends AbstractController {
 
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/getSimpleSearchAdds")
-	public List<RAccommodationAdd> getSimpleSearchAdds(@RequestParam("leftSpinner") String leftSpinner,
-			@RequestParam("rightSpinner") String rightSpinner, HttpServletRequest request) throws Exception {
+	// @RequestMapping(method = RequestMethod.GET, value =
+	// "/getSimpleSearchAddsAndroid")
+	// public List<RAccommodationAdd>
+	// getSimpleSearchAddsAndroid(@RequestParam("leftSpinner") String
+	// leftSpinner,
+	// @RequestParam("rightSpinner") String rightSpinner, HttpServletRequest
+	// request) throws Exception {
+	//
+	// return accommodationService.getSimpleSearchAdds(leftSpinner,
+	// rightSpinner, getUserFromRequest(request));
+	// }
 
-		return accommodationService.getSimpleSearchAdds(leftSpinner, rightSpinner, getUserFromRequest(request));
-	}
-
-	@RequestMapping(method = RequestMethod.GET, value = "/getSimpleSearchAddsForWebApp")
-	public List<RAccommodationAddJson> getSimpleSearchAddsForWebApp(@RequestParam("leftSpinner") String leftSpinner,
-			@RequestParam("rightSpinner") String rightSpinner, HttpServletRequest request) throws Exception {
-
-		return accommodationService.getSimpleSearchAddsForWebApp(leftSpinner, rightSpinner,
-				getUserFromRequest(request));
-	}
+	// @RequestMapping(method = RequestMethod.GET, value =
+	// "/getSimpleSearchAddsForWebApp")
+	// public List<RAccommodationAddJson>
+	// getSimpleSearchAddsForWebApp(@RequestParam("leftSpinner") String
+	// leftSpinner,
+	// @RequestParam("rightSpinner") String rightSpinner, HttpServletRequest
+	// request) throws Exception {
+	//
+	// return accommodationService.getSimpleSearchAddsForWebApp(leftSpinner,
+	// rightSpinner,
+	// getUserFromRequest(request));
+	// }
 
 	/**
 	 * Pagination for returning additional accommodation Adds
@@ -220,11 +230,12 @@ public class AccommodationController extends AbstractController {
 
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/getSimpleSearchAddsUnregisteredUser")
+	@RequestMapping(method = RequestMethod.GET, value = "/getSimpleSearchAdds")
 	public List<UniversityAccommodationDTO> getSimpleSearchAddsUnregisteredUser(
-			AccommodationSearchDTO accommodationSearch, HttpServletRequest request) {
+			AccommodationSearchDTO accommodationSearch,
+			HttpServletRequest request) throws Exception {
 
-		return accommodationService.getSimpleSearchAddsNg(accommodationSearch);
+		return accommodationService.getSimpleSearchAdds(accommodationSearch);
 	}
 
 	@RequestMapping("/getCl")

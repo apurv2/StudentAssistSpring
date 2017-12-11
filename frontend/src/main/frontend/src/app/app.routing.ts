@@ -3,6 +3,7 @@ import { SimpleSearch } from 'app/accommodation/simpleSearch/accommodation.simpl
 import { AdvancedSearch } from 'app/accommodation/advancedSearch/accommodation.advanced.search';
 import { Login } from 'app/shared/login/login';
 import { Dashboard } from 'app/dashboard/landing.dashboard';
+import { PostAccommodation } from './accommodation/post/accommodation.post';
 
 const appRoutes: Routes = [
     {
@@ -15,6 +16,9 @@ const appRoutes: Routes = [
     {
         path: 'simple-search',
         component: SimpleSearch
+    }, {
+        path: 'post',
+        component: PostAccommodation
     },
     { path: '**', redirectTo: 'dashboard' }
 

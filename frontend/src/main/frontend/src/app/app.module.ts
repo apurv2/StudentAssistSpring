@@ -33,6 +33,9 @@ import { MatChipsModule, MatIconModule, MatSnackBarModule, MatSelectModule,  } f
 import 'hammerjs';
 import { LandingFlashCards } from './dashboard/flashCards/landing.flash.cards';
 import { LandingFlashCardsService } from './dashboard/flashCards/landing.flash.cards.service';
+import { PostAccommodation } from './accommodation/post/accommodation.post';
+import { UserPosts } from './accommodation/post/userPosts/user.posts';
+import { MidSection } from './dashboard/midSection/landing.misection';
 
 @NgModule({
   imports: [
@@ -46,6 +49,7 @@ import { LandingFlashCardsService } from './dashboard/flashCards/landing.flash.c
     MatIconModule,
     MatSnackBarModule,
     MatSelectModule
+    
   ],
   declarations: [
     AppComponent,
@@ -64,7 +68,10 @@ import { LandingFlashCardsService } from './dashboard/flashCards/landing.flash.c
     LandingSearch,
     LandingFlashCards,
     SimpleSearchAddsList,
-    SimpleSearchAddsFilters
+    SimpleSearchAddsFilters,
+    PostAccommodation,
+    UserPosts,
+    MidSection
   ],
   providers: [UniversitiesService,
     HttpInterceptorService,

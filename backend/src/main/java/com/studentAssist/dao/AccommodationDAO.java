@@ -180,10 +180,9 @@ public class AccommodationDAO extends AbstractDao {
 	 * @param session
 	 * @return
 	 */
-	public List<AccommodationAdd> getSimpleSearchAdds(String leftSpinner, String rightSpinner, Users currentUser)
-			throws Exception {
+	public List<AccommodationAdd> getSimpleSearchAdds(String leftSpinner, String rightSpinner,
+			List<Integer> universityIds) throws Exception {
 
-		Users user = getByKey(Users.class, currentUser.getUserId());
 		List<Universities> universities = new ArrayList<>();
 		Apartments apt = new Apartments();
 		String secondParameter = "";
@@ -191,11 +190,6 @@ public class AccommodationDAO extends AbstractDao {
 		List list1 = new ArrayList<>();
 
 		List<AccommodationAdd> accommodationAddsList = new ArrayList<>();
-		// return null if the user does not have universities.
-		universities = user.getUniversities();
-		if (universities.isEmpty()) {
-			return new ArrayList();
-		}
 
 		if (SAConstants.APARTMENT_TYPE.equals(leftSpinner)) {
 			apt.setApartmentType(rightSpinner);
@@ -210,18 +204,15 @@ public class AccommodationDAO extends AbstractDao {
 		this.addAccommodationAddToApartment(apt, exampleAccAdd);
 		Example example = Example.create((Object) exampleAccAdd);
 
-		// we want the join to Apartments table only for "Apt type" and "Apt
-		// Name"
-
-		for (Universities university : user.getUniversities()) {
+		for (int universityId : universityIds) {
 			Criteria criteria = getCriteria(AccommodationAdd.class, "add").add((Criterion) example);
 			if (leftSpinner.equals("gender")) {
 				criteria.setFetchMode("apartment", FetchMode.SELECT).createAlias("apartment", "a")
-						.add(Restrictions.eq("a.university.universityId", university.getUniversityId()));
+						.add(Restrictions.eq("a.university.universityId", universityId));
 			} else {
 				criteria.setFetchMode("apartment", FetchMode.SELECT).createAlias("apartment", "a")
 						.add(Restrictions.eq(secondParameter, rightSpinner)).createAlias("a.university", "b")
-						.add(Restrictions.eq("b.universityId", university.getUniversityId()));
+						.add(Restrictions.eq("b.universityId", universityId));
 
 			}
 

@@ -3,6 +3,10 @@ package com.studentAssist.services;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -128,49 +132,92 @@ public class AccommodationService {
 
 	}
 
-	public List<RAccommodationAddJson> getSimpleSearchAddsForWebApp(String leftSpinner, String rightSpinner,
-			Users currentUser) throws Exception {
+	// public List<RAccommodationAddJson> getSimpleSearchAddsForWebApp(String
+	// leftSpinner, String rightSpinner,
+	// Users currentUser) throws Exception {
+	//
+	// List<AccommodationAdd> simpleSearchAdds =
+	// accommmodationDAO.getSimpleSearchAdds(leftSpinner, rightSpinner,
+	// currentUser);
+	// List<Long> addIds = getUserVisitedAdds(currentUser);
+	// List<RAccommodationAdd> accomodationAdds =
+	// getRAccommodationAdds(simpleSearchAdds, addIds);
+	//
+	// List<Integer> universityIds = new ArrayList<>();
+	// // List<RAccommodationAddJson> addJson = new ArrayList<>();
+	// for (AccommodationAdd add : simpleSearchAdds) {
+	// if
+	// (!(universityIds.contains(add.getApartment().getUniversity().getUniversityId())))
+	// {
+	// universityIds.add(add.getApartment().getUniversity().getUniversityId());
+	// }
+	// }
+	//
+	// List<RAccommodationAddJson> accoAddsJson = new ArrayList<>();
+	// List<RAccommodationAdd> accoAdds = new ArrayList<>();
+	// for (int universityId : universityIds) {
+	// for (RAccommodationAdd add : accomodationAdds) {
+	// if (universityId == add.getUniversityId()) {
+	// accoAdds.add(add);
+	// }
+	// }
+	// List<RAccommodationAdd> uniAdds = new ArrayList<>();
+	// uniAdds.addAll(accoAdds);
+	// accoAddsJson.add(new RAccommodationAddJson(universityId, uniAdds));
+	// accoAdds.clear();
+	// }
+	//
+	// return accoAddsJson;
+	//
+	// }
 
-		List<AccommodationAdd> simpleSearchAdds = accommmodationDAO.getSimpleSearchAdds(leftSpinner, rightSpinner,
-				currentUser);
-		List<Long> addIds = getUserVisitedAdds(currentUser);
-		List<RAccommodationAdd> accomodationAdds = getRAccommodationAdds(simpleSearchAdds, addIds);
-
-		List<Integer> universityIds = new ArrayList<>();
-		// List<RAccommodationAddJson> addJson = new ArrayList<>();
-		for (AccommodationAdd add : simpleSearchAdds) {
-			if (!(universityIds.contains(add.getApartment().getUniversity().getUniversityId()))) {
-				universityIds.add(add.getApartment().getUniversity().getUniversityId());
-			}
-		}
-
-		List<RAccommodationAddJson> accoAddsJson = new ArrayList<>();
-		List<RAccommodationAdd> accoAdds = new ArrayList<>();
-		for (int universityId : universityIds) {
-			for (RAccommodationAdd add : accomodationAdds) {
-				if (universityId == add.getUniversityId()) {
-					accoAdds.add(add);
-				}
-			}
-			List<RAccommodationAdd> uniAdds = new ArrayList<>();
-			uniAdds.addAll(accoAdds);
-			accoAddsJson.add(new RAccommodationAddJson(universityId, uniAdds));
-			accoAdds.clear();
-		}
-
-		return accoAddsJson;
-
-	}
-
-	public List<RAccommodationAdd> getSimpleSearchAdds(String leftSpinner, String rightSpinner, Users currentUser)
+	public List<UniversityAccommodationDTO> getSimpleSearchAdds(AccommodationSearchDTO accommodationSearch)
 			throws Exception {
 
-		List<AccommodationAdd> simpleSearchAdds = accommmodationDAO.getSimpleSearchAdds(leftSpinner, rightSpinner,
-				currentUser);
-		List<Long> addIds = getUserVisitedAdds(currentUser);
-		List<RAccommodationAdd> accomodationAdds = getRAccommodationAdds(simpleSearchAdds, addIds);
+		List<AccommodationAdd> simpleSearchAdds = accommmodationDAO.getSimpleSearchAdds(
+				accommodationSearch.getLeftSpinner(), accommodationSearch.getRightSpinner(),
+				accommodationSearch.getUniversityIds());
 
-		return accomodationAdds;
+		// List<AccommodationAdd> simpleSearchAdds =
+		// accommmodationDAO.getSimpleSearchAdds("gender", "Male",
+		// Arrays.asList(1, 2, 3));
+		// List<Long> addIds = getUserVisitedAdds(currentUser);
+
+		List<RAccommodationAdd> accomodationAdds = getRAccommodationAdds(simpleSearchAdds, null);
+
+		Map<Integer, UniversityAccommodationDTO> perUnivListing = new HashMap<Integer, UniversityAccommodationDTO>();
+
+		for (RAccommodationAdd add : accomodationAdds) {
+
+			if (perUnivListing.containsKey(add.getUniversityId())) {
+
+				UniversityAccommodationDTO univAdd = perUnivListing.get(add.getUniversityId());
+				univAdd.getAccommodationAdds().add(add);
+
+			} else {
+				List<RAccommodationAdd> addsList = new ArrayList<RAccommodationAdd>();
+				UniversityAccommodationDTO univAcc = new UniversityAccommodationDTO();
+
+				addsList.add(add);
+				univAcc.setAccommodationAdds(addsList);
+				univAcc.setUniversityId(add.getUniversityId());
+				univAcc.setUniversityName(add.getUniversityName());
+				univAcc.setUrls(add.getUniversityPhotoUrl());
+
+				perUnivListing.put(add.getUniversityId(), univAcc);
+			}
+		}
+
+		List<UniversityAccommodationDTO> univAddsList = new ArrayList();
+		Iterator it = perUnivListing.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry pair = (Map.Entry) it.next();
+
+			UniversityAccommodationDTO dto = perUnivListing.get(pair.getKey());
+			univAddsList.add(dto);
+		}
+
+		return univAddsList;
 
 	}
 
@@ -241,6 +288,12 @@ public class AccommodationService {
 
 	}
 
+	/**
+	 * 
+	 * @param accommodationAdds
+	 * @param addIds
+	 * @return
+	 */
 	public List<RAccommodationAdd> getRAccommodationAdds(List<AccommodationAdd> accommodationAdds, List<Long> addIds) {
 
 		List<RAccommodationAdd> rAdds = new ArrayList<RAccommodationAdd>();

@@ -3,10 +3,10 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 
 @Component({
-    selector: 'accommodation-post',
-    templateUrl: 'accommodation.post.html'
+    selector: 'user-post',
+    templateUrl: 'user.posts.html'
 })
-export class PostAccommodation {
+export class UserPosts {
 
     constructor() {
     }
