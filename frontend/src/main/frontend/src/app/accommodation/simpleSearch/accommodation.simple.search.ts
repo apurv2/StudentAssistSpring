@@ -5,6 +5,7 @@ import { AccommodationSearchModel } from "../shared/models/accommodation.filter.
 import { Observable } from "rxjs/Observable";
 import { SimpleSearchService } from "./accommodation.simple.search.service";
 import { AccommodationAdd } from "../shared/models/accommodation.model";
+import { UniversityAccommodationAdds } from "../shared/models/university.accommodation.adds.model";
 
 @Component({
     selector: 'simple-search',
@@ -13,7 +14,7 @@ import { AccommodationAdd } from "../shared/models/accommodation.model";
 
 export class SimpleSearch {
     selectedAccommodationAdd: AccommodationAdd;
-    accommodationSearchResults: AccommodationAdd[];
+    universityAccommodationAdds: UniversityAccommodationAdds[];
 
     constructor(private simpleSearchService: SimpleSearchService,
         private facebookService: FacebookService,
@@ -21,18 +22,27 @@ export class SimpleSearch {
 
     }
     ngOnInit() {
-        this.sharedDataservice.getAccommomdationSearchFilters()
-            .switchMap(filters => this.getSimpleSearchAdds(filters)).
-            subscribe(advertisements => this.accommodationSearchResults = advertisements);
+        this.subscribeToAccommodationAddsFilters();
+        this.subscribeToAddClick();
 
     }
+    subscribeToAddClick() {
 
+        this.sharedDataservice.observeAccommodationAdd()
+            .subscribe(accommodationAdd =>
+                this.selectedAccommodationAdd = accommodationAdd);
+    }
+
+    subscribeToAccommodationAddsFilters() {
+        this.sharedDataservice.observeAccommomdationSearchFilters().
+            switchMap(filters => this.getSimpleSearchAdds(filters)).
+            subscribe(universityAccommodationAdds =>
+                this.universityAccommodationAdds = universityAccommodationAdds);
+    }
 
     getSimpleSearchAdds(filters: AccommodationSearchModel): Observable<any> {
-
-        let rightSpinner = encodeURIComponent(filters.rightSpinner);
-        let leftSpinner = encodeURIComponent(filters.leftSpinner);
-        return this.simpleSearchService.getSimpleSearchAdds(leftSpinner, rightSpinner);
+        // this.universityAccommodationAdds = [];
+        return this.simpleSearchService.getSimpleSearchAdds(filters);
     }
 
     makeLink() {
@@ -45,4 +55,6 @@ export class SimpleSearch {
         body.removeChild(copyFrom);
         //  Materialize.toast('Copied to clipboard', 4000);
     }
+
+    ngOnDestroy() { }
 }

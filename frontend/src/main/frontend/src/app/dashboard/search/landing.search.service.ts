@@ -22,11 +22,9 @@ export class LandingSearchService {
             .switchMap(term => this.searchEntries(term));
     }
     searchEntries(term) {
-
         return term ?
             this.http.get(this.baseUrl + '/' + term)
                 .map(res => res.json()) : Observable.of([])
-
     }
 
 }

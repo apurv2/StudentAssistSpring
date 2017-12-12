@@ -1,17 +1,38 @@
 import { Subject } from "rxjs/Subject";
 import { Observable } from "rxjs/Observable";
 import { AccommodationSearchModel } from "../../accommodation/shared/models/accommodation.filter.model";
+import { University } from "../../accommodation/shared/models/universities.list.model";
+import { AccommodationAdd } from "../../accommodation/shared/models/accommodation.model";
+import { MatSnackBar } from "@angular/material";
 
 export class SharedDataService {
 
     showHomepageBackground = new Subject<boolean>();
     accommomdationSearchFilters = new Subject<AccommodationSearchModel>();
+    userSelectedUniversitiesList: University[];
+    accommodationAdd = new Subject<AccommodationAdd>();
 
-    getAccommomdationSearchFilters(): Subject<AccommodationSearchModel>  {
+    emitAccommodationAdd(accommodationAdd: AccommodationAdd) {
+        return this.accommodationAdd.next(accommodationAdd);
+    }
+
+    observeAccommodationAdd(): Observable<AccommodationAdd> {
+        return this.accommodationAdd;
+    }
+
+    getUserSelectedUniversitiesList(): University[] {
+        return this.userSelectedUniversitiesList;
+    }
+
+    setUserSelectedUniversitiesList(universities: University[]) {
+        this.userSelectedUniversitiesList = universities;
+    }
+
+    observeAccommomdationSearchFilters(): Observable<AccommodationSearchModel> {
         return this.accommomdationSearchFilters;
     }
 
-    setAccommomdationSearchFilters(filterData: AccommodationSearchModel){
+    emitAccommomdationSearchFilters(filterData: AccommodationSearchModel) {
         this.accommomdationSearchFilters.next(filterData);
     }
 
@@ -21,5 +42,8 @@ export class SharedDataService {
 
     setHomePageBackground(status: boolean) {
         this.showHomepageBackground.next(status);
+    }
+    openSnackBar(snackbar: MatSnackBar, message: string, action: string) {
+        snackbar.open(message, action, { duration: 2000 });
     }
 }

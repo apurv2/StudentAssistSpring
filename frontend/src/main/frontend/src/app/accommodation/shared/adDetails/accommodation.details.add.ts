@@ -1,5 +1,6 @@
 import { Input, Component } from "@angular/core";
-import { AccommodationAdd } from "app/accommodation/shared/models/accommodation.model";
+import { AccommodationAdd } from "../models/accommodation.model";
+import { SharedDataService } from "../../../shared/data/shared.data.service";
 
 
 @Component({
@@ -10,7 +11,13 @@ import { AccommodationAdd } from "app/accommodation/shared/models/accommodation.
 
 export class AddDetails {
 
-    @Input() selectedAccommodationAdd: AccommodationAdd;
+    @Input()
+    selectedAccommodationAdd: AccommodationAdd;
+
+
+    ngOnInit() {
+
+    }
 
     openNotificationSettingsModal() {
 

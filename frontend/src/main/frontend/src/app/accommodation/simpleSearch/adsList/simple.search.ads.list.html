@@ -1,156 +1,32 @@
 <div class="col-xs-12 col-sm-12 col-md-4 height-400 overflow-auto">
-
   <div class="row">
     <ul class="collapsible popout" data-collapsible="expandable">
-      <!-- <li *ngFor="university of accommodationSearchResults">
-        <img src="{{university.accommodationAdd[0].universityPhotoUrl}}" />
-      </li> -->
-
-      <li>
+      <li *ngFor="let university of accommodationSearchResults">
         <div class="collapsible-header">
-          <i class="material-icons">filter_drama</i>First</div>
-        <div class="collapsible-body">
-          <span>Lorem ipsum dolor sit amet.</span>
+          <img class="customClass" src="{{university.urls}}" />
         </div>
-      </li>
-      <li>
-        <div class="collapsible-header">
-          <i class="material-icons">place</i>Second</div>
         <div class="collapsible-body">
-          <span>Lorem ipsum dolor sit amet.</span>
-        </div>
-      </li>
-      <li>
-        <div class="collapsible-header">
-          <i class="material-icons">whatshot</i>Third</div>
-        <div class="collapsible-body">
-          <span>Lorem ipsum dolor sit amet.</span>
+          <div *ngFor="let accommodationAdd of university?.accommodationAdds" class="col-xs-12 col-sm-6 col-md-12">
+            <div class="card animated-card1 horizontal-card" (click)="addClick(accommodationAdd)">
+              <div class="media">
+                <div class="media-left">
+                  <img src="http://graph.facebook.com/{{accommodationAdd.userId}}/picture?type=normal" alt="" />
+                </div>
+                <div class="media-body panel-body">
+                  <h4 class="media-heading">
+                    <b>{{accommodationAdd.apartmentName}}</b>
+                  </h4>
+                  <div class="text-muted small">
+                    <b>{{accommodationAdd.noOfRooms}}</b>
+                  </div>
+                  <span class="label price-label dark-bg pull-right font-size-10">
+                    ${{accommodationAdd.cost}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </li>
     </ul>
-
-
-
-    <div class="col-xs-12 col-sm-6 col-md-12">
-      <div class="card animated-card1 horizontal-card">
-        <div class="media">
-          <div class="media-left">
-            <img src="./assets/images/apartment.jpg" alt="" />
-          </div>
-          <div class="media-body panel-body">
-            <h4 class="media-heading">
-              <b>My Apartment</b>
-            </h4>
-            <p class="text-muted address">
-              <b>Mapple road, taxes North main road</b>
-            </p>
-            <div class="text-muted small">
-              <b>3bhk / 3 bathroom</b>
-            </div>
-            <span class="label price-label dark-bg pull-right font-size-10">$ 300</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-xs-12 col-sm-6 col-md-12">
-      <div class="card animated-card1 horizontal-card">
-        <div class="media">
-          <div class="media-left">
-            <img src="./assets/images/apartment.jpg" alt="" />
-          </div>
-          <div class="media-body panel-body">
-            <h4 class="media-heading">
-              <b>My Apartment</b>
-            </h4>
-            <p class="text-muted address">
-              <b>Mapple road, taxes North main road</b>
-            </p>
-            <div class="text-muted small">
-              <b>3bhk / 3 bathroom</b>
-            </div>
-            <span class="label price-label dark-bg pull-right font-size-10">$ 300</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-xs-12 col-sm-6 col-md-12">
-      <div class="card animated-card1 horizontal-card">
-        <div class="media">
-          <div class="media-left">
-            <img src="./assets/images/apartment.jpg" alt="" />
-          </div>
-          <div class="media-body panel-body">
-            <h4 class="media-heading">
-              <b>My Apartment</b>
-            </h4>
-            <p class="text-muted address">
-              <b>Mapple road, taxes North main road</b>
-            </p>
-            <!-- <div class="text-muted small"><b>3bhk / 3 bathroom</b></div>
-                          <span class="label price-label dark-bg pull-right font-size-10">$ 300</span> -->
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-xs-12 col-sm-6 col-md-12">
-      <div class="card animated-card1 horizontal-card">
-        <div class="media">
-          <div class="media-left">
-            <img src="./assets/images/apartment.jpg" alt="" />
-          </div>
-          <div class="media-body panel-body">
-            <h4 class="media-heading">
-              <b>My Apartment</b>
-            </h4>
-            <p class="text-muted address">
-              <b>Mapple road, taxes North main road</b>
-            </p>
-            <!-- <div class="text-muted small"><b>3bhk / 3 bathroom</b></div>
-                              <span class="label price-label dark-bg pull-right font-size-10">$ 300</span> -->
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-12">
-      <div class="card animated-card1 horizontal-card">
-        <div class="media">
-          <div class="media-left">
-            <img src="./assets/images/apartment.jpg" alt="" />
-          </div>
-          <div class="media-body panel-body">
-            <h4 class="media-heading">
-              <b>My Apartment</b>
-            </h4>
-            <p class="text-muted address">
-              <b>Mapple road, taxes North main road</b>
-            </p>
-            <!-- <div class="text-muted small"><b>3bhk / 3 bathroom</b></div>
-                                  <span class="label price-label dark-bg pull-right font-size-10">$ 300</span> -->
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-12">
-      <div class="card animated-card1 horizontal-card">
-        <div class="media">
-          <div class="media-left">
-            <img src="./assets/images/apartment.jpg" alt="" />
-          </div>
-          <div class="media-body panel-body">
-            <h4 class="media-heading">
-              <b>My Apartment</b>
-            </h4>
-            <p class="text-muted address">
-              <b>Mapple road, taxes North main road</b>
-            </p>
-            <!-- <div class="text-muted small"><b>3bhk / 3 bathroom</b></div>
-                                      <span class="label price-label dark-bg pull-right font-size-10">$ 300</span> -->
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </div>

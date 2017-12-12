@@ -9,11 +9,9 @@
         <div class="search-panel">
             <form>
                 <div class="input-group">
-                    
-
                     <mat-chip-list #chipList>
                         <mat-chip *ngFor="let university of selectedUniversities" [selectable]="selectable" [removable]="removable" (remove)="removeChip(university)">
-                            {{university}}
+                            {{university.univAcronym}}
                             <mat-icon matChipRemove (click)="removeChip(university)">cancel</mat-icon>
                         </mat-chip>
 
@@ -27,7 +25,7 @@
                         </span>
 
                     <ul [class.reveal-hide]="searchDropdownToggle" class="search-list search-dropdown-transition">
-                        <li *ngFor="let university of universityResults | slice:0:9" (click)="addChip(university.univAcronym)">
+                        <li *ngFor="let university of universityResults | slice:0:9" (click)="addChip(university)">
                             <a target="_blank">
                                 {{ university.universityName }}
                             </a>

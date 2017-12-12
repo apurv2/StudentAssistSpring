@@ -1,8 +1,8 @@
 <div class="card animated-card1">
     <div class="view-details height-400 overflow-hidden">
         <div class="overlap-content">
-            <h2 class="pull-left margin-top-0">My Apartment</h2>
-            <span class="label price-label pull-right dark-bg font-size-18">$ 300</span>
+            <h2 class="pull-left margin-top-0">{{selectedAccommodationAdd?.apartmentName}}</h2>
+            <span class="label price-label pull-right dark-bg font-size-18">${{selectedAccommodationAdd?.cost}}</span>
         </div>
         <img src="./assets/images/business.jpg" alt="" width="100%" />
     </div>
@@ -10,15 +10,12 @@
         <div class="row">
             <div class="col-sm-9">
                 <h3 class="media-heading">
-                    <b>My Apartment</b>
+                    <b>{{selectedAccommodationAdd?.apartmentName}}</b>
                 </h3>
                 <p class="text-muted address">
                     <b>Mapple road, taxes North main road</b>
                 </p>
-                <p class="text-muted">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
-                    standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled
-                    it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic
-                    typesetting, remaining essentially unchanged.</p>
+                <p class="text-muted">{{selectedAccommodationAdd?.notes}}</p>
             </div>
             <div class="col-sm-3">
                 <div class="social-icons">

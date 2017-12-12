@@ -10,16 +10,16 @@ export const environment = {
   NO_OF_ROOMS: "noOfRooms",
   VACANCIES: "vacancies",
   COST: "cost",
-  GENDER: "Gender",
+  GENDER: "gender",
   FBID: "fbId",
   NOTES: "notes",
   USER_ID: "userId",
   POST_ACCOMODATION: "createAccommodationAddFromFacebook",
   POST_ACCOMMODATION_INDV: "createAccommodationAdd",
   ON_CAMPUS: "On-Campus",
-  APARTMENT_TYPE: 'Apartment Type',
-  APARTMENT_NAME2: 'Apartment Name',
-  GENDER_SPINNER: 'Gender',
+  APARTMENT_TYPE: 'apartmentType',
+  APARTMENT_NAME2: 'ApartmentName',
+  GENDER_SPINNER: 'gender',
   MALE: "Male",
   FIRST_NAME: "firstName",
   LAST_NAME: "lastName",
@@ -62,7 +62,8 @@ export const environment = {
   getUniversityDetailsForUser: 'universities/getUniversityDetailsForUser',
   accessToken: 'access_token',
   universityName: 'universityName',
-  getFlashCards: 'getFlashCards'
+  getFlashCards: 'getFlashCards',
+  getSimpleSearchAdds: 'getSimpleSearchAdds'
 
 
 }
