@@ -60,7 +60,7 @@ public class AccommodationService {
 		accommodationAdds = accommmodationDAO.getAccommodationNotifications(user, position);
 
 		List<Long> addIds = getUserVisitedAdds(user);
-		return getRAccommodationAdds(accommodationAdds, addIds);
+		return getRAccommodationAdds(accommodationAdds, addIds, -1);
 	}
 
 	public String createAccommodationAdd(String userId, String apartmentName, String noOfRooms, String vacancies,
@@ -96,7 +96,7 @@ public class AccommodationService {
 	public List<RAccommodationAdd> getUserPosts(String userId, int position) throws Exception {
 
 		List<AccommodationAdd> userAdds = accommmodationDAO.getUserPosts(userId, position);
-		return getRAccommodationAdds(userAdds, null);
+		return getRAccommodationAdds(userAdds, null, -1);
 
 	}
 
@@ -128,7 +128,7 @@ public class AccommodationService {
 
 		List<Long> addIds = getUserVisitedAdds(currentUser);
 
-		return getRAccommodationAdds(advancedSearchAdds, addIds);
+		return getRAccommodationAdds(advancedSearchAdds, addIds, -1);
 
 	}
 
@@ -183,7 +183,7 @@ public class AccommodationService {
 		// Arrays.asList(1, 2, 3));
 		// List<Long> addIds = getUserVisitedAdds(currentUser);
 
-		List<RAccommodationAdd> accomodationAdds = getRAccommodationAdds(simpleSearchAdds, null);
+		List<RAccommodationAdd> accomodationAdds = getRAccommodationAdds(simpleSearchAdds, null, 2);
 
 		Map<Integer, UniversityAccommodationDTO> perUnivListing = new HashMap<Integer, UniversityAccommodationDTO>();
 
@@ -226,7 +226,7 @@ public class AccommodationService {
 
 		List<AccommodationAdd> simpleSearchAdds = accommmodationDAO.getSimpleSearchAddsPagination(leftSpinner,
 				rightSpinner, position, universityId);
-		return getRAccommodationAdds(simpleSearchAdds, null);
+		return getRAccommodationAdds(simpleSearchAdds, null, -1);
 	}
 
 	public List<RApartmentNames> getApartmentNames(String apartmentType) throws Exception {
@@ -284,30 +284,33 @@ public class AccommodationService {
 
 		accommodationAdds = accommmodationDAO.getRecentlyViewed(user, position);
 
-		return getRAccommodationAdds(accommodationAdds, null);
+		return getRAccommodationAdds(accommodationAdds, null, -1);
 
 	}
 
 	/**
+	 * priority => 1. Logo 2. Building Image
 	 * 
 	 * @param accommodationAdds
 	 * @param addIds
 	 * @return
 	 */
-	public List<RAccommodationAdd> getRAccommodationAdds(List<AccommodationAdd> accommodationAdds, List<Long> addIds) {
+	public List<RAccommodationAdd> getRAccommodationAdds(List<AccommodationAdd> accommodationAdds, List<Long> addIds,
+			int photoPriority) {
 
 		List<RAccommodationAdd> rAdds = new ArrayList<RAccommodationAdd>();
 
 		for (AccommodationAdd add : accommodationAdds) {
 
 			String universityPhoto = SAConstants.EmptyText;
-			String universityLogo = SAConstants.EmptyText;
-			List<UniversityPhotos> photos = add.getApartment().getUniversity().getUniversityPhotos();
-			for (UniversityPhotos photo : photos) {
-				if (photo.getPhotoPriority() == 2) {
-					universityPhoto = photo.getPhotoUrl();
-				} else if (photo.getPhotoPriority() == 1) {
-					universityLogo = photo.getPhotoUrl();
+			List<UniversityPhotos> photos = add.getUniversity().getUniversityPhotos();
+			if (photoPriority != -1) {
+				for (UniversityPhotos photo : photos) {
+					if (photo.getPhotoPriority() == photoPriority) {
+						universityPhoto = photo.getPhotoUrl();
+						break;
+					}
+
 				}
 			}
 
@@ -342,7 +345,7 @@ public class AccommodationService {
 						user.getFirstName(), user.getLastName(), user.getEmail(), user.getPhoneNumber(), add.getAddId(),
 						true, new SimpleDateFormat("dd MMM").format(add.getDatePosted()), add.getAddPhotoIds(),
 						add.getApartment().getUniversity().getUniversityId(),
-						add.getApartment().getUniversity().getUniversityName(), universityLogo,
+						add.getApartment().getUniversity().getUniversityName(), universityPhoto,
 						add.getApartment().getUniversity().getUnivAcronym(), add.getApartment().getCity(),
 						add.getApartment().getState(), add.getApartment().getZip()));
 

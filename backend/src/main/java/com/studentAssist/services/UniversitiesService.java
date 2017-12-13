@@ -182,7 +182,7 @@ public class UniversitiesService {
 
 		List<AccommodationAdd> accomodationAdds = accommodationDAO
 				.getAccommodationCardsByUniversityId(selectedUniversityID, numberOfCards);
-		return accommodationService.getRAccommodationAdds(accomodationAdds, null);
+		return accommodationService.getRAccommodationAdds(accomodationAdds, null, 1);
 
 	}
 

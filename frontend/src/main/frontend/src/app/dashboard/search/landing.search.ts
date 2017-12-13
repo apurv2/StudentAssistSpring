@@ -25,7 +25,7 @@ export class LandingSearch {
     private sharedDataService: SharedDataService) {
   }
 
-  selectedUniversities = new Array<University>();
+  selectedUniversities: University[];
   addOnBlur: boolean = true;
   separatorKeysCodes = [ENTER, COMMA];
 
@@ -42,7 +42,8 @@ export class LandingSearch {
 
   getUserUnivsFromDataService() {
 
-    this.selectedUniversities = this.sharedDataService.getUserSelectedUniversitiesList();
+    this.selectedUniversities = this.sharedDataService.getUserSelectedUniversitiesList() != null ?
+      this.sharedDataService.getUserSelectedUniversitiesList() : new Array<University>();;
 
   }
   search() {
