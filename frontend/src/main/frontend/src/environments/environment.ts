@@ -63,7 +63,8 @@ export const environment = {
   accessToken: 'access_token',
   universityName: 'universityName',
   getFlashCards: 'getFlashCards',
-  getSimpleSearchAdds: 'getSimpleSearchAdds'
+  getSimpleSearchAdds: 'getSimpleSearchAdds',
+  userSelectedUnivs: 'userSelectedUnivs'
 
 
 }

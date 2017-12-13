@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { environment } from '../../../environments/environment';
+import { Subject } from 'rxjs/Subject';
+import { University } from '../../accommodation/shared/models/universities.list.model';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
-import { environment } from '../../../environments/environment';
-import { Subject } from 'rxjs/Subject';
-import { University } from '../../accommodation/shared/models/universities.list.model';
 import 'rxjs/add/observable/of';
 
 @Injectable()
