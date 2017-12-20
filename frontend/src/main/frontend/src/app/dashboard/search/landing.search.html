@@ -16,13 +16,14 @@
                         </mat-chip>
 
                         <input [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
-                            (keyup)="searchTerm$.next($event.target.value)" class=" form-control type-search" placeholder="Enter Multiple University Names...">
+                            (keyup)="searchTerm$.next($event.target.value)" [(ngModel)]="searchBarText" class=" form-control type-search"
+                            [ngModelOptions]="{standalone: true}" placeholder="Enter University Name(s)...">
 
                     </mat-chip-list>
                     <span class="input-group-addon padding-0">
-                            <!--<button type="button">Search</button>-->
-                            <i class="fa fa-search" aria-hidden="true"></i>
-                        </span>
+                        <!--<button type="button">Search</button>-->
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </span>
 
                     <ul [class.reveal-hide]="searchDropdownToggle" class="search-list search-dropdown-transition">
                         <li *ngFor="let university of universityResults | slice:0:9" (click)="addChip(university)">

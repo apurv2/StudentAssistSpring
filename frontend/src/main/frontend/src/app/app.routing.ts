@@ -4,6 +4,7 @@ import { AdvancedSearch } from 'app/accommodation/advancedSearch/accommodation.a
 import { Login } from 'app/shared/login/login';
 import { Dashboard } from 'app/dashboard/landing.dashboard';
 import { PostAccommodation } from './accommodation/post/accommodation.post';
+import { ChipsInputExample } from 'app/airport/airport.list';
 
 const appRoutes: Routes = [
     {
@@ -19,6 +20,10 @@ const appRoutes: Routes = [
     }, {
         path: 'post',
         component: PostAccommodation
+    },
+    {
+        path: 'test',
+        component: ChipsInputExample
     },
     { path: '**', redirectTo: 'dashboard' }
 

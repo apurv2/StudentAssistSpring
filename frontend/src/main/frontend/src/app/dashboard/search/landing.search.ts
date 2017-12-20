@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material';
 import { SharedDataService } from '../../shared/data/shared.data.service';
 import { LandingSearchService } from './landing.search.service';
 import { environment } from '../../../environments/environment';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'landing-search',
@@ -18,7 +19,7 @@ export class LandingSearch {
 
   searchTerm$ = new Subject<string>();
   searchDropdownToggle: boolean;
-
+  searchBarText: string = "";
   constructor(private router: Router,
     private searchService: LandingSearchService,
     public snackBar: MatSnackBar,
@@ -28,10 +29,13 @@ export class LandingSearch {
   selectedUniversities: University[];
   addOnBlur: boolean = true;
   separatorKeysCodes = [ENTER, COMMA];
+  searchBarSubscription: Subscription;
+  selectable: boolean = true;
+  removable: boolean = true;
 
   ngOnInit() {
 
-    this.searchService.search(this.searchTerm$)
+    this.searchBarSubscription = this.searchService.search(this.searchTerm$)
       .subscribe(results => {
         this.universityResults = results;
         this.searchDropdownToggle = this.universityResults.length > 0 ? true : false;
@@ -59,6 +63,9 @@ export class LandingSearch {
         this.sharedDataService.openSnackBar(this.snackBar, "Already Selected", university.univAcronym);
       }
       else {
+        this.universityResults.length = 0;
+        this.searchBarText = '';
+        this.searchTerm$.next('');
         this.selectedUniversities.push(university);
         this.sharedDataService.setUserSelectedUniversitiesList(this.selectedUniversities);
         localStorage.setItem(environment.userSelectedUnivs,
@@ -71,9 +78,12 @@ export class LandingSearch {
     if (index >= 0) {
       this.selectedUniversities.splice(index, 1);
       this.sharedDataService.setUserSelectedUniversitiesList(this.selectedUniversities);
+      localStorage.setItem(environment.userSelectedUnivs,
+        JSON.stringify(this.selectedUniversities));
     }
   }
 
-
-
+  ngOnDestroy() {
+    this.searchBarSubscription.unsubscribe();
+  }
 }

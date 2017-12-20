@@ -2,6 +2,7 @@
 body{
     font-family: 'Lato', sans-serif;
     font-size: 16px;
+    background: none;
 }
 
 .demo-chip-list {
@@ -272,7 +273,7 @@ line-height: 24px;
     font-size: 20px;
 }
 .header-section{
-    padding: 40px 0;
+    padding: 20px 0;
 }
 
 /*user account dropdown*/
@@ -283,6 +284,10 @@ line-height: 24px;
     background-color: #414a59;
     color: #fff;
     padding: 7px 15px;
+}
+.mat-form-field
+{
+    padding: 0px 10px 0px 10px;
 }
 
 .useraccount .media-body, .useraccount .media-left{
@@ -441,9 +446,13 @@ line-height: 24px;
 .card .card-img-view h4{
     position: absolute;
     bottom: 0;
-    margin:15px;
+    margin:0px;
+    padding: 10px;
     font-weight: 600;
     color: #fff;
+    background: rgba(0, 0, 0, 0.5);
+    
+    width: 100%;
 }
 .card .card-img-view img{
     width: 100%;
@@ -900,13 +909,13 @@ box-shadow: 0 3px 6px rgba(0,0,0,.2);
 }
 .search-container
 {
-    width: 85%;
-    margin: 10px 90px;
+    width: 55%;
+    margin: 0px 32px;
     padding: 0px 10px;
-    background: #fff;
+    
     border-radius: 3px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    border: 1px solid rgba(0,0,0,.06);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.50);
+    border: 5px solid rgba(255, 255, 255, 1);
     overflow: hidden;
 }
 .mat-chip-list-wrapper { 
@@ -914,7 +923,7 @@ box-shadow: 0 3px 6px rgba(0,0,0,.2);
 }
 input.mat-chip-input {
     margin: 0px;
-    }
+}
     .search-panel .search-list {
         width: 100%;
        left: 0;
@@ -1053,8 +1062,102 @@ input.mat-chip-input {
         width: auto !important;
     }
 }
-.customClass {
-	border-radius: 50%;
-	width: 50px;
-	height: 50px;
+.univCardImg {
+    width: 100%;
+	height: 40%;
+}
+.media-left img
+{
+    border-radius: 50%;
+    width: 80px;
+    border: 1px solid #ccc;
+}
+.panel-body
+{
+    padding: 10px;
+}
+.univhead{
+    position: relative;
+    top: 0;
+    margin:0px;
+    padding: 15px;
+    font-weight: 600;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.5);
+    width: auto;
+}
+.collapsible-body .card{
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+.inline-block
+{
+    display: inline-block;
+}
+.card-active {
+    background-color: #f9f9f9;
+    border: 3px solid #999;
+}
+.img-container img
+{
+    border-radius: 3px;
+    box-shadow: 0 10px 10px rgba(161, 62, 60, 0.5);
+    border: 1px solid rgba(0,0,0,.06);
+    margin-bottom: 5px;
+    margin-left: 50px;
+}
+
+/* materialize.min.css for Detail page card expention*/
+.collapsible {
+    border-top: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    margin: .5rem 0 1rem 0;
+}
+.collapsible-header {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    line-height: 1.5;
+    padding: 1rem;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+}
+.collapsible-body {
+    display: none;
+    border-bottom: 1px solid #ddd;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 2rem;
+}
+.collapsible.popout {
+    border: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+ul:not(.browser-default) {
+    padding-left: 0;
+    list-style-type: none;
+}
+
+
+ul:not(.browser-default)>li {
+    list-style-type: none;
+}
+.collapsible.popout>li.active {
+    -webkit-box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18), 0 4px 15px 0 rgba(0,0,0,0.15);
+    box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18), 0 4px 15px 0 rgba(0,0,0,0.15);
+    margin: 16px 0;
+}
+
+.collapsible.popout>li {
+    -webkit-box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+    margin: 0 24px;
+    -webkit-transition: margin 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: margin 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }

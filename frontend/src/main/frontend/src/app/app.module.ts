@@ -37,6 +37,7 @@ import { PostAccommodation } from './accommodation/post/accommodation.post';
 import { UserPosts } from './accommodation/post/userPosts/user.posts';
 import { MidSection } from './dashboard/midSection/landing.mid.section';
 import { SimpleSearchFilterService } from './accommodation/simpleSearch/filters/simple.search.filters.service';
+import { ChipsInputExample } from 'app/airport/airport.list';
 
 @NgModule({
   imports: [
@@ -72,7 +73,8 @@ import { SimpleSearchFilterService } from './accommodation/simpleSearch/filters/
     SimpleSearchAddsFilters,
     PostAccommodation,
     UserPosts,
-    MidSection
+    MidSection,
+    ChipsInputExample
   ],
   providers: [UniversitiesService,
     HttpInterceptorService,

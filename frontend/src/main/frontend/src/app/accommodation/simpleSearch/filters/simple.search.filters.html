@@ -1,19 +1,8 @@
 <div class="search-container overflow-inherit">
+
     <div class="row">
         <div class="col-md-12 filter">
             <form class="form-inline">
-                <div class="form-group">
-                    <div class="toggle-menu text-center">
-                        <ul>
-                            <li class="active">
-                                <a href="#">Search</a>
-                            </li>
-                            <li>
-                                <a href="#">Advance Search</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
                 <mat-form-field>
                     <mat-select [(ngModel)]="leftSpinnerSelectedItem.code" (ngModelChange)="leftSpinnerClick($event)" [ngModelOptions]="{standalone: true}">
                         <mat-option *ngFor="let spinnerValue of leftSpinnerValues" [value]="spinnerValue.code">{{spinnerValue.description}}</mat-option>
@@ -25,6 +14,17 @@
                         <mat-option *ngFor="let spinnerValue of rightSpinnerValues" [value]="spinnerValue.code">{{spinnerValue.description}}</mat-option>
                     </mat-select>
                 </mat-form-field>
+
+                <div class="form-group">
+                    <div class="toggle-menu text-center">
+                        <ul>
+
+                            <li>
+                                <a href="#">Advance Search</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </form>
         </div>
     </div>

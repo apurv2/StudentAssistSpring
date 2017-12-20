@@ -6,6 +6,7 @@ import { Observable } from "rxjs/Observable";
 import { SimpleSearchService } from "./accommodation.simple.search.service";
 import { AccommodationAdd } from "../shared/models/accommodation.model";
 import { UniversityAccommodationAdds } from "../shared/models/university.accommodation.adds.model";
+import { Subscription } from "rxjs/Subscription";
 
 @Component({
     selector: 'simple-search',
@@ -15,6 +16,8 @@ import { UniversityAccommodationAdds } from "../shared/models/university.accommo
 export class SimpleSearch {
     selectedAccommodationAdd: AccommodationAdd;
     universityAccommodationAdds: UniversityAccommodationAdds[];
+    accommodationFiltersObservable: Subscription;
+    accommodationAddSubscription: Subscription;
 
     constructor(private simpleSearchService: SimpleSearchService,
         private facebookService: FacebookService,
@@ -27,14 +30,13 @@ export class SimpleSearch {
 
     }
     subscribeToAddClick() {
-
-        this.sharedDataservice.observeAccommodationAdd()
+        this.accommodationAddSubscription = this.sharedDataservice.observeAccommodationAdd()
             .subscribe(accommodationAdd =>
                 this.selectedAccommodationAdd = accommodationAdd);
     }
 
     subscribeToAccommodationAddsFilters() {
-        this.sharedDataservice.observeAccommomdationSearchFilters().
+        this.accommodationFiltersObservable = this.sharedDataservice.observeAccommomdationSearchFilters().
             switchMap(filters => this.getSimpleSearchAdds(filters)).
             subscribe(universityAccommodationAdds =>
                 this.universityAccommodationAdds = universityAccommodationAdds);
@@ -56,5 +58,10 @@ export class SimpleSearch {
         //  Materialize.toast('Copied to clipboard', 4000);
     }
 
-    ngOnDestroy() { }
+    ngOnDestroy() {
+
+        this.accommodationAddSubscription.unsubscribe();
+        this.accommodationFiltersObservable.unsubscribe();
+
+    }
 }

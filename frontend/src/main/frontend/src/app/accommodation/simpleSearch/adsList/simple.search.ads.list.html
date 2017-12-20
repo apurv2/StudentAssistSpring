@@ -1,12 +1,13 @@
-<div class="col-xs-12 col-sm-12 col-md-4 height-400 overflow-auto">
+<div class="col-xs-12 col-sm-12 col-md-4">
   <div class="row">
     <ul class="collapsible popout" data-collapsible="expandable">
       <li *ngFor="let university of accommodationSearchResults">
+        <h4 class="univhead">{{university.universityName}}</h4>
         <div class="collapsible-header">
-          <img class="customClass" src="{{university.urls}}" />
+          <img class="univCardImg" src="{{university.urls}}" />
         </div>
-        <div class="collapsible-body">
-          <div *ngFor="let accommodationAdd of university?.accommodationAdds" class="col-xs-12 col-sm-6 col-md-12">
+        <div class="collapsible-body height-400 overflow-auto">
+          <div *ngFor="let accommodationAdd of university?.accommodationAdds">
             <div class="card animated-card1 horizontal-card" (click)="addClick(accommodationAdd)">
               <div class="media">
                 <div class="media-left">
@@ -17,6 +18,9 @@
                     <b>{{accommodationAdd.apartmentName}}</b>
                   </h4>
                   <div class="text-muted small">
+                    <b>10 miles from UTA</b>
+                  </div>
+                  <div class="text-muted small inline-block">
                     <b>{{accommodationAdd.noOfRooms}}</b>
                   </div>
                   <span class="label price-label dark-bg pull-right font-size-10">

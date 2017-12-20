@@ -14,6 +14,8 @@ export class SimpleSearchService {
 
     getSimpleSearchAdds(filters: AccommodationSearchModel) {
         console.log(JSON.stringify(filters));
+        console.log(environment.url + environment.getSimpleSearchAdds);
+        
         return this.http.post(environment.url + environment.getSimpleSearchAdds,filters)
             .map(res => this.data = res.json());
     }
