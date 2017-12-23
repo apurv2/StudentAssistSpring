@@ -47,7 +47,7 @@ export class LandingSearch {
   getUserUnivsFromDataService() {
 
     this.selectedUniversities = this.sharedDataService.getUserSelectedUniversitiesList() != null ?
-      this.sharedDataService.getUserSelectedUniversitiesList() : new Array<University>();;
+      this.sharedDataService.getUserSelectedUniversitiesList() : new Array<University>();
 
   }
   search() {

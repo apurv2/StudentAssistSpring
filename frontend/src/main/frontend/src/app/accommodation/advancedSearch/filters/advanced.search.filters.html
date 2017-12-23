@@ -1,0 +1,50 @@
+<div class="search-container overflow-inherit">
+
+    <div class="row">
+        <div class="col-md-12 filter">
+            <form class="form-inline">
+                <mat-form-field>
+                    <mat-select [(ngModel)]="aptTypeSpinnerSelectedItem.code" (ngModelChange)="spinnerClick($event)" [ngModelOptions]="{standalone: true}">
+                        <mat-option *ngFor="let spinnerValue of aptTypeSpinnerValues" [value]="spinnerValue?.code">{{spinnerValue.description}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-select [(ngModel)]="aptNameSpinnerSelectedItem.code" (ngModelChange)="spinnerClick($event)" [ngModelOptions]="{standalone: true}">
+                        <mat-option *ngFor="let spinnerValue of aptNameSpinnerValues" [value]="spinnerValue?.code">{{spinnerValue.description}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-select [(ngModel)]="universityNameSpinnerSelectedItem.code" (ngModelChange)="spinnerClick($event)" [ngModelOptions]="{standalone: true}">
+                        <mat-option *ngFor="let spinnerValue of universityNameSpinnerValues" [value]="spinnerValue?.code">{{spinnerValue.description}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-select [(ngModel)]="genderSpinnerSelectedItem.code" (ngModelChange)="spinnerClick($event)" [ngModelOptions]="{standalone: true}">
+                        <mat-option *ngFor="let spinnerValue of genderSpinnerValues" [value]="spinnerValue?.code">{{spinnerValue.description}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div class="form-group">
+                    <div class="toggle-menu text-center">
+                        <ul>
+                            <li>
+                                <a [routerLink]="['/simple-search']">Simple Search</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="toggle-menu text-center">
+                        <ul>
+                            <li>
+                                <a (click)="searchClicked()">Search</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

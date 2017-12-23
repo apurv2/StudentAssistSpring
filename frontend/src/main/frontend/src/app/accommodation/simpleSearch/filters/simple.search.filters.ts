@@ -41,9 +41,8 @@ export class SimpleSearchAddsFilters {
 
     leftSpinnerClick(clickedItem) {
         if (clickedItem == environment.APARTMENT_TYPE) {
-
             this.rightSpinnerValues = environment.apartmentTypes;
-            this.rightSpinnerSelectedItem = environment.apartmentTypes[0];
+            this.rightSpinnerSelectedItem = Object.assign([], environment.apartmentTypes[0]);
             this.emitSpinnerClick(false);
 
         }
@@ -53,7 +52,7 @@ export class SimpleSearchAddsFilters {
         else if (clickedItem == environment.GENDER) {
 
             this.rightSpinnerValues = environment.GENDER_CODES;
-            this.rightSpinnerSelectedItem = environment.GENDER_CODES[0];
+            this.rightSpinnerSelectedItem = Object.assign([], environment.GENDER_CODES[0]);
             this.emitSpinnerClick(false);
         }
     }
@@ -78,9 +77,11 @@ export class SimpleSearchAddsFilters {
             filterData.universityIds = universityIds;
             if (apartmentName) {
                 this.simpleSearchFilterService.getApartmentNames(filterData).
-                    map(apartmentNames => this.mapApartmentNames(apartmentNames),
-                    filterData.rightSpinner = this.rightSpinnerSelectedItem.code).
-                    map(data => this.sharedDataService.emitAccommomdationSearchFilters(filterData));
+                    map(apartmentNames => {
+                        this.mapApartmentNames(apartmentNames);
+                        filterData.rightSpinner = this.rightSpinnerSelectedItem.code;
+                    }).
+                    subscribe(data => this.sharedDataService.emitAccommomdationSearchFilters(filterData));
             }
             else {
                 this.sharedDataService.emitAccommomdationSearchFilters(filterData);
@@ -91,17 +92,17 @@ export class SimpleSearchAddsFilters {
 
         }
     }
-
+    
     mapApartmentNames(apartments: ApartmentName[]) {
-
+        this.rightSpinnerValues = new Array();
+        this.rightSpinnerValues.length = 0;
         for (let apartment of apartments) {
             this.rightSpinnerValues.push({
                 'code': apartment.apartmentName,
                 'description': apartment.apartmentName
             });
         }
-
-        this.rightSpinnerSelectedItem = this.rightSpinnerValues[0];
+        this.rightSpinnerSelectedItem = Object.assign([], this.rightSpinnerValues[0]);
     }
 
 }

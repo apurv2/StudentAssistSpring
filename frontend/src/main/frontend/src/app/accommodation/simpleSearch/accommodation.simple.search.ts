@@ -8,6 +8,7 @@ import { AccommodationAdd } from "../shared/models/accommodation.model";
 import { UniversityAccommodationAdds } from "../shared/models/university.accommodation.adds.model";
 import { Subscription } from "rxjs/Subscription";
 
+
 @Component({
     selector: 'simple-search',
     templateUrl: 'accommodation.simple.search.html'

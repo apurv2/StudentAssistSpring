@@ -22,7 +22,9 @@
                     </mat-chip-list>
                     <span class="input-group-addon padding-0">
                         <!--<button type="button">Search</button>-->
-                        <i class="fa fa-search" aria-hidden="true"></i>
+                        <a [routerLink]="['/simple-search']">
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                        </a>
                     </span>
 
                     <ul [class.reveal-hide]="searchDropdownToggle" class="search-list search-dropdown-transition">

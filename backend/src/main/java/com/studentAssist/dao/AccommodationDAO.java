@@ -4,6 +4,7 @@ package com.studentAssist.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.Hibernate;
@@ -144,8 +145,8 @@ public class AccommodationDAO extends AbstractDao {
 
 	}
 
-	public List<AccommodationAdd> getAdvancedAdvertisements(String apartmentName, String gender, int position)
-			throws Exception {
+	public List<AccommodationAdd> getAdvancedAdvertisements(String apartmentName, String gender,
+			int universityId, int position) throws Exception {
 		List<AccommodationAdd> adds = null;
 
 		AccommodationAdd add = new AccommodationAdd();
@@ -157,6 +158,7 @@ public class AccommodationDAO extends AbstractDao {
 		// getCriteria(AccommodationAdd.class)
 		Criteria criteria = getCriteria(AccommodationAdd.class, "add").add((Criterion) example)
 				.setFetchMode("apartment", FetchMode.JOIN).createAlias("apartment", "a")
+				.add((Criterion) Restrictions.eq("university.universityId", universityId))
 				.add((Criterion) Restrictions.eq((String) "a.apartmentName", (Object) apartmentName));
 
 		criteria.addOrder(Order.desc("add.datePosted"));
@@ -337,11 +339,12 @@ public class AccommodationDAO extends AbstractDao {
 		return SAConstants.RESPONSE_SUCCESS;
 	}
 
-	public List<Apartments> getApartmentNamesWithType() throws Exception {
+	public List<Apartments> getApartmentNamesWithType(List<Integer> universityIds) throws Exception {
 
 		List apartmentNames = null;
+		String univsList = StringUtils.join(universityIds.toArray(), ",");
 
-		Query query = getSession().createQuery("from Apartments");
+		Query query = getSession().createQuery("from Apartments where university.universityId in(" + univsList + ")");
 		apartmentNames = query.list();
 
 		return apartmentNames;

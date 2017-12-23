@@ -38,6 +38,11 @@ import { UserPosts } from './accommodation/post/userPosts/user.posts';
 import { MidSection } from './dashboard/midSection/landing.mid.section';
 import { SimpleSearchFilterService } from './accommodation/simpleSearch/filters/simple.search.filters.service';
 import { ChipsInputExample } from 'app/airport/airport.list';
+import { NotificationSettingsModal } from './notifications/notifications.subscribe.modal';
+import { Universities } from './universities/universities.list';
+import { AdvancedSearchFilters } from './accommodation/advancedSearch/filters/advanced.search.filters';
+import { AddsList } from './accommodation/shared/adsList/ads.list';
+import { AdvanceSearchService } from './accommodation/advancedSearch/accommodation.advanced.search.service';
 
 @NgModule({
   imports: [
@@ -74,7 +79,11 @@ import { ChipsInputExample } from 'app/airport/airport.list';
     PostAccommodation,
     UserPosts,
     MidSection,
-    ChipsInputExample
+    ChipsInputExample,
+    NotificationSettingsModal,
+    Universities,
+    AdvancedSearchFilters,
+    AddsList
   ],
   providers: [UniversitiesService,
     HttpInterceptorService,
@@ -82,7 +91,8 @@ import { ChipsInputExample } from 'app/airport/airport.list';
     SimpleSearchService,
     SharedDataService,
     LandingFlashCardsService,
-    SimpleSearchFilterService
+    SimpleSearchFilterService,
+    AdvanceSearchService
 
   ],
   bootstrap: [AppComponent, TopHeader, LeftNav]

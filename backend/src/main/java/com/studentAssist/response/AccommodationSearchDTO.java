@@ -16,6 +16,16 @@ public class AccommodationSearchDTO {
 
 	private String gender;
 
+	private int selectedUniversityId;
+
+	public int getSelectedUniversityId() {
+		return selectedUniversityId;
+	}
+
+	public void setSelectedUniversityId(int selectedUniversityId) {
+		this.selectedUniversityId = selectedUniversityId;
+	}
+
 	public List<Integer> getUniversityIds() {
 		return universityIds;
 	}

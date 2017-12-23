@@ -112,13 +112,28 @@ public class AccommodationController extends AbstractController {
 		return accommodationService.getAllApartmentNames(getUserFromRequest(request));
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/getAdvancedAdvertisements")
-	public List<RAccommodationAdd> getAdvancedAdvertisements(@RequestParam("apartmentName") String apartmentName,
-			@RequestParam("position") int position, @RequestParam("gender") String gender,
-			@RequestParam("universityId") String universityId, HttpServletRequest request) throws Exception {
+	// @RequestMapping(method = RequestMethod.GET, value =
+	// "/getAdvancedAdvertisements")
+	// public List<RAccommodationAdd>
+	// getAdvancedAdvertisements(@RequestParam("apartmentName") String
+	// apartmentName,
+	// @RequestParam("position") int position, @RequestParam("gender") String
+	// gender,
+	// @RequestParam("universityId") String universityId, HttpServletRequest
+	// request) throws Exception {
+	//
+	// return accommodationService.getAdvancedAdvertisements(apartmentName,
+	// gender, getUserFromRequest(request),
+	// position);
+	//
+	// }
 
-		return accommodationService.getAdvancedAdvertisements(apartmentName, gender, getUserFromRequest(request),
-				position);
+	@RequestMapping(method = RequestMethod.POST, value = "/getAdvancedSearchAdds")
+	public List<RAccommodationAdd> getAdvancedSearchAddsWebApp(@RequestBody AccommodationSearchDTO searchParams,
+			HttpServletRequest request) throws Exception {
+
+		return accommodationService.getAdvancedAdvertisements(searchParams.getApartmentName(), searchParams.getGender(),
+				searchParams.getSelectedUniversityId(), 0);
 
 	}
 
@@ -194,10 +209,12 @@ public class AccommodationController extends AbstractController {
 	}
 
 	// javascript code to be added for accesstoken
-	@RequestMapping(method = RequestMethod.GET, value = "/getAllApartmentsWithType")
-	public List<RApartmentNamesWithType> getAllApartmentsWithType(HttpServletRequest request) throws Exception {
+	@RequestMapping(method = RequestMethod.POST, value = "/getAllApartmentsWithType")
+	public List<RApartmentNamesWithType> getAllApartmentsWithType(HttpServletRequest request,
+			@RequestBody AccommodationSearchDTO aptNames) throws Exception {
 
-		return accommodationService.getApartmentNamesWithType();
+		List<Integer> universityIds = aptNames.getUniversityIds();
+		return accommodationService.getApartmentNamesWithType(universityIds);
 
 	}
 

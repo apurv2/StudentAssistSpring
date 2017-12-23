@@ -6,4 +6,5 @@ export class AccommodationSearchModel {
     apartmentName: string;
     apartmentType: string;
     gender: string;
+    selectedUniversityId: number;
 }

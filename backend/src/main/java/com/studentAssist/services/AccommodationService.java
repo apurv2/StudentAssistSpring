@@ -120,15 +120,15 @@ public class AccommodationService {
 		return rApartments;
 	}
 
-	public List<RAccommodationAdd> getAdvancedAdvertisements(String apartmentName, String gender, Users currentUser,
+	public List<RAccommodationAdd> getAdvancedAdvertisements(String apartmentName, String gender, int universityId,
 			int position) throws Exception {
 
 		List<AccommodationAdd> advancedSearchAdds = accommmodationDAO.getAdvancedAdvertisements(apartmentName, gender,
-				position);
+				universityId, position);
 
-		List<Long> addIds = getUserVisitedAdds(currentUser);
+		// List<Long> addIds = getUserVisitedAdds(list);
 
-		return getRAccommodationAdds(advancedSearchAdds, addIds, -1);
+		return getRAccommodationAdds(advancedSearchAdds, null, -1);
 
 	}
 
@@ -244,13 +244,14 @@ public class AccommodationService {
 		return accommmodationDAO.addNewApartment(apartmentName, apartmentType);
 	}
 
-	public List<RApartmentNamesWithType> getApartmentNamesWithType() throws Exception {
+	public List<RApartmentNamesWithType> getApartmentNamesWithType(List<Integer> universityIds) throws Exception {
 
-		List<Apartments> apartments = accommmodationDAO.getApartmentNamesWithType();
+		List<Apartments> apartments = accommmodationDAO.getApartmentNamesWithType(universityIds);
 		List<RApartmentNamesWithType> rApartments = new ArrayList<>();
 
 		for (Apartments apartment : apartments) {
-			rApartments.add(new RApartmentNamesWithType(apartment.getApartmentName(), apartment.getApartmentType()));
+			rApartments.add(new RApartmentNamesWithType(apartment.getApartmentName(), apartment.getApartmentType(),
+					apartment.getUniversity().getUniversityId()));
 		}
 		return rApartments;
 	}

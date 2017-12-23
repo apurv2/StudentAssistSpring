@@ -7,14 +7,14 @@ public class RApartmentNamesWithType {
 
 	String apartmentName;
 	String apartmentType;
-	String uinversityId;
+	int universityId;
 
-	public String getUinversityId() {
-		return uinversityId;
+	public int getUinversityId() {
+		return universityId;
 	}
 
-	public void setUinversityId(String uinversityId) {
-		this.uinversityId = uinversityId;
+	public void setUinversityId(int uinversityId) {
+		this.universityId = uinversityId;
 	}
 
 	public String getApartmentName() {
@@ -39,11 +39,11 @@ public class RApartmentNamesWithType {
 		this.apartmentType = apartmentType;
 	}
 
-	public RApartmentNamesWithType(String apartmentName, String apartmentType, String uinversityId) {
+	public RApartmentNamesWithType(String apartmentName, String apartmentType, int uinversityId) {
 		super();
 		this.apartmentName = apartmentName;
 		this.apartmentType = apartmentType;
-		this.uinversityId = uinversityId;
+		this.universityId = uinversityId;
 	}
 
 	public RApartmentNamesWithType(String apartmentName) {

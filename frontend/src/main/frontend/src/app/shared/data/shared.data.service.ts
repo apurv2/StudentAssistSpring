@@ -4,6 +4,7 @@ import { AccommodationSearchModel } from "../../accommodation/shared/models/acco
 import { University } from "../../accommodation/shared/models/universities.list.model";
 import { AccommodationAdd } from "../../accommodation/shared/models/accommodation.model";
 import { MatSnackBar } from "@angular/material";
+import { ApartmentName } from "../../accommodation/shared/models/apartment.names.model";
 
 export class SharedDataService {
 
@@ -11,7 +12,16 @@ export class SharedDataService {
     accommomdationSearchFilters = new Subject<AccommodationSearchModel>();
     userSelectedUniversitiesList: University[];
     accommodationAdd = new Subject<AccommodationAdd>();
+    apartmentNames: ApartmentName[];
 
+    getApartmentNames(): ApartmentName[] {
+        return this.apartmentNames;
+    }
+
+    setApartmentNames(apartmentNames : ApartmentName[])
+    {
+        this.apartmentNames = apartmentNames
+    }
     emitAccommodationAdd(accommodationAdd: AccommodationAdd) {
         return this.accommodationAdd.next(accommodationAdd);
     }
