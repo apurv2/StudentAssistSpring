@@ -7,6 +7,8 @@ import { SimpleSearchService } from "./accommodation.simple.search.service";
 import { AccommodationAdd } from "../shared/models/accommodation.model";
 import { UniversityAccommodationAdds } from "../shared/models/university.accommodation.adds.model";
 import { Subscription } from "rxjs/Subscription";
+import { LoginResponse } from "ngx-facebook/dist/esm/models/login-response";
+import { UserService } from "app/shared/userServices/user.service";
 
 
 @Component({
@@ -22,12 +24,16 @@ export class SimpleSearch {
 
     constructor(private simpleSearchService: SimpleSearchService,
         private facebookService: FacebookService,
-        private sharedDataservice: SharedDataService) {
+        private sharedDataservice: SharedDataService,
+        private userService: UserService) {
 
     }
     ngOnInit() {
         this.subscribeToAccommodationAddsFilters();
         this.subscribeToAddClick();
+
+        this.userService.getLoginStatus().
+            subscribe(res => console.log("status==" + res));
 
     }
     subscribeToAddClick() {

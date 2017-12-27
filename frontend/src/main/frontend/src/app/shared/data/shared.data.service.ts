@@ -5,6 +5,14 @@ import { University } from "../../accommodation/shared/models/universities.list.
 import { AccommodationAdd } from "../../accommodation/shared/models/accommodation.model";
 import { MatSnackBar } from "@angular/material";
 import { ApartmentName } from "../../accommodation/shared/models/apartment.names.model";
+import { UserModel } from "../models/user.model";
+import { Http, Response } from '@angular/http';
+import { environment } from "../../../environments/environment";
+import { HttpInterceptorService } from "../Interceptor/HttpInterceptorService";
+import { FacebookService } from "ngx-facebook/dist/esm/providers/facebook";
+import { AuthResponse } from "ngx-facebook/dist/esm/models/auth-response";
+import { LoginResponse } from "ngx-facebook/dist/esm/models/login-response";
+import { Observer } from "rxjs/Observer";
 
 export class SharedDataService {
 
@@ -12,14 +20,21 @@ export class SharedDataService {
     accommomdationSearchFilters = new Subject<AccommodationSearchModel>();
     userSelectedUniversitiesList: University[];
     accommodationAdd = new Subject<AccommodationAdd>();
+    dbUnivChips = new Subject<University[]>();
     apartmentNames: ApartmentName[];
 
+    observeDbUnivChips(): Observable<University[]> {
+        return this.dbUnivChips;
+    }
+
+    emitDbUnivChips(univChips: University[]) {
+        this.dbUnivChips.next(univChips);
+    }
     getApartmentNames(): ApartmentName[] {
         return this.apartmentNames;
     }
 
-    setApartmentNames(apartmentNames : ApartmentName[])
-    {
+    setApartmentNames(apartmentNames: ApartmentName[]) {
         this.apartmentNames = apartmentNames
     }
     emitAccommodationAdd(accommodationAdd: AccommodationAdd) {
@@ -46,14 +61,8 @@ export class SharedDataService {
         this.accommomdationSearchFilters.next(filterData);
     }
 
-    getHomePageBackground() {
-        return this.showHomepageBackground;
-    }
-
-    setHomePageBackground(status: boolean) {
-        this.showHomepageBackground.next(status);
-    }
     openSnackBar(snackbar: MatSnackBar, message: string, action: string) {
         snackbar.open(message, action, { duration: 2000 });
     }
+
 }

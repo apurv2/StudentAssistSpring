@@ -13,17 +13,15 @@ export class SimpleSearchService {
     }
 
     getSimpleSearchAdds(filters: AccommodationSearchModel) {
-        console.log(JSON.stringify(filters));
-        console.log(environment.url + environment.getSimpleSearchAdds);
-        
-        return this.http.post(environment.url + environment.getSimpleSearchAdds,filters)
+
+        return this.http.post(environment.getSimpleSearchAdds, filters)
             .map(res => this.data = res.json());
     }
 
-    getAllApartmentnames() {
-        return this.http.get(environment.url).map((res: Response) => res.json())
-            .catch((error: any) => Observable.throw(error.json().error || 'server error'));
+    // getAllApartmentnames() {
+    //     return this.http.get(environment.url).map((res: Response) => res.json())
+    //         .catch((error: any) => Observable.throw(error.json().error || 'server error'));
 
-    }
+    // }
 
 }

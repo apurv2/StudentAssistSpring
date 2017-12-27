@@ -14,9 +14,9 @@ export class AdvanceSearchService {
 
     getAdvancedSearchAdds(filters: AccommodationSearchModel) {
         console.log(JSON.stringify(filters));
-        console.log(environment.url + environment.getAdvancedSearchAdds);
+        console.log(environment.getAdvancedSearchAdds);
 
-        return this.http.post(environment.url + environment.getAdvancedSearchAdds, filters)
+        return this.http.post(environment.getAdvancedSearchAdds, filters)
             .map(res => res.json());
     }
 

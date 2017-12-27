@@ -1,32 +1,71 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { FacebookService } from 'ngx-facebook';
-import { environment } from 'environments/environment';
+import { ConnectionBackend, RequestOptions, Request, RequestOptionsArgs, Response } from "@angular/http";
+import { environment } from '../../../environments/environment';
+import { Observable } from 'rxjs/Observable';
+import { XHRBackend } from '@angular/http/src/backends/xhr_backend';
+import { FacebookModule } from 'ngx-facebook/dist/esm/facebook.module';
+
+export function httpFactory(xhrBackend: XHRBackend,
+  requestOptions: RequestOptions,
+  fb: FacebookService): Http {
+  return new HttpInterceptorService(xhrBackend, requestOptions, fb);
+}
 
 @Injectable()
-export class HttpInterceptorService {
+export class HttpInterceptorService extends Http {
 
-  constructor(private http: Http,
-    private fb: FacebookService) { }
+  constructor(backend: ConnectionBackend,
+    defaultOptions: RequestOptions,
+    private fb: FacebookService) {
+    super(backend, defaultOptions);
+  }
 
   createAuthorizationHeader(headers: Headers) {
-    let accessToken = this.fb.getAuthResponse()['accessToken'];
+    let accessToken = this.fb.getAuthResponse() == null ? '0' : this.fb.getAuthResponse()['accessToken'];
     headers.append(environment.accessToken, accessToken);
   }
 
-  get(url) {
-    let headers = new Headers();
-    this.createAuthorizationHeader(headers);
-    return this.http.get(url, {
-      headers: headers
-    });
+  request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
+    return super.request(url, options);
   }
 
-  post(url, data) {
-    let headers = new Headers();
-    this.createAuthorizationHeader(headers);
-    return this.http.post(url, data, {
-      headers: headers
-    });
+  get(url: string, options?: RequestOptionsArgs): Observable<Response> {
+    url = this.updateUrl(url);
+    return super.get(url, this.getRequestOptionArgs(options));
+  }
+
+  post(url: string, body: string, options?: RequestOptionsArgs): Observable<Response> {
+    url = this.updateUrl(url);
+    return super.post(url, body, this.getRequestOptionArgs(options));
+  }
+
+  put(url: string, body: string, options?: RequestOptionsArgs): Observable<Response> {
+    url = this.updateUrl(url);
+    return super.put(url, body, this.getRequestOptionArgs(options));
+  }
+
+  delete(url: string, options?: RequestOptionsArgs): Observable<Response> {
+    url = this.updateUrl(url);
+    return super.delete(url, this.getRequestOptionArgs(options));
+  }
+
+  private updateUrl(req: string) {
+    return environment.url + req;
+
+  }
+
+  private getRequestOptionArgs(options?: RequestOptionsArgs): RequestOptionsArgs {
+    if (options == null) {
+      options = new RequestOptions();
+    }
+    if (options.headers == null) {
+      options.headers = new Headers();
+    }
+    options.headers.append('Content-Type', 'application/json');
+    this.createAuthorizationHeader(options.headers);
+
+    return options;
   }
 }

@@ -19,7 +19,7 @@ public class UserController extends AbstractController {
 	@Autowired
 	private UserService userService;
 
-	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT, value = "/createUser")
+	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT, value = "profile/createUser")
 	public String createUser(@RequestBody CreateUserDetails createUserDetails, HttpServletRequest request)
 			throws Exception {
 

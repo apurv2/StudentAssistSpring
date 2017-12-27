@@ -2,9 +2,10 @@
   <div class="row">
     <ul class="collapsible popout" data-collapsible="expandable">
       <li *ngFor="let university of accommodationSearchResults">
-        <h4 class="univhead">{{university.universityName}}</h4>
+        
         <div class="collapsible-header">
           <img class="univCardImg" src="{{university.urls}}" />
+          <h4 class="univhead">{{university.universityName}}</h4>
         </div>
         <div class="collapsible-body height-400 overflow-auto">
           <div *ngFor="let accommodationAdd of university?.accommodationAdds">

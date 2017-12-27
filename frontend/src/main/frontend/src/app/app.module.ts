@@ -5,14 +5,12 @@ import { FacebookModule, FacebookService, InitParams } from 'ngx-facebook';
 import { TopHeader } from 'app/shared/topHeader/top.header';
 import { LeftNav } from 'app/shared/leftNav/left.nav';
 import { routing } from 'app/app.routing';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdvancedSearch } from 'app/accommodation/advancedSearch/accommodation.advanced.search';
 import { SimpleSearch } from 'app/accommodation/simpleSearch/accommodation.simple.search';
 import { AddDetails } from 'app/accommodation/shared/adDetails/accommodation.details.add';
-import { Login } from 'app/shared/login/login';
 import { UniversitiesService } from 'app/universities/universities.list.service';
 import { Http, HttpModule, XHRBackend, RequestOptions } from '@angular/http';
-import { httpFactory } from '@angular/http/src/http_module';
 import { HttpInterceptorService } from 'app/shared/Interceptor/HttpInterceptorService';
 import { Dashboard } from 'app/dashboard/landing.dashboard';
 import { DriverComponent } from 'app/airport/dashboards/driver/driver.dashboard';
@@ -28,7 +26,7 @@ import { SimpleSearchAddsFilters } from './accommodation/simpleSearch/filters/si
 import { SharedDataService } from './shared/data/shared.data.service';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatChipsModule, MatIconModule, MatSnackBarModule, MatSelectModule, } from '@angular/material';
+import { MatChipsModule, MatIconModule, MatSnackBarModule, MatSelectModule, MatInputModule, MatNativeDateModule, MatDialog, MatDialogModule, } from '@angular/material';
 
 import 'hammerjs';
 import { LandingFlashCards } from './dashboard/flashCards/landing.flash.cards';
@@ -43,6 +41,10 @@ import { Universities } from './universities/universities.list';
 import { AdvancedSearchFilters } from './accommodation/advancedSearch/filters/advanced.search.filters';
 import { AddsList } from './accommodation/shared/adsList/ads.list';
 import { AdvanceSearchService } from './accommodation/advancedSearch/accommodation.advanced.search.service';
+import { SubscribeNotificationsModal } from 'app/accommodation/shared/modals/subscribe.notifications.modal';
+import { LoginModal } from 'app/shared/modals/login.modal';
+import { httpFactory } from './shared/Interceptor/HttpInterceptorService';
+import { UserService } from 'app/shared/userServices/user.service';
 
 @NgModule({
   imports: [
@@ -55,7 +57,10 @@ import { AdvanceSearchService } from './accommodation/advancedSearch/accommodati
     MatChipsModule,
     MatIconModule,
     MatSnackBarModule,
-    MatSelectModule
+    MatSelectModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatDialogModule,
 
   ],
   declarations: [
@@ -65,7 +70,6 @@ import { AdvanceSearchService } from './accommodation/advancedSearch/accommodati
     SimpleSearch,
     AdvancedSearch,
     AddDetails,
-    Login,
     Dashboard,
     DriverComponent,
     OrganizerComponent,
@@ -83,7 +87,10 @@ import { AdvanceSearchService } from './accommodation/advancedSearch/accommodati
     NotificationSettingsModal,
     Universities,
     AdvancedSearchFilters,
-    AddsList
+    AddsList,
+    SubscribeNotificationsModal,
+    LoginModal
+
   ],
   providers: [UniversitiesService,
     HttpInterceptorService,
@@ -92,21 +99,29 @@ import { AdvanceSearchService } from './accommodation/advancedSearch/accommodati
     SharedDataService,
     LandingFlashCardsService,
     SimpleSearchFilterService,
-    AdvanceSearchService
+    AdvanceSearchService,
+    MatDialog,
+    UserService,
+    {
+      provide: Http,
+      useFactory: httpFactory,
+      deps: [XHRBackend, RequestOptions, FacebookService]
+    }
 
   ],
-  bootstrap: [AppComponent, TopHeader, LeftNav]
+  bootstrap: [AppComponent, TopHeader, LeftNav],
+  entryComponents: [SubscribeNotificationsModal, LoginModal]
 })
 export class AppModule {
 
-  constructor(private fb: FacebookService) {
+  constructor(private fb: FacebookService,
+    sharedDataService: SharedDataService) {
     let initParams: InitParams = {
       appId: '931333680308184',
       xfbml: true,
       version: 'v2.8'
     };
 
-    // fb.init(initParams);
-
+    fb.init(initParams);
   }
 }

@@ -1,4 +1,4 @@
- 
+
 package com.studentAssist.dao;
 
 import java.util.ArrayList;
@@ -24,8 +24,8 @@ import com.studentAssist.response.RUniversity;
 public class UniversitiesDAO extends AbstractDao {
 
 	/**
-	 * 1. here apartment is name of join column in AccommodationAdd JOINS Apartments
-	 * table
+	 * 1. here apartment is name of join column in AccommodationAdd JOINS
+	 * Apartments table
 	 * 
 	 * @param leftSpinner
 	 * @param rightSpinner
@@ -36,8 +36,10 @@ public class UniversitiesDAO extends AbstractDao {
 
 		StringBuilder sb = new StringBuilder();
 		//
-		// String queryStr = "select NEW package.RUniversity( a.field1, b.field2,
-		// c.field3, c.field4) from a left outer join b on a.id=b.fk left outer join c
+		// String queryStr = "select NEW package.RUniversity( a.field1,
+		// b.field2,
+		// c.field3, c.field4) from a left outer join b on a.id=b.fk left outer
+		// join c
 		// on b.id=c.fk";
 		//
 		//
@@ -94,13 +96,9 @@ public class UniversitiesDAO extends AbstractDao {
 	public List<Universities> getUserUniversities(Users currentUser) {
 		Users user = getByKey(Users.class, currentUser.getUserId());
 
-		if (null != user.getUniversities() && !user.getUniversities().isEmpty()) {
-
-			return user.getUniversities();
-
-		} else {
-			return new ArrayList();
-		}
+		List<Universities> dbUnivs;
+		dbUnivs = user.getUniversities();
+		return dbUnivs != null && !dbUnivs.isEmpty() ? dbUnivs : new ArrayList();
 
 	}
 

@@ -12,7 +12,7 @@ import 'rxjs/add/observable/of';
 
 @Injectable()
 export class LandingSearchService {
-    baseUrl: string = environment.url + environment.universityName;
+    baseUrl: string = environment.universityName;
 
     constructor(private http: Http) { }
 

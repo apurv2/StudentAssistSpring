@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.studentAssist.entities.Universities;
 import com.studentAssist.exception.InvalidTokenException;
 import com.studentAssist.response.FlashCardsRequestDTO;
 import com.studentAssist.response.FlashCardsResponseDTO;
@@ -36,8 +35,8 @@ public class UniversitiesController extends AbstractController {
 	}
 
 	/**
-	 * called from UniversitiesActivity when the list of Univs is shown to the user
-	 * for the first time/new user
+	 * called from UniversitiesActivity when the list of Univs is shown to the
+	 * user for the first time/new user
 	 * 
 	 * @param request
 	 * @return
@@ -50,9 +49,9 @@ public class UniversitiesController extends AbstractController {
 	}
 
 	/**
-	 * Returns boolean value of true or false to check if the user has universities
-	 * or not. This is called before displaying the home screen to check if the user
-	 * has univs else redirect him/her to select univs page
+	 * Returns boolean value of true or false to check if the user has
+	 * universities or not. This is called before displaying the home screen to
+	 * check if the user has univs else redirect him/her to select univs page
 	 * 
 	 * @param request
 	 * @return
@@ -65,17 +64,17 @@ public class UniversitiesController extends AbstractController {
 	}
 
 	/**
-	 * Called when the user opens the settings page to populate the univs the user
-	 * has already selected.
+	 * Called when the user opens the settings page to populate the univs the
+	 * user has already selected.
 	 * 
 	 * @param request
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(method = RequestMethod.GET, value = "/getAllUniversitiesWithUserSelected")
+	@RequestMapping(method = RequestMethod.GET, value = "profile/getUserUniversities")
 	public List<RUniversity> getUserUniversities(HttpServletRequest request) throws Exception {
 
-		return universitiesService.getUserUniversities(getUserFromRequest(request));
+		return universitiesService.getUserSelectedUniversities(getUserFromRequest(request));
 	}
 
 	/**
@@ -102,7 +101,7 @@ public class UniversitiesController extends AbstractController {
 
 		return universitiesService.getUniversitiesByName(universityName);
 	}
-	
+
 	/**
 	 * 
 	 * @param request
@@ -110,10 +109,10 @@ public class UniversitiesController extends AbstractController {
 	 * @throws InvalidTokenException
 	 */
 	@RequestMapping(method = RequestMethod.POST, value = "/getFlashCards")
-	public FlashCardsResponseDTO getFlashCards(HttpServletRequest request,FlashCardsRequestDTO flashCards) throws InvalidTokenException {
+	public FlashCardsResponseDTO getFlashCards(HttpServletRequest request, FlashCardsRequestDTO flashCards)
+			throws InvalidTokenException {
 
 		return universitiesService.getFlashCards(flashCards);
 	}
-	
 
 }

@@ -12,12 +12,7 @@ export class Dashboard {
     constructor(private sharedDataService: SharedDataService) {
     }
 
-    ngOnInit() {
-        this.sharedDataService.setHomePageBackground(true);
-    }
-
     ngOnDestroy() {
-        this.sharedDataService.setHomePageBackground(false);
     }
 
 }

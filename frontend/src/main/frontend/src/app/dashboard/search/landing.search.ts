@@ -8,6 +8,8 @@ import { SharedDataService } from '../../shared/data/shared.data.service';
 import { LandingSearchService } from './landing.search.service';
 import { environment } from '../../../environments/environment';
 import { Subscription } from 'rxjs/Subscription';
+import { UserService } from 'app/shared/userServices/user.service';
+import { UserModel } from 'app/shared/models/user.model';
 
 @Component({
   selector: 'landing-search',
@@ -23,13 +25,15 @@ export class LandingSearch {
   constructor(private router: Router,
     private searchService: LandingSearchService,
     public snackBar: MatSnackBar,
-    private sharedDataService: SharedDataService) {
+    private sharedDataService: SharedDataService,
+    private userService: UserService) {
   }
 
   selectedUniversities: University[];
   addOnBlur: boolean = true;
   separatorKeysCodes = [ENTER, COMMA];
   searchBarSubscription: Subscription;
+  dbUnivChips: Subscription;
   selectable: boolean = true;
   removable: boolean = true;
 
@@ -42,6 +46,12 @@ export class LandingSearch {
       });
 
     this.getUserUnivsFromDataService();
+    this.subscribeForDBChips();
+  }
+
+  subscribeForDBChips() {
+    this.dbUnivChips = this.sharedDataService.observeDbUnivChips().
+      subscribe(chips => this.selectedUniversities = chips);
   }
 
   getUserUnivsFromDataService() {
@@ -70,6 +80,8 @@ export class LandingSearch {
         this.sharedDataService.setUserSelectedUniversitiesList(this.selectedUniversities);
         localStorage.setItem(environment.userSelectedUnivs,
           JSON.stringify(this.selectedUniversities));
+
+        this.updateDBChips();
       }
   }
   removeChip(university: University) {
@@ -80,10 +92,19 @@ export class LandingSearch {
       this.sharedDataService.setUserSelectedUniversitiesList(this.selectedUniversities);
       localStorage.setItem(environment.userSelectedUnivs,
         JSON.stringify(this.selectedUniversities));
+
+      this.updateDBChips();
     }
   }
 
+  updateDBChips() {
+    this.userService.getLoginStatus().
+      switchMap(resp => resp ? this.userService.createOrUpdateUser() : null).
+      subscribe(resp => null);
+
+  }
   ngOnDestroy() {
     this.searchBarSubscription.unsubscribe();
+    this.dbUnivChips.unsubscribe();
   }
 }

@@ -9,9 +9,7 @@ export class SimpleSearchFilterService {
     constructor(private http: Http) { }
 
     getApartmentNames(filterData: AccommodationSearchModel) {
-        console.log(environment.url + environment.getAllApartmentsWithType);
-        console.log(JSON.stringify(filterData));
-        return this.http.post(environment.url + environment.getAllApartmentsWithType, filterData).
+        return this.http.post(environment.getAllApartmentsWithType, filterData).
             map(res => res.json());
 
     }
