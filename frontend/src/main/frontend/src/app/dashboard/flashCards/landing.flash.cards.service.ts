@@ -8,7 +8,7 @@ export class LandingFlashCardsService {
 
     constructor(public http: Http) { }
 
-    getInitialFlashCards() {
+    getFlashCards() {
 
         let flashCardModel = new FlashCardsModel();
         return this.http.post(environment.getFlashCards, flashCardModel)
