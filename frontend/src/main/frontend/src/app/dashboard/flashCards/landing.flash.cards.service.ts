@@ -11,8 +11,8 @@ export class LandingFlashCardsService {
     getFlashCards() {
 
         let flashCardModel = new FlashCardsModel();
-        return this.http.post(environment.url + '/' + environment.getFlashCards, flashCardModel)
-        .map(res => res.json());
-        
+        return this.http.post(environment.getFlashCards, flashCardModel)
+            .map(res => res.json());
+
     }
 }

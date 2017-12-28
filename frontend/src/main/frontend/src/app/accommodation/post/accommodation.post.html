@@ -1,98 +1,93 @@
-<body>
-    <div class="wrapper">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-8 col-md-8">
-                    <div class="card">
-                        <div class="signin-form">
-                            <h3 class="text-center margin-bottom-10">
-                                <b>Apartment Information</b>
-                            </h3>
-                            <form>
-                                <div class="form-group col-md-12">
-                                    <label for="Apartmentname">Apartment name</label>
-                                    <input type="text" class="form-control" id="Apartmentname" placeholder="Apartment name">
-                                </div>
-                                <div class="form-group col-md-12">
-                                    <label for="address">Apartment Address</label>
-                                    <textarea class="form-control" id="address" placeholder="Apartment Address.."></textarea>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label class="display-block" for="selectdropdown">Apartment Type</label>
-                                    <select class="selectpicker" data-width="100%">
-                                        <option>option1</option>
-                                        <option>option2</option>
-                                        <option>option3</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label class="display-block" for="selectdropdown">Vacancy For</label>
-                                    <select class="selectpicker" data-width="100%">
-                                        <option>Male</option>
-                                        <option>Female</option>
-                                        <option>Both</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label class="display-block" for="selectdropdown">Bed rooms</label>
-                                    <select class="selectpicker" data-width="100%">
-                                        <option>No of bed rooms</option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label class="display-block" for="selectdropdown">Bath rooms</label>
-                                    <select class="selectpicker" data-width="100%">
-                                        <option>No of bath rooms</option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                    </select>
-                                </div>
+<div class="wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8 col-md-8">
+                <div class="card">
+                    <div class="signin-form">
+                        <h3 class="text-center margin-bottom-10">
+                            <b>Apartment Information</b>
+                        </h3>
+                        <form>
+                            <div class="form-group col-md-6">
+                                <mat-form-field>
+                                    <mat-select placeholder="Apartment Type" [(ngModel)]="aptTypeSpinnerSelectedItem.code" (ngModelChange)="spinnerClick($event)"
+                                        [ngModelOptions]="{standalone: true}">
+                                        <mat-option *ngFor="let spinnerValue of aptTypeSpinnerValues" [value]="spinnerValue?.code">{{spinnerValue.description}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div><div class="form-group col-md-6">
+                                    <mat-form-field>
+                                    <mat-select placeholder="Apartment Name" [(ngModel)]="aptNameSpinnerSelectedItem.code" (ngModelChange)="spinnerClick1($event)"
+                                        [ngModelOptions]="{standalone: true}">
+                                        <mat-option *ngFor="let spinnerValue of aptNameSpinnerValues" [value]="spinnerValue?.code">{{spinnerValue.description}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="form-group col-md-6">
 
-                                <div class="form-group col-md-6">
-                                    <label for="cost">Cost</label>
-                                    <input type="text" class="form-control" id="cost" placeholder="Cost">
-
+                                <mat-form-field>
+                                    <mat-select placeholder="University Name" [(ngModel)]="universityNameSpinnerSelectedItem.code" (ngModelChange)="spinnerClick($event)"
+                                        [ngModelOptions]="{standalone: true}">
+                                        <mat-option *ngFor="let spinnerValue of universityNameSpinnerValues" [value]="spinnerValue?.code">{{spinnerValue.description}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div><div class="form-group col-md-6">
+                                <mat-form-field>
+                                    <mat-select placeholder="Gender" [(ngModel)]="genderSpinnerSelectedItem.code" (ngModelChange)="spinnerClick1($event)" [ngModelOptions]="{standalone: true}">
+                                        <mat-option *ngFor="let spinnerValue of genderSpinnerValues" [value]="spinnerValue?.code">{{spinnerValue.description}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <mat-form-field>
+                                    <mat-select placeholder="No Of Rooms" [(ngModel)]="noOfRoomsSpinnerSelectedItem.code" (ngModelChange)="spinnerClick1($event)"
+                                        [ngModelOptions]="{standalone: true}">
+                                        <mat-option *ngFor="let spinnerValue of noOfRoomsSpinnerValues" [value]="spinnerValue?.code">{{spinnerValue.description}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div><div class="form-group col-md-6">
+                                <mat-form-field>
+                                    <mat-select placeholder="Vacancies" [(ngModel)]="vacanciesSpinnerSelectedItem.code" (ngModelChange)="spinnerClick1($event)"
+                                        [ngModelOptions]="{standalone: true}">
+                                        <mat-option *ngFor="let spinnerValue of vacanciesSpinnerValues" [value]="spinnerValue?.code">{{spinnerValue.description}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div><div class="form-group col-md-6">
+                            <mat-form-field>
+                                <span matPrefix>$&nbsp;</span>
+                                <input matInput placeholder="Cost">
+                            </mat-form-field>
+                            </div>
+                            
+                            <div class="form-group col-md-6">
+                                <mat-form-field >
+                                    <input matInput placeholder="Email" [formControl]="emailFormControl" [errorStateMatcher]="matcher">
+                                    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                                        Please enter a valid email address
+                                    </mat-error>
+                                    <mat-error *ngIf="emailFormControl.hasError('required')">
+                                        Email is
+                                        <strong>required</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="form-group col-md-12">
+                                    <mat-form-field>
+                                        <textarea matInput placeholder="Notes" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5"></textarea>
+                                    </mat-form-field>
                                 </div>
-                                <div class="form-group col-md-6">
-                                    <label for="area">Area</label>
-                                    <input type="text" class="form-control" id="area" placeholder="Area">
-                                </div>
-
-                                <div class="form-group col-md-12">
-                                    <label for="notes">Notes</label>
-                                    <textarea class="form-control" id="notes" placeholder="Notes.."></textarea>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="alternateno">Alternate Contact no</label>
-                                    <input type="text" class="form-control width-250" id="alternateno" placeholder="Alternate Contact no">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="alternate-email">Alternate Email</label>
-                                    <input type="text" class="form-control" id="alternate-email" placeholder="Alternate Email">
-                                </div>
-                                <div class="form-group col-md-12">
-                                    <label for="alternate-email">Add Image</label>
-                                    <input type="file" class="multi with-preview" multiple />
-                                </div>
-                                <div class="form-group col-md-12">
-                                    <label for="alternate-email">Add Univ logo</label>
-                                    <input type="file" class="multi with-preview" multiple />
-                                </div>
-                                <div class="form-group col-md-4 col-md-push-4">
-                                    <button type="submit" class="btn primary-btn btn-lg btn-block">Post</button>
-                                </div>
-
-
-                            </form>
-                        </div>
+                            <div class="form-group col-md-12">
+                                <label for="alternate-email">Add Image</label>
+                                <input type="file" class="multi with-preview" multiple />
+                            </div>
+                            <div class="form-group col-md-4 col-md-push-4">
+                                <button type="submit" (click)="postAccommodation()"  class="btn primary-btn btn-lg btn-block">Post</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-
-                <user-post></user-post>
             </div>
+            <user-post></user-post>
         </div>
     </div>
+</div>

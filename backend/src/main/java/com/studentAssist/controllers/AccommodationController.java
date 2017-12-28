@@ -239,7 +239,7 @@ public class AccommodationController extends AbstractController {
 
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/getRecentlyViewed")
+	@RequestMapping(method = RequestMethod.GET, value = "profile/getRecentlyViewed")
 	public List<RAccommodationAdd> getRecentlyViewed(@RequestParam("position") int position,
 			HttpServletRequest request) {
 

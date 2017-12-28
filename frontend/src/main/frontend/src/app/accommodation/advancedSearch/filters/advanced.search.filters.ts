@@ -24,6 +24,7 @@ export class AdvancedSearchFilters {
     universityNameSpinnerSelectedItem: AccommodationDropdown;
     genderSpinnerSelectedItem: AccommodationDropdown;
     selectedUniversities: University[];
+    allApartments: ApartmentName[];
 
     constructor(private sharedDataService: SharedDataService,
         private simpleSearchFilterService: SimpleSearchFilterService) { }
@@ -70,13 +71,8 @@ export class AdvancedSearchFilters {
     }
 
     mapApartmentNames(apartments: ApartmentName[]) {
-        for (let apartment of apartments) {
-            this.aptNameSpinnerValues.push({
-                'code': apartment.apartmentName,
-                'description': apartment.apartmentName
-            });
-        }
-        this.aptNameSpinnerSelectedItem = Object.assign([], this.aptNameSpinnerValues[0]);
+        this.allApartments = apartments;
+        this.populateApartmentNameSpinner();
     }
 
     mapUniversityNames(selectedUniversities: University[]) {
@@ -102,7 +98,28 @@ export class AdvancedSearchFilters {
 
     }
 
-    spinnerClick(event) {
-
+    spinnerClick(clickedItem) {
+        this.populateApartmentNameSpinner();
     }
+
+    populateApartmentNameSpinner() {
+
+        let universityId = this.universityNameSpinnerSelectedItem.code;
+        let apartmentType = this.aptTypeSpinnerSelectedItem.code;
+        this.aptNameSpinnerValues = new Array();
+        for (let apartment of this.allApartments) {
+
+            if (apartment.uinversityId == +universityId &&
+                apartment.apartmentType == apartmentType) {
+
+                this.aptNameSpinnerValues.push({
+                    'code': apartment.apartmentName,
+                    'description': apartment.apartmentName
+                });
+                this.aptNameSpinnerSelectedItem = Object.assign([], this.aptNameSpinnerValues[0]);
+            }
+        }
+    }
+
+    spinnerClick1(clickedItem) { }
 }

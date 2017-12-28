@@ -23,9 +23,6 @@ import com.studentAssist.response.RAccommodationAdd;
 import com.studentAssist.response.RUniversity;
 import com.studentAssist.util.SAConstants;
 
-import antlr.StringUtils;
-import kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.EMPTY_MEMBER_INDEX;
-
 @Service
 public class UniversitiesService {
 
@@ -79,6 +76,24 @@ public class UniversitiesService {
 		}
 		return allUniversities;
 
+	}
+
+	public List<RUniversity> getUserSelectedUniversities(Users currentUser) throws Exception {
+
+		Users dbUser = universitiesDAO.getUser(currentUser);
+
+		List<Universities> dbUnivs = universitiesDAO.getUserUniversities(dbUser);
+		List<RUniversity> userUnivs = new ArrayList();
+		for (Universities dbUniv : dbUnivs) {
+
+			RUniversity univ = new RUniversity();
+			univ.setUniversityId(dbUniv.getUniversityId());
+			univ.setUniversityName(dbUniv.getUniversityName());
+			univ.setUnivAcronym(dbUniv.getUnivAcronym());
+
+			userUnivs.add(univ);
+		}
+		return userUnivs;
 	}
 
 	private void populateUserSelectedUniversities(List<RUniversity> allUniversities,
