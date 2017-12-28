@@ -8,6 +8,8 @@ import { University } from 'app/universities/universities.model';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/observable/from';
 import { Observer } from 'rxjs/Observer';
+import { UserInfo } from 'app/shared/models/user.info.model';
+import { FacebookService } from 'ngx-facebook/dist/esm/providers/facebook';
 
 
 @Component({
@@ -22,24 +24,33 @@ export class AppComponent {
   constructor(private router: Router,
     private sharedDataService: SharedDataService,
     private userService: UserService,
+    private fb: FacebookService
   ) {
   }
   ngOnInit() {
 
     if (!this.getUserUniversitiesFromLocalStorage()) {
-
       this.userService.getLoginStatus().
-        switchMap(resp => resp ? this.userService.getUserUniversities() : null).
+        switchMap(resp => resp ? this.userService.getUserUniversities() : new Observable).
         subscribe(resp => this.processDbUnivChips(resp));
 
     }
+
+    this.userService.getLoginStatus().
+      switchMap(resp => resp ? this.userService.getUserInfoFromFb() :
+        Observable.empty<UserInfo>()).
+      subscribe((userInfo: UserInfo) => this.sharedDataService.emitUserInfo(userInfo));
+
   }
 
   processDbUnivChips(chips: University[]) {
-    this.sharedDataService.setUserSelectedUniversitiesList(chips);
-    localStorage.setItem(environment.userSelectedUnivs,
-      JSON.stringify(chips));
-    this.sharedDataService.emitDbUnivChips(chips);
+
+    if (chips != null && chips.length > 0) {
+      this.sharedDataService.setUserSelectedUniversitiesList(chips);
+      localStorage.setItem(environment.userSelectedUnivs,
+        JSON.stringify(chips));
+      this.sharedDataService.emitDbUnivChips(chips);
+    }
   }
 
 

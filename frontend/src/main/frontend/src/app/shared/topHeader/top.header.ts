@@ -1,5 +1,8 @@
 import { Component } from "@angular/core";
 import { Router } from '@angular/router';
+import { SharedDataService } from "app/shared/data/shared.data.service";
+import { UserInfo } from "app/shared/models/user.info.model";
+import { Subscription } from "rxjs/Subscription";
 
 @Component({
     selector: 'top-header',
@@ -9,12 +12,24 @@ import { Router } from '@angular/router';
 export class TopHeader {
 
     showSideNav: boolean;
+    userInfo: UserInfo;
+    userInfoSubscription: Subscription;
 
-    constructor(private router: Router) { }
+
+    constructor(private router: Router,
+        private sharedDataService: SharedDataService) { }
 
     ngOnInit() {
 
+        this.subscribeToUserDetails();
     }
+
+    subscribeToUserDetails() {
+
+        this.sharedDataService.observeUserInfo().
+            subscribe(userInfo => this.userInfo = userInfo);
+    }
+
     openNav() {
         document.getElementById("mySidenav").style.width = "250px";
         // document.getElementById("nav-overlay").style.display = "block";

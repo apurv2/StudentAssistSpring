@@ -45,6 +45,7 @@ import { SubscribeNotificationsModal } from 'app/accommodation/shared/modals/sub
 import { LoginModal } from 'app/shared/modals/login.modal';
 import { httpFactory } from './shared/Interceptor/HttpInterceptorService';
 import { UserService } from 'app/shared/userServices/user.service';
+import { environment } from 'environments/environment';
 
 @NgModule({
   imports: [
@@ -117,7 +118,7 @@ export class AppModule {
   constructor(private fb: FacebookService,
     sharedDataService: SharedDataService) {
     let initParams: InitParams = {
-      appId: '931333680308184',
+      appId: environment.appId,
       xfbml: true,
       version: 'v2.8'
     };

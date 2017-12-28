@@ -8,6 +8,7 @@ import { LoginResponse } from "ngx-facebook/dist/esm/models/login-response";
 import { FacebookService } from "ngx-facebook/dist/esm/providers/facebook";
 import { University } from "app/accommodation/shared/models/universities.list.model";
 import { SharedDataService } from "app/shared/data/shared.data.service";
+import { UserInfo } from "app/shared/models/user.info.model";
 
 @Injectable()
 export class UserService {
@@ -28,16 +29,16 @@ export class UserService {
             universityIds.push(university.universityId);
         }
         user.selectedUniversityIds = universityIds;
-        
+
         return this.http.put(environment.createUser, user).
             map(res => res.json());
     }
 
     getLoginStatus(): Observable<boolean> {
-
+        console.log("came to login status")
         return Observable.create((observer: Observer<boolean>) =>
-            this.fb.getLoginStatus().then((resp: LoginResponse) =>
-                observer.next(resp.status === environment.connected ? true : false)))
+            this.fb.getLoginStatus().then(resp =>
+                observer.next(resp.status === environment.connected ? true : false)));
     }
 
     login(): Observable<LoginResponse> {
@@ -57,6 +58,19 @@ export class UserService {
     getUserUniversities() {
         return this.http.get(environment.getUserUniversities).
             map(res => res.json());
+    }
+
+    getUserInfoFromFb(): Observable<UserInfo> {
+        console.log("apurv came here")
+        return Observable.create((observer: Observer<UserInfo>) =>
+            this.fb.api('/me/', 'get').then(resp => {
+
+                let userInfo: UserInfo = new UserInfo();
+                userInfo.fullName = resp.name;
+                userInfo.userId = resp.id;
+
+                observer.next(userInfo);
+            }));
     }
 
 }

@@ -13,6 +13,7 @@ import { FacebookService } from "ngx-facebook/dist/esm/providers/facebook";
 import { AuthResponse } from "ngx-facebook/dist/esm/models/auth-response";
 import { LoginResponse } from "ngx-facebook/dist/esm/models/login-response";
 import { Observer } from "rxjs/Observer";
+import { UserInfo } from "app/shared/models/user.info.model";
 
 export class SharedDataService {
 
@@ -21,7 +22,16 @@ export class SharedDataService {
     userSelectedUniversitiesList: University[];
     accommodationAdd = new Subject<AccommodationAdd>();
     dbUnivChips = new Subject<University[]>();
+    userInfo = new Subject<UserInfo>();
     apartmentNames: ApartmentName[];
+
+    observeUserInfo(): Observable<UserInfo> {
+        return this.userInfo;
+    }
+
+    emitUserInfo(userInfo: UserInfo) {
+        this.userInfo.next(userInfo);
+    }
 
     observeDbUnivChips(): Observable<University[]> {
         return this.dbUnivChips;

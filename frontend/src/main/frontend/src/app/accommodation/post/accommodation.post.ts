@@ -133,6 +133,10 @@ export class PostAccommodation {
         this.populateApartmentNameSpinner();
     }
 
+    spinnerClick1(clickedItem) {
+        this.populateApartmentNameSpinner();
+    }
+
     populateApartmentNameSpinner() {
 
         let universityId = this.universityNameSpinnerSelectedItem.code;
