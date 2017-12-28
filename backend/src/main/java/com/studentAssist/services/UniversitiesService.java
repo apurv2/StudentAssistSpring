@@ -139,7 +139,7 @@ public class UniversitiesService {
 		int selectedUniversityID;
 
 		if (flashCardsRequestDTO.getUniversitiesIDs() != null) {
-			selectedUniversityID = getSelectedUniversityID(flashCardsRequestDTO.getUniversitiesIDs());
+			selectedUniversityID = getSelectedUniversityID(flashCardsRequestDTO.getUniversitiesIDs(), flashCardsRequestDTO.getCurrentUniversityID());
 		} else {
 			selectedUniversityID = getRecentUniversityID();
 		}
@@ -190,9 +190,19 @@ public class UniversitiesService {
 		return accommodationDAO.getRecentAccommodationAdd().getUniversity().getUniversityId();
 	}
 
-	private int getSelectedUniversityID(List<Integer> universitiesIDs) {
+	private int getSelectedUniversityID(List<Integer> universitiesIDs, int currentUniversityID) {
 		// TODO Auto-generated method stub
-		return 0;
+		if(currentUniversityID!=0) {
+			 int currentUniversityIndex = universitiesIDs.indexOf(currentUniversityID);
+			 if(currentUniversityIndex!=universitiesIDs.size()-1) {
+				 return universitiesIDs.get(currentUniversityIndex+1);
+			 }else {
+				 return universitiesIDs.get(0);
+			 }
+		}
+		else {
+			return universitiesIDs.get(0);
+		}
 	}
 
 }
