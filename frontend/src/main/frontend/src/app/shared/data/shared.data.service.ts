@@ -4,7 +4,6 @@ import { AccommodationSearchModel } from "../../accommodation/shared/models/acco
 import { University } from "../../accommodation/shared/models/universities.list.model";
 import { AccommodationAdd } from "../../accommodation/shared/models/accommodation.model";
 import { MatSnackBar } from "@angular/material";
-import { ApartmentName } from "../../accommodation/shared/models/apartment.names.model";
 import { UserModel } from "../models/user.model";
 import { Http, Response } from '@angular/http';
 import { environment } from "../../../environments/environment";
@@ -14,6 +13,7 @@ import { AuthResponse } from "ngx-facebook/dist/esm/models/auth-response";
 import { LoginResponse } from "ngx-facebook/dist/esm/models/login-response";
 import { Observer } from "rxjs/Observer";
 import { UserInfo } from "app/shared/models/user.info.model";
+import { Apartment } from "app/accommodation/shared/models/apartment.names.model";
 
 export class SharedDataService {
 
@@ -23,7 +23,7 @@ export class SharedDataService {
     accommodationAdd = new Subject<AccommodationAdd>();
     dbUnivChips = new Subject<University[]>();
     userInfo = new Subject<UserInfo>();
-    apartmentNames: ApartmentName[];
+    apartmentNames: Apartment[];
 
     observeUserInfo(): Observable<UserInfo> {
         return this.userInfo;
@@ -40,11 +40,11 @@ export class SharedDataService {
     emitDbUnivChips(univChips: University[]) {
         this.dbUnivChips.next(univChips);
     }
-    getApartmentNames(): ApartmentName[] {
+    getApartmentNames(): Apartment[] {
         return this.apartmentNames;
     }
 
-    setApartmentNames(apartmentNames: ApartmentName[]) {
+    setApartmentNames(apartmentNames: Apartment[]) {
         this.apartmentNames = apartmentNames
     }
     emitAccommodationAdd(accommodationAdd: AccommodationAdd) {

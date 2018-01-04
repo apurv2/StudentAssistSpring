@@ -17,13 +17,13 @@ public class NotificationsController extends AbstractController {
 	@Autowired
 	private NotificationsService notificationService;
 
-	@RequestMapping(method = RequestMethod.GET, value = "/getNotificationSettings")
+	@RequestMapping(method = RequestMethod.GET, value = "profile/getNotificationSettings")
 	public RNotificationSettings getNotificationSettings(HttpServletRequest request) throws Exception {
 
 		return notificationService.getNotificationSettings(getUserFromRequest(request));
 	}
 
-	@RequestMapping(method = RequestMethod.PUT, value = "/subscribeNotifications")
+	@RequestMapping(method = RequestMethod.PUT, value = "profile/subscribeNotifications")
 	public String subscribeNotifications(@RequestBody RNotificationSettings notifications, HttpServletRequest request)
 			throws Exception {
 

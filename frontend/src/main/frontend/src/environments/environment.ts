@@ -83,5 +83,7 @@ export const environment = {
     { code: "Lease Transfer", description: "Lease Transfer" }],
   createUser: 'profile/createUser',
   connected: 'connected',
-  getUserUniversities: 'profile/getUserUniversities'
+  getUserUniversities: 'profile/getUserUniversities',
+  getNotificationSettings: 'profile/getNotificationSettings',
+  subscribeNotifications: 'profile/subscribeNotifications'
 }

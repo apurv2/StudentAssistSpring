@@ -1,0 +1,55 @@
+<div class="col-sm-12 col-md-12">
+    <div class="card">
+        <div class="signin-form">
+            <h3 class="text-center">
+                <b>Subscribe for push Notifications</b>
+            </h3>
+            <h4>Apartment Type</h4>
+            <div class="col-sm-4 col-md-4">
+                <mat-checkbox [(ngModel)]="aptTypeCheckboxes['on']">On-Campus</mat-checkbox>
+            </div>
+            <div class="col-sm-4 col-md-4">
+                <mat-checkbox [(ngModel)]="aptTypeCheckboxes['off']">Off-Campus</mat-checkbox>
+            </div>
+            <div class="col-sm-4 col-md-4">
+                <mat-checkbox [(ngModel)]="aptTypeCheckboxes['dorms']">Dorms</mat-checkbox>
+            </div>
+
+            <h4>Gender</h4>
+            <mat-radio-group [(ngModel)]="selectedGender">
+                <mat-radio-button *ngFor="let gender of genderValues" [value]="gender">
+                    {{gender}}
+                </mat-radio-button>
+            </mat-radio-group>
+
+            <h4>Apartment Names</h4>
+            <h4>On-campus</h4>
+            <div class="row">
+                <div class="col-sm-4 col-md-4" *ngFor="let apartmentName of selectedUniversityDetails?.apartmentNames 
+            | notificationSettingsFilter : 'on'">
+                    <mat-checkbox [(ngModel)]="aptNameCheckboxes[apartmentName.apartmentName]">
+                        {{apartmentName.apartmentName}}</mat-checkbox>
+                </div>
+            </div>
+            <h4>Off-campus</h4>
+            <div class="row">
+                <div class="col-sm-4 col-md-4" *ngFor="let apartmentName of selectedUniversityDetails?.apartmentNames 
+            | notificationSettingsFilter : 'off'">
+                    <mat-checkbox [(ngModel)]="aptNameCheckboxes[apartmentName.apartmentName]">{{apartmentName.apartmentName}}</mat-checkbox>
+                </div>
+            </div>
+
+            <h4>Dorms</h4>
+            <div class="row">
+                <div class="col-sm-4 col-md-4" *ngFor="let apartmentName of selectedUniversityDetails?.apartmentNames 
+            | notificationSettingsFilter : 'dorms'">
+                    <mat-checkbox [(ngModel)]="aptNameCheckboxes[apartmentName.apartmentName]">{{apartmentName.apartmentName}}</mat-checkbox>
+                </div>
+            </div>
+
+            <div class="row">
+                <input type="button" (click)="subscribe()" value="subscribe">
+    </div>
+</div>
+</div>
+</div>

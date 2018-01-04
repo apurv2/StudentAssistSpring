@@ -26,7 +26,7 @@ import { SimpleSearchAddsFilters } from './accommodation/simpleSearch/filters/si
 import { SharedDataService } from './shared/data/shared.data.service';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatChipsModule, MatIconModule, MatSnackBarModule, MatSelectModule, MatInputModule, MatNativeDateModule, MatDialog, MatDialogModule, } from '@angular/material';
+import { MatChipsModule, MatIconModule, MatSnackBarModule, MatSelectModule, MatInputModule, MatNativeDateModule, MatDialog, MatDialogModule, MatCheckbox, MatCheckboxModule, MatRadioModule, } from '@angular/material';
 
 import 'hammerjs';
 import { LandingFlashCards } from './dashboard/flashCards/landing.flash.cards';
@@ -36,16 +36,17 @@ import { UserPosts } from './accommodation/post/userPosts/user.posts';
 import { MidSection } from './dashboard/midSection/landing.mid.section';
 import { SimpleSearchFilterService } from './accommodation/simpleSearch/filters/simple.search.filters.service';
 import { ChipsInputExample } from 'app/airport/airport.list';
-import { NotificationSettingsModal } from './notifications/notifications.subscribe.modal';
 import { Universities } from './universities/universities.list';
 import { AdvancedSearchFilters } from './accommodation/advancedSearch/filters/advanced.search.filters';
 import { AddsList } from './accommodation/shared/adsList/ads.list';
 import { AdvanceSearchService } from './accommodation/advancedSearch/accommodation.advanced.search.service';
-import { SubscribeNotificationsModal } from 'app/accommodation/shared/modals/subscribe.notifications.modal';
 import { LoginModal } from 'app/shared/modals/login.modal';
 import { httpFactory } from './shared/Interceptor/HttpInterceptorService';
 import { UserService } from 'app/shared/userServices/user.service';
 import { environment } from 'environments/environment';
+import { SubscribeNotificationsModal } from 'app/notifications/notifications.subscribe.modal';
+import { NotificationSettingsService } from 'app/notifications/notifications.subscribe.modal.service';
+import { NotificationSettingsFilter } from 'app/notifications/subscribe.notifications.filter';
 
 @NgModule({
   imports: [
@@ -62,6 +63,8 @@ import { environment } from 'environments/environment';
     MatInputModule,
     ReactiveFormsModule,
     MatDialogModule,
+    MatCheckboxModule,
+    MatRadioModule
 
   ],
   declarations: [
@@ -84,13 +87,13 @@ import { environment } from 'environments/environment';
     PostAccommodation,
     UserPosts,
     MidSection,
-    ChipsInputExample,
-    NotificationSettingsModal,
     Universities,
     AdvancedSearchFilters,
     AddsList,
     SubscribeNotificationsModal,
-    LoginModal
+    LoginModal,
+    NotificationSettingsFilter,
+
 
   ],
   providers: [UniversitiesService,
@@ -103,6 +106,7 @@ import { environment } from 'environments/environment';
     AdvanceSearchService,
     MatDialog,
     UserService,
+    NotificationSettingsService,
     {
       provide: Http,
       useFactory: httpFactory,

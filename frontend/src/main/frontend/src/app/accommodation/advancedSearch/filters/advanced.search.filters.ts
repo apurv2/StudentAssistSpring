@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { AccommodationDropdown } from "../../shared/models/accommodation.dropdown.model";
 import { environment } from "../../../../environments/environment";
 import { SharedDataService } from "../../../shared/data/shared.data.service";
-import { ApartmentName } from "../../shared/models/apartment.names.model";
+import { Apartment } from "../../shared/models/apartment.names.model";
 import { University } from "../../shared/models/universities.list.model";
 import { SimpleSearchFilterService } from "../../simpleSearch/filters/simple.search.filters.service";
 import { AccommodationSearchModel } from "../../shared/models/accommodation.filter.model";
@@ -24,7 +24,7 @@ export class AdvancedSearchFilters {
     universityNameSpinnerSelectedItem: AccommodationDropdown;
     genderSpinnerSelectedItem: AccommodationDropdown;
     selectedUniversities: University[];
-    allApartments: ApartmentName[];
+    allApartments: Apartment[];
 
     constructor(private sharedDataService: SharedDataService,
         private simpleSearchFilterService: SimpleSearchFilterService) { }
@@ -70,7 +70,7 @@ export class AdvancedSearchFilters {
         }
     }
 
-    mapApartmentNames(apartments: ApartmentName[]) {
+    mapApartmentNames(apartments: Apartment[]) {
         this.allApartments = apartments;
         this.populateApartmentNameSpinner();
     }

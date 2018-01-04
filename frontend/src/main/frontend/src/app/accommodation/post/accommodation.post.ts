@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import { AccommodationDropdown } from '../shared/models/accommodation.dropdown.model';
 import { University } from '../shared/models/universities.list.model';
-import { ApartmentName } from '../shared/models/apartment.names.model';
+import { Apartment } from '../shared/models/apartment.names.model';
 import { SharedDataService } from '../../shared/data/shared.data.service';
 import { SimpleSearchFilterService } from '../simpleSearch/filters/simple.search.filters.service';
 import { environment } from '../../../environments/environment';
@@ -41,7 +41,7 @@ export class PostAccommodation {
     universityNameSpinnerSelectedItem: AccommodationDropdown;
     genderSpinnerSelectedItem: AccommodationDropdown;
     selectedUniversities: University[];
-    allApartments: ApartmentName[];
+    allApartments: Apartment[];
     matcher = new MyErrorStateMatcher();
 
 
@@ -101,7 +101,7 @@ export class PostAccommodation {
         }
     }
 
-    mapApartmentNames(apartments: ApartmentName[]) {
+    mapApartmentNames(apartments: Apartment[]) {
         this.allApartments = apartments;
         this.populateApartmentNameSpinner();
     }

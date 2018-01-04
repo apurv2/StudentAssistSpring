@@ -4,9 +4,9 @@ import { environment } from "../../../../environments/environment";
 import { AccommodationSearchModel } from "../../shared/models/accommodation.filter.model";
 import { University } from "../../shared/models/universities.list.model";
 import { SimpleSearchFilterService } from "./simple.search.filters.service";
-import { ApartmentName } from "../../shared/models/apartment.names.model";
 import { AccommodationDropdown } from "../../shared/models/accommodation.dropdown.model";
 import { MatSnackBar } from "@angular/material";
+import { Apartment } from "app/accommodation/shared/models/apartment.names.model";
 
 
 @Component({
@@ -93,7 +93,7 @@ export class SimpleSearchAddsFilters {
         }
     }
     
-    mapApartmentNames(apartments: ApartmentName[]) {
+    mapApartmentNames(apartments: Apartment[]) {
         this.rightSpinnerValues = new Array();
         this.rightSpinnerValues.length = 0;
         for (let apartment of apartments) {

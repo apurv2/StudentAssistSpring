@@ -2,10 +2,10 @@ import { Input, Component, Injectable } from "@angular/core";
 import { AccommodationAdd } from "../models/accommodation.model";
 import { SharedDataService } from "../../../shared/data/shared.data.service";
 import { MatDialog } from "@angular/material";
-import { SubscribeNotificationsModal } from "app/accommodation/shared/modals/subscribe.notifications.modal";
 import { FacebookService } from "ngx-facebook/dist/esm/providers/facebook";
 import { LoginModal } from "../../../shared/modals/login.modal";
 import { UserService } from "../../../shared/userServices/user.service";
+import { SubscribeNotificationsModal } from "app/notifications/notifications.subscribe.modal";
 
 
 @Component({
