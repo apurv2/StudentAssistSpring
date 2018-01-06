@@ -7,6 +7,8 @@ import { SharedDataService } from 'app/shared/data/shared.data.service';
 import { University } from "app/accommodation/shared/models/universities.list.model";
 import { CheckBoxModel } from 'app/shared/models/checkbox.model';
 import { Apartment } from 'app/accommodation/shared/models/apartment.names.model';
+import { checkAndUpdateBinding } from '@angular/core/src/view/util';
+import { environment } from 'environments/environment';
 
 @Component({
     selector: 'notification-settings',
@@ -21,14 +23,21 @@ export class SubscribeNotificationsModal {
     notificationSettings: NotificationSettings;
     selectedUniversityDetails: UniversityApartments;
     selectedUniversityId: number;
-    universityNames: University;
-    aptNameCheckboxes: string[] = [];
+    allUniversities: University[] = [];
+    aptNameCheckboxes: CheckBoxModel[] = [];
     aptTypeCheckboxes: string[] = [];
     genderValues = [
         'Male',
         'Female',
     ];
     selectedGender: string;
+    showUnivs: boolean;
+
+    aptTypeVisibility = {
+        on: false,
+        off: false,
+        dorms: false
+    };
 
     onNoClick(): void {
         this.dialogRef.close();
@@ -50,12 +59,26 @@ export class SubscribeNotificationsModal {
                 this.selectedUniversityId = this.notificationSettings.universityId;
 
                 this.setSelectedUnivAptNames();
+                this.extractUniversitynames();
 
+                if (notificationSettings.universityId === -1) {
+                    this.showUnivs = true;
+                }
                 setTimeout(() => {
                     this.populateCheckBoxNgModel();
                 }, 500);
             });
 
+    }
+
+    extractUniversitynames() {
+        for (let university of this.notificationSettings.apartmentNames) {
+
+            let univ: University = new University();
+            univ.universityName = university.universityName;
+            univ.universityId = university.universityId;
+            this.allUniversities.push(univ);
+        }
     }
 
     setSelectedUnivAptNames() {
@@ -74,16 +97,19 @@ export class SubscribeNotificationsModal {
             let value = this.notificationSettings.apartmentName.
                 indexOf(aptName.apartmentName) != -1 ? true : false;
 
-            this.aptNameCheckboxes[aptName.apartmentName] = value;
+            let checkbox: CheckBoxModel = new CheckBoxModel();
+            checkbox.aptType = aptName.apartmentType;
+            checkbox.value = value;
+            this.aptNameCheckboxes[aptName.apartmentName] = checkbox;
         }
 
         for (let aptType of this.notificationSettings.apartmentType) {
 
+            this.aptTypeVisibility[aptType] = true;
             let value = this.notificationSettings.apartmentType.
                 indexOf(aptType) != -1 ? true : false;
             this.aptTypeCheckboxes[aptType] = value;
         }
-
         this.selectedGender = this.notificationSettings.gender;
     }
 
@@ -94,7 +120,7 @@ export class SubscribeNotificationsModal {
         let aptTypes: string[] = [];
 
         for (let aptName in this.aptNameCheckboxes) {
-            if (this.aptNameCheckboxes[aptName]) {
+            if (this.aptNameCheckboxes[aptName].value) {
                 aptNames.push(aptName);
             }
         }
@@ -107,8 +133,35 @@ export class SubscribeNotificationsModal {
         settings.apartmentName = aptNames;
         settings.apartmentType = aptTypes;
         settings.gender = this.selectedGender;
+        settings.universityId = this.selectedUniversityId;
         this.notificationService.
             subscribeForNotifications(settings).subscribe(status => console.log(status));
+
+    }
+
+    selectUniversity() {
+        this.showUnivs = false;
+        this.setSelectedUnivAptNames();
+    }
+    backClicked() {
+        this.showUnivs = true;
+    }
+
+    checkUnCheckBoxes(aptType: string) {
+
+        if (aptType === environment.all) {
+            for (let aptName in this.aptNameCheckboxes) {
+                this.aptNameCheckboxes[aptName].value = false;
+            }
+        }
+        else {
+            this.aptTypeVisibility[aptType] = !this.aptTypeVisibility[aptType];
+            for (let aptName in this.aptNameCheckboxes) {
+                if (this.aptNameCheckboxes[aptName].aptType === aptType) {
+                    this.aptNameCheckboxes[aptName].value = false;
+                }
+            }
+        }
 
     }
 }
