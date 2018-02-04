@@ -80,7 +80,6 @@ export class LandingSearch {
         this.sharedDataService.setUserSelectedUniversitiesList(this.selectedUniversities);
         localStorage.setItem(environment.userSelectedUnivs,
           JSON.stringify(this.selectedUniversities));
-
         this.updateDBChips();
       }
   }

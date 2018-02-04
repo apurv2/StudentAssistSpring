@@ -6,6 +6,7 @@
 export const environment = {
   url: 'http://localhost:8080/',
   production: false,
+  appId: '931333680308184',
   APARTMENT_NAME: "apartmentName",
   NO_OF_ROOMS: "noOfRooms",
   VACANCIES: "vacancies",
@@ -82,5 +83,8 @@ export const environment = {
     { code: "Lease Transfer", description: "Lease Transfer" }],
   createUser: 'profile/createUser',
   connected: 'connected',
-  getUserUniversities: 'profile/getUserUniversities'
+  getUserUniversities: 'profile/getUserUniversities',
+  getNotificationSettings: 'profile/getNotificationSettings',
+  subscribeNotifications: 'profile/subscribeNotifications',
+  all: 'all'
 }

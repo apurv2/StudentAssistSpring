@@ -65,8 +65,6 @@ public class NotificationsService {
 		Universities university = new Universities();
 		university.setUniversityId(notificationSettings.getUniversityId());
 
-		// inserting null for user because we are inserting user object into
-		// notificationsettings object in the Repository(DAO) layer.
 		return notificationsDAO
 				.subscribeNotifications(user,
 						new NotificationSettings(null, notificationSettings.getApartmentName(),

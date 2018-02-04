@@ -1,0 +1,85 @@
+<div class="col-sm-12 col-md-12">
+    <div class="card">
+        <div class="signin-form">
+            <h3 class="text-center">
+                <b>Subscribe for push Notifications</b>
+            </h3>
+            <div *ngIf="showUnivs">
+                <div class="row">
+                    <h5>Select a University</h5>
+                </div>
+                <mat-radio-group [(ngModel)]="selectedUniversityId">
+                    <mat-radio-button *ngFor="let university of allUniversities" [value]="university.universityId">
+                        {{university.universityName}}
+                    </mat-radio-button>
+                </mat-radio-group>
+
+                <span>
+                    <a href="javascript:void(0)" (click)="selectUniversity()">
+                        <i class="fa fa-send" aria-hidden="true"></i>
+                    </a>
+                </span>
+            </div>
+
+
+            <div *ngIf="!showUnivs">
+                <span>
+                    <a href="javascript:void(0)" (click)="backClicked()">
+                        <i class="fa fa-send" aria-hidden="true"></i>
+                    </a>
+                </span>
+
+                <h4>Apartment Type</h4>
+                <div class="col-sm-4 col-md-4">
+                    <mat-checkbox (click)="checkUnCheckBoxes('on')" [(ngModel)]="aptTypeCheckboxes['on']">On-Campus</mat-checkbox>
+                </div>
+                <div class="col-sm-4 col-md-4">
+                    <mat-checkbox (click)="checkUnCheckBoxes('off')" [(ngModel)]="aptTypeCheckboxes['off']">Off-Campus</mat-checkbox>
+                </div>
+                <div class="col-sm-4 col-md-4">
+                    <mat-checkbox (click)="checkUnCheckBoxes('dorms')" [(ngModel)]="aptTypeCheckboxes['dorms']">Dorms</mat-checkbox>
+                </div>
+
+                <h4>Gender</h4>
+                <mat-radio-group [(ngModel)]="selectedGender">
+                    <mat-radio-button *ngFor="let gender of genderValues" [value]="gender">
+                        {{gender}}
+                    </mat-radio-button>
+                </mat-radio-group>
+                <h4>Apartment Names</h4>
+                <div *ngIf="aptTypeVisibility.on">
+                    <h4>On-campus</h4>
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4" *ngFor="let apartmentName of selectedUniversityDetails?.apartmentNames 
+            | notificationSettingsFilter : 'on'">
+                            <mat-checkbox [(ngModel)]="aptNameCheckboxes[apartmentName.apartmentName].value">
+                                {{apartmentName.apartmentName}}</mat-checkbox>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="aptTypeVisibility.off">
+                    <h4>Off-campus</h4>
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4" *ngFor="let apartmentName of selectedUniversityDetails?.apartmentNames 
+            | notificationSettingsFilter : 'off'">
+                            <mat-checkbox [(ngModel)]="aptNameCheckboxes[apartmentName.apartmentName].value">{{apartmentName.apartmentName}}</mat-checkbox>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="aptTypeVisibility.dorms">
+                    <h4>Dorms</h4>
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4" *ngFor="let apartmentName of selectedUniversityDetails?.apartmentNames 
+            | notificationSettingsFilter : 'dorms'">
+                            <mat-checkbox [(ngModel)]="aptNameCheckboxes[apartmentName.apartmentName].value">{{apartmentName.apartmentName}}</mat-checkbox>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <input type="button" (click)="subscribe()" value="subscribe">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
