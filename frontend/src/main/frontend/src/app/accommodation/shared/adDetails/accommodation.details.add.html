@@ -1,46 +1,79 @@
-<div class="card animated-card1">
-    <div class="view-details height-400 overflow-hidden">
+<div class="card animated-card1 detail-card">
+    <div class="view-details image-container overflow-hidden">
         <div class="overlap-content">
             <h2 class="pull-left margin-top-0">{{selectedAccommodationAdd?.apartmentName}}</h2>
             <span class="label price-label pull-right dark-bg font-size-18">${{selectedAccommodationAdd?.cost}}</span>
         </div>
-        <img src="./assets/images/business.jpg" alt="" width="100%" />
+        <div ng2-carouselamos class="slides-wrapper" [items]="items" [width]="900" [$prev]="prev" [$next]="next" [$item]="item">
+        </div>
+        <ng-template #prev>
+            <i class="material-icons" id="left">keyboard_arrow_left</i>
+        </ng-template>
+        <ng-template #next>
+            <i class="material-icons" id="left">keyboard_arrow_right</i>
+        </ng-template>
+        <ng-template #item let-item let-i="index">
+
+            <div class="items">
+                <img src="{{ item.name }}">
+            </div>
+
+        </ng-template>
+
+
     </div>
     <div class="panel-footer white-bg padding-30">
         <div class="row">
             <div class="col-sm-9">
-                <h3 class="media-heading">
-                    <b>{{selectedAccommodationAdd?.apartmentName}}</b>
-                </h3>
                 <p class="text-muted address">
                     <b>Mapple road, taxes North main road</b>
                 </p>
-                <p class="text-muted">{{selectedAccommodationAdd?.notes}}</p>
+
+                <p class="text-muted address">
+                    On-Campus
+                </p>
+
+                <p class="text-muted address">
+                    1 bhk / 1 bath for Male (2 Vacancies)
+                </p>
+                <p class="text-muted address">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    ... The first word, “Lorem,” isn't even a word; instead it's a piece of the word “dolorem,” meaning pain,
+                    suffering, or sorrow.
+                </p>
+
             </div>
             <div class="col-sm-3">
                 <div class="social-icons">
                     <span>
-                        <a href="javascript:void(0)"(click)="subscribe()">
-                            <i class="fa fa-rss" aria-hidden="true"></i>
+                        <a href="javascript:void(0)" (click)="subscribe()">
+                            <i class="fa fa-rss-square" aria-hidden="true"></i>
                         </a>
                     </span>
                     <span>
                         <a href="#">
-                            <i aria-hidden="true" class="fa fa-facebook"></i>
+                            <i aria-hidden="true" class="fa fa-facebook-square"></i>
                         </a>
                     </span>
                     <span>
                         <a href="#">
-                            <i aria-hidden="true" class="fa fa-share-alt"></i>
+                            <i aria-hidden="true" class="fa fa-share-alt-square"></i>
+                        </a>
+                    </span>
+                    <span>
+                        <a href="#">
+                            <i aria-hidden="true" class="fa fa-envelope-square"></i>
                         </a>
                     </span>
                 </div>
-                <div class="form-group xs-display-inline">
+                <p class="text-muted posted-by">{{selectedAccommodationAdd?.notes}}</p>
+                <!-- <div class="form-group xs-display-inline">
                     <button type="button" class="btn primary-btn btn-width-100">CALL</button>
                 </div>
                 <div class="form-group xs-display-inline">
                     <button type="button" class="btn secondary-btn btn-width-100">ENQUIRY</button>
-                </div>
+                </div> -->
+
             </div>
         </div>
     </div>

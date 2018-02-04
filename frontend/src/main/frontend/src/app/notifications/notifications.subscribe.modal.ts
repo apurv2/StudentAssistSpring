@@ -92,25 +92,27 @@ export class SubscribeNotificationsModal {
 
     populateCheckBoxNgModel() {
 
-        for (let aptName of this.selectedUniversityDetails.apartmentNames) {
+        if (this.selectedUniversityDetails) {
+            for (let aptName of this.selectedUniversityDetails.apartmentNames) {
 
-            let value = this.notificationSettings.apartmentName.
-                indexOf(aptName.apartmentName) != -1 ? true : false;
+                let value = this.notificationSettings.apartmentName.
+                    indexOf(aptName.apartmentName) != -1 ? true : false;
 
-            let checkbox: CheckBoxModel = new CheckBoxModel();
-            checkbox.aptType = aptName.apartmentType;
-            checkbox.value = value;
-            this.aptNameCheckboxes[aptName.apartmentName] = checkbox;
+                let checkbox: CheckBoxModel = new CheckBoxModel();
+                checkbox.aptType = aptName.apartmentType;
+                checkbox.value = value;
+                this.aptNameCheckboxes[aptName.apartmentName] = checkbox;
+            }
+
+            for (let aptType of this.notificationSettings.apartmentType) {
+
+                this.aptTypeVisibility[aptType] = true;
+                let value = this.notificationSettings.apartmentType.
+                    indexOf(aptType) != -1 ? true : false;
+                this.aptTypeCheckboxes[aptType] = value;
+            }
+            this.selectedGender = this.notificationSettings.gender;
         }
-
-        for (let aptType of this.notificationSettings.apartmentType) {
-
-            this.aptTypeVisibility[aptType] = true;
-            let value = this.notificationSettings.apartmentType.
-                indexOf(aptType) != -1 ? true : false;
-            this.aptTypeCheckboxes[aptType] = value;
-        }
-        this.selectedGender = this.notificationSettings.gender;
     }
 
     subscribe() {

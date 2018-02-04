@@ -11,6 +11,12 @@ import { AccommodationSearchModel } from '../shared/models/accommodation.filter.
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher, MatDialog } from '@angular/material';
 import { LoginModal } from 'app/shared/modals/login.modal';
+import { CloudinaryUploader } from 'ng2-cloudinary/dist/esm/src/cloudinary-uploader.service';
+import { CloudinaryOptions } from 'ng2-cloudinary/dist/esm/src/cloudinary-options.class';
+import { PostAccommodationService } from 'app/accommodation/post/accommodation.post.service';
+import { Observable } from 'rxjs/Observable';
+import { AccommodationAdd } from 'app/accommodation/shared/models/accommodation.model';
+import { SuccessOrFailureModal } from 'app/shared/modals/success.or.failure';
 
 
 /** Error when invalid control is dirty, touched, or submitted. */
@@ -43,16 +49,22 @@ export class PostAccommodation {
     selectedUniversities: University[];
     allApartments: Apartment[];
     matcher = new MyErrorStateMatcher();
-
+    photos: File[] = [];
+    cost: number;
+    notes: string;
+    email: string;
 
     emailFormControl = new FormControl('', [
         Validators.required,
         Validators.email,
     ]);
 
+    cloudinaryUrls: string[] = [];
+
     constructor(private sharedDataService: SharedDataService,
         private simpleSearchFilterService: SimpleSearchFilterService,
-        private dialog: MatDialog) { }
+        private dialog: MatDialog,
+        private postAccommodationService: PostAccommodationService) { }
 
     ngOnInit() {
 
@@ -157,8 +169,8 @@ export class PostAccommodation {
     }
 
     postAccommodation() {
-        console.log("clicked here");
-        this.openDialog();
+        this.photos.length > 0 ? this.uploadImages() : this.postAccommodationAdd(null)
+            .subscribe(e => this.handlePostAccommodationResponse(e));
     }
 
     openDialog(): void {
@@ -168,5 +180,73 @@ export class PostAccommodation {
             console.log('The dialog was closed');
         });
     }
+
+    addFile(files: any) {
+        for (let photoFile of files.files) {
+            let reader = new FileReader();
+            reader.onload = (e) => this.photos.push(e.target['result']);
+            reader.readAsDataURL(photoFile);
+        }
+    }
+
+    uploadImages() {
+        let obs: Observable<any>[] = [];
+        for (let photo of this.photos) {
+            const params = this.createUploadParams(photo);
+            obs.push(this.postAccommodationService.postImages(environment.cloudinaryURL, params));
+        }
+
+        Observable.merge(obs)
+            .flatMap(obs => obs)
+            .map(cloudinaryResponse => this.cloudinaryUrls.push(cloudinaryResponse.url))
+            .filter(e => this.cloudinaryUrls.length == this.photos.length)
+            .switchMap(e => this.postAccommodationAdd(this.cloudinaryUrls))
+            .subscribe(e => this.handlePostAccommodationResponse(e));
+
+    }
+
+    private createUploadParams(photo) {
+        let formData: FormData = new FormData();
+        formData.append(environment.upload_preset, environment.CLOUDINARY_PRESET_VALUE);
+        formData.append(environment.file, photo);
+        return formData;
+    }
+
+    postAccommodationAdd(photoUrls: string[]): Observable<any> {
+        let accommodationAdd: AccommodationAdd = this.preparePostAccommodationParams();
+        if (photoUrls != null) { accommodationAdd.addPhotoIds = photoUrls }
+        return this.postAccommodationService
+            .postAccommodation(environment.createAccommodationAdd, accommodationAdd);
+    }
+
+    private preparePostAccommodationParams(): AccommodationAdd {
+
+        let accommodationAdd: AccommodationAdd = new AccommodationAdd();
+        accommodationAdd.apartmentName = this.aptNameSpinnerSelectedItem.code;
+        accommodationAdd.gender = this.genderSpinnerSelectedItem.code;
+        accommodationAdd.vacancies = +this.vacanciesSpinnerSelectedItem.code;
+        accommodationAdd.cost = this.cost;
+        accommodationAdd.notes = this.notes;
+        accommodationAdd.universityId = +this.universityNameSpinnerSelectedItem.code;
+        accommodationAdd.emailId = this.email;
+        accommodationAdd.noOfRooms = this.noOfRoomsSpinnerSelectedItem.code;
+        return accommodationAdd;
+    }
+
+    handlePostAccommodationResponse(response) {
+        let data: any = {};
+        data.message = response.response === environment.success ? "success" : "failure";
+        data.response = response.response;
+
+        this.dialog.open(SuccessOrFailureModal, {
+            data: data
+        }).
+            afterClosed().subscribe(result => {
+                console.log('The dialog was closed');
+            });
+
+
+    }
+
 
 }

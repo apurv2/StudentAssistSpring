@@ -16,15 +16,11 @@ public class ApplicationApi implements CommandLineRunner {
 		SpringApplication.run(ApplicationApi.class, args);
 	}
 
-	@Autowired
-	DataSource dataSource;
 
 	@Override
 	public void run(String... args) throws Exception {
 
 		XTrustProvider.install();
-
-		System.out.println("DATASOURCE = " + dataSource);
 
 	}
 }

@@ -24,7 +24,6 @@ export class SharedDataService {
     dbUnivChips = new Subject<University[]>();
     userInfo = new Subject<UserInfo>();
     apartmentNames: Apartment[];
-
     observeUserInfo(): Observable<UserInfo> {
         return this.userInfo;
     }

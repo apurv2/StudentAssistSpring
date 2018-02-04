@@ -2,7 +2,7 @@ export class AccommodationAdd {
 
     vacancies: number;
     gender: string;
-    noOfRooms: number;
+    noOfRooms: string;
     cost: number;
     fbId: number;
     notes: string;
@@ -22,4 +22,5 @@ export class AccommodationAdd {
     city: string;
     state: string;
     zip: number;
+    addPhotoIds: string[];
 }

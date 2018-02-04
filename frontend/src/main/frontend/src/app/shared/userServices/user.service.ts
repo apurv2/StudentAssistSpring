@@ -25,11 +25,12 @@ export class UserService {
         let universityIds: number[] = new Array();
         let user: UserModel = new UserModel();
 
-        for (let university of userUniversities) {
-            universityIds.push(university.universityId);
+        if (userUniversities && userUniversities.length > 0) {
+            for (let university of userUniversities) {
+                universityIds.push(university.universityId);
+            }
+            user.selectedUniversityIds = universityIds;
         }
-        user.selectedUniversityIds = universityIds;
-
         return this.http.put(environment.createUser, user).
             map(res => res.json());
     }
@@ -41,11 +42,11 @@ export class UserService {
                 observer.next(resp.status === environment.connected ? true : false)));
     }
 
-    login(): Observable<LoginResponse> {
+    login(): Observable<boolean> {
 
-        return Observable.create((observer: Observer<LoginResponse>) =>
+        return Observable.create((observer: Observer<boolean>) =>
             this.fb.login().then((resp: LoginResponse) =>
-                observer.next(resp)))
+                observer.next(resp.status === environment.connected ? true : false)));
     }
 
     logout(): Observable<boolean> {
@@ -61,7 +62,6 @@ export class UserService {
     }
 
     getUserInfoFromFb(): Observable<UserInfo> {
-        console.log("apurv came here")
         return Observable.create((observer: Observer<UserInfo>) =>
             this.fb.api('/me/', 'get').then(resp => {
 
@@ -71,6 +71,10 @@ export class UserService {
 
                 observer.next(userInfo);
             }));
+    }
+
+    returnFalseObservable(): Observable<boolean> {
+        return Observable.create().next(false);
     }
 
 }

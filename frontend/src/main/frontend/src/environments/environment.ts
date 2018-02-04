@@ -86,5 +86,11 @@ export const environment = {
   getUserUniversities: 'profile/getUserUniversities',
   getNotificationSettings: 'profile/getNotificationSettings',
   subscribeNotifications: 'profile/subscribeNotifications',
-  all: 'all'
+  all: 'all',
+  createAccommodationAdd: 'profile/createAccommodationAdd',
+  cloudinaryURL: 'https://api.cloudinary.com/v1_1/duf1ntj7z/upload',
+  CLOUDINARY_PRESET_VALUE: 'qdisf7f1',
+  upload_preset: 'upload_preset',
+  file: 'file',
+  success: 'success'
 }

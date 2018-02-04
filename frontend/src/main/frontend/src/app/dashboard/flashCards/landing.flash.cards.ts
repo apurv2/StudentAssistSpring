@@ -30,7 +30,7 @@ export class LandingFlashCards {
     }
 
     getFlashCards() {
-        this.flashCardsService.getFlashCards()
+        this.flashCardsService.getFlashCards(null)
             .subscribe(flashCards => {
                 this.flashCardsData = flashCards;
             });

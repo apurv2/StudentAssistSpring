@@ -79,7 +79,7 @@ public class AccommodationController extends AbstractController {
 
 	}
 
-	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT, value = "/createAccommodationAdd")
+	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT, value = "profile/createAccommodationAdd")
 	public String createAccommodationAdd(@RequestBody RAccommodationAdd rAccommodationAdd, HttpServletRequest request)
 			throws Exception {
 
@@ -89,14 +89,14 @@ public class AccommodationController extends AbstractController {
 		return accommodationService.createAccommodationAdd(userId, rAccommodationAdd.getApartmentName(),
 				rAccommodationAdd.getNoOfRooms(), rAccommodationAdd.getVacancies(), rAccommodationAdd.getCost(),
 				rAccommodationAdd.getGender(), rAccommodationAdd.getFbId(), rAccommodationAdd.getNotes(),
-				rAccommodationAdd.getAddPhotoIds());
+				rAccommodationAdd.getAddPhotoIds(), rAccommodationAdd.getUniversityId());
 
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, value = "/deleteAccommodationAdd")
 	public String deleteAccommodationAdd(@RequestParam("addId") String addId) throws NumberFormatException, Exception {
 
-		return accommodationService.deleteAccommodationAdd(Long.parseLong(addId));
+		return accommodationService.deleteAccommodationAdd(Integer.parseInt(addId));
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/getUserPosts")

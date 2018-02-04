@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import { University } from '../../accommodation/shared/models/universities.list.model';
@@ -105,5 +105,15 @@ export class LandingSearch {
   ngOnDestroy() {
     this.searchBarSubscription.unsubscribe();
     this.dbUnivChips.unsubscribe();
+  }
+
+  onEnterClicked() {
+    this.router.navigate(['/simple-search']);
+  }
+
+  @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(evt: KeyboardEvent) {
+
+    this.searchTerm$.next('');
+
   }
 }

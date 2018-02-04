@@ -3,7 +3,7 @@
     <div class="col-sm-6 col-sm-offset-3">
         <h1>
             <span>Student Assist </span>
-            <div>Book unique homes and experience a city like a local.</div>
+            <div>Search for unique homes On/Off Campus and experience the university as your own.</div>
         </h1>
 
         <div class="search-panel">
@@ -16,7 +16,7 @@
                         </mat-chip>
 
                         <input [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
-                            (keyup)="searchTerm$.next($event.target.value)" [(ngModel)]="searchBarText" class=" form-control type-search"
+                            (keyup)="searchTerm$.next($event.target.value)" (keyup.enter)="onEnterClicked()" [(ngModel)]="searchBarText" class=" form-control type-search"
                             [ngModelOptions]="{standalone: true}" placeholder="Enter University Name(s)...">
 
                     </mat-chip-list>

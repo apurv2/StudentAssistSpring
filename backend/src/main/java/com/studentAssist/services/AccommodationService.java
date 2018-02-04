@@ -17,6 +17,7 @@ import com.cloudinary.Cloudinary;
 import com.studentAssist.dao.AccommodationDAO;
 import com.studentAssist.entities.AccommodationAdd;
 import com.studentAssist.entities.Apartments;
+import com.studentAssist.entities.Universities;
 import com.studentAssist.entities.UniversityPhotos;
 import com.studentAssist.entities.UserVisitedAdds;
 import com.studentAssist.entities.Users;
@@ -64,15 +65,20 @@ public class AccommodationService {
 	}
 
 	public String createAccommodationAdd(String userId, String apartmentName, String noOfRooms, String vacancies,
-			String cost, String gender, String fbId, String notes, List<String> addPhotoIds) throws Exception {
+			String cost, String gender, String fbId, String notes, List<String> addPhotoIds, int universityId)
+			throws Exception {
 
 		AccommodationAdd advertisement = new AccommodationAdd(vacancies, gender, noOfRooms, cost, fbId, notes,
 				Utilities.getDate(), addPhotoIds);
-
+		
+		Universities university = new Universities();
+		university.setUniversityId(universityId);
+		advertisement.setUniversity(university);
+		
 		return accommmodationDAO.createAccommodationAdd(userId, advertisement, apartmentName);
 	}
 
-	public String deleteAccommodationAdd(long addId) throws Exception {
+	public String deleteAccommodationAdd(int addId) throws Exception {
 
 		Cloudinary cloudinary;
 		cloudinary = new Cloudinary("cloudinary://647816789382186:5R3U1Oc9zwvnPOfI-TtlIeI0u_E@duf1ntj7z");

@@ -77,6 +77,9 @@ a{
 .width-80{
     width: 80px;
 }
+.width-120{
+    width: 120px;
+}
 .height-400{
     height: 400px;
 }
@@ -116,6 +119,9 @@ a{
 .padding-30{
     padding: 30px;
 }
+.padding-20{
+    padding: 20px;
+}
 .highlight-text{
     color: #666;
     font-weight: 700;
@@ -128,7 +134,7 @@ a{
 }
 .price-label{
     padding: 5px 7px;
-    border-radius: 20px;
+    border-radius: 10px;
     font-size: 12px;
     font-weight: 400;
 }
@@ -160,13 +166,33 @@ a{
 .btn-width-100{
     width: 100px;
 }
+.detail-card{
+    margin-top:10px; 
+}
+.image-container
+{
+    height: 320px;
+}
+.posted-by
+{
+    text-transform: capitalize;
+}
+.search-container .mat-form-field-wrapper
+{
+    padding-bottom: 0 !important;
+}
+.search-container .mat-form-field-underline
+{
+    position: unset !important;
+}
 .social-icons{
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 .social-icons i
 {
-    padding-right: 10px;
-    font-size: 24px;
+    padding-right: 8px;
+    font-size: 30px;
+    color: #fb6362;
 }
 .margin-bottom-30{
     margin-bottom: 30px;
@@ -289,8 +315,12 @@ line-height: 24px;
 .mat-form-field
 {
     padding: 0px 10px 0px 10px;
+    font-family: 'Josefin Sans', sans-serif !important;
 }
-
+.mat-option, .mat-select
+{
+    font-family: 'Josefin Sans', sans-serif !important;
+}
 .useraccount .media-body, .useraccount .media-left{
     vertical-align: middle;
 }
@@ -416,16 +446,26 @@ line-height: 24px;
     height: 320px;
     transition: all 0.1s;
 }
+.no-record{
+    padding: 20px;
+    background: #fff;
+    text-align: center;
+    font-weight: 800;
+    margin: 0px 5px;
+    display: none;
+}
 .card{
     background: #fff;
     border-radius: 3px;
-    box-shadow: 0 2px 4px rgba(161, 60, 60, 0.05);
+    /* box-shadow: 0 2px 4px rgba(161, 60, 60, 0.05);*/
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     border: 1px solid rgba(0,0,0,.06);
     overflow: hidden;
     margin-bottom: 5px;
 }
 .vertical-card:hover {
-    box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+   /* box-shadow: 0 8px 30px rgba(0,0,0,0.1);*/
+   box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
 }
 .animated-card1{
     transition: all .3s;
@@ -485,7 +525,8 @@ line-height: 24px;
 .rating-card {
     background: #fff;
     border-radius: 3px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+   /* box-shadow: 0 2px 4px rgba(0,0,0,0.05);*/
+   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     border: 1px solid rgba(0,0,0,.06);
     transition: all .1s;
     overflow: hidden;
@@ -493,7 +534,8 @@ line-height: 24px;
     margin-bottom: 30px;
 }
 .rating-card:hover {
-    box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    /*box-shadow: 0 8px 30px rgba(0,0,0,0.1);*/
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
 }
 .rating-card .card-usr-img{
     width: 90px;
@@ -504,6 +546,7 @@ line-height: 24px;
 }
 .rating-card .card-usr-img img{
     width: 100%;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 .rating-card .card-usr-img:before{
     content: '';
@@ -537,7 +580,8 @@ line-height: 24px;
 .overlap-content{
     position: absolute;
     width: 100%;
-    padding: 30px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.2);
 }
 
 
@@ -553,7 +597,10 @@ line-height: 24px;
 .signin-form{
     padding: 30px;
 }
-
+.post-accom-form
+{
+    padding: 10px;
+}
 /*tabs*/
 .nav-tabs{
     border-bottom: 0;
@@ -703,7 +750,7 @@ line-height: 24px;
     height: 100%;
     width: 0;
     position: fixed;
-    z-index: 3;
+    z-index: 5;
     top: 0;
     right: 0;
     background-color: #fff;
@@ -747,7 +794,7 @@ line-height: 24px;
     right: 0;
     top: 0;
     bottom: 0;
-    z-index: 2;
+    z-index: 4;
     display: none;
 }
 .card-group{
@@ -876,8 +923,7 @@ height: 60px;
 border-radius: 100%;
 padding: 10px;
 margin: 2px;
-box-shadow: 0 3px 6px rgba(0,0,0,.2);
-    border: 3px solid #d0d3db;
+box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 .banner h1 {
     margin-top: -15px;
@@ -913,7 +959,7 @@ box-shadow: 0 3px 6px rgba(0,0,0,.2);
     width: 100%;
    margin-bottom: 5px;
    border-radius: 3px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.50);
+   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     border: 2px solid rgba(255, 255, 255, 1);
     overflow: hidden;
     background-color: #fff;
@@ -1043,7 +1089,6 @@ input.mat-chip-input {
     border: none;
     border-radius: 2px;
     color: #FFF;
-    font-family: 'Roboto', sans-serif;
     font-weight: 500;
     transition: 0.2s ease;
     cursor: pointer;
@@ -1071,7 +1116,72 @@ input.mat-chip-input {
   button.social-signin.google {
     background: #DD4B39;
   }
+  .signin-form label
+  {
+    font-weight: 400;
+  }
 /*End Login*/
+.notification-form .mat-checkbox-layout
+{
+  max-width: 250px; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+  .mat-radio-button,.mat-checkbox, b {
+    font-family: 'Josefin Sans', sans-serif !important;
+}
+.mat-radio-label-content
+{
+    padding: 0px 10px 0px 5px !important;
+}
+label
+{
+    font-weight: 400 !important;
+}
+.subscription .card
+{
+    border: 0px;
+    box-shadow:none;
+}
+.notification-form
+{
+    padding: 0 20px;
+    max-height: 520px;
+    overflow: auto;
+    max-width: 900px;
+}
+.notification-form h4
+{
+    padding-top:10px;
+    font-weight: 600;
+}
+.back-arrow
+{
+position: absolute;
+top:15px;
+}
+.popup-head
+{
+    text-align: center;
+    background:#f7f7f7;
+
+}
+.popup-head span
+{
+    font-size: 20px;
+    padding: 30px;
+    font-weight: 500;
+    color: #fb6362;
+}
+.border
+{
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    
+    padding-bottom: 20px;
+    width: 100%;
+}
+/*FB like div*/
+/*END FB like div*/
 /*Responsive*/
 @media screen and (min-width:500px) and (max-width:767px){
     .responsive-50{
@@ -1109,6 +1219,7 @@ input.mat-chip-input {
     .banner-bottom {
         margin-top: -110px;
     }
+    
     .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
         width: 100%;
     }
@@ -1132,8 +1243,66 @@ input.mat-chip-input {
     .xs-display-inline{
         display: inline-block;
     }
-
-  
+    .banner
+    {
+        background-size:auto;
+    }
+    .banner h1 {
+        margin-top: 8px;
+    }
+    .banner h1 span
+    {
+        font-size: 18px;
+        letter-spacing: 1px;
+    }
+    .banner h1 div
+    {
+        font-size: 18px;
+    }
+    .section-body h3
+    {
+        font-size: 24px;
+    }
+    .img-container img
+    {
+        margin-left: 0px !important;
+    }
+    .section-body h4 b
+    {
+        font-size: 20px;
+    }
+    .search-container
+    {
+        margin-top: 10px;
+    }
+    .mat-form-field-infix
+    {
+        width: 100% !important;
+    }
+    .mat-form-field-flex
+    {
+        padding: 5px;
+    }
+    .collapsible.popout>li
+    {
+        margin: 0px !important;
+    }
+    .image-container
+    {
+        height: 220px;
+    }
+    .popup-head h3{
+        font-size: 20px;
+        font-weight: 400;
+    }
+    .popup-head span {
+        font-size: 18px;
+        padding: 0px;
+    }
+    .signin-form
+    {
+        padding: 0px;
+    }
 }
 @media (max-width:980px){
       .vertical-card:hover {
@@ -1203,9 +1372,9 @@ input.mat-chip-input {
 }
 .media-left img
 {
-    border-radius: 50%;
+    border-radius: 10%;
     width: 70px;
-    border: 1px solid #ccc;
+    
 }
 .panel-body
 {
@@ -1221,10 +1390,26 @@ input.mat-chip-input {
     width: 100%;
     font-size: 16px;
 }
-.collapsible-body .card{
-    padding: 3px;
-    border-radius: 5px;
-    margin-bottom: 3px;
+.user-posts
+{
+   
+}
+.collapsible-body .card, .adv-card-list .card{
+    padding: 5px;
+    margin-bottom: 7px;
+    cursor: pointer;
+    
+}
+.active-card
+{
+    border: 3px dotted #fb6362;
+    padding: 15px !important;    
+}
+.user-posts .card{
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    
 }
 .inline-block
 {
@@ -1237,7 +1422,7 @@ input.mat-chip-input {
 .img-container img
 {
     border-radius: 3px;
-    box-shadow: 0 10px 10px rgba(161, 62, 60, 0.5);
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     border: 1px solid rgba(0,0,0,.06);
     margin-bottom: 5px;
     margin-left: 50px;
@@ -1261,6 +1446,17 @@ input.mat-chip-input {
     background-color: #fff;
     border-bottom: 1px solid #ddd;
     min-height: 80px;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+.adv-card-list{
+    border-bottom: 1px solid #ddd;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 1rem;
+    background-color: rgba(0, 0, 7, 0.3);
+    background: rgba(0, 0, 7, 0.5);
+    color: rgba(0, 0, 7, 0.3);
+    margin-top: 6px;
 }
 .collapsible-body {
     display: none;
@@ -1269,7 +1465,7 @@ input.mat-chip-input {
     box-sizing: border-box;
     padding: 1rem;
     background-color: rgba(0, 0, 7, 0.3);
-    background: rgba(0, 0, 7, 0.5);
+    background: rgba(0, 0, 7, 0.3);
     color: rgba(0, 0, 7, 0.3);
 }
 .collapsible.popout {
@@ -1289,13 +1485,26 @@ ul:not(.browser-default)>li {
 .collapsible.popout>li.active {
     -webkit-box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18), 0 4px 15px 0 rgba(0,0,0,0.15);
     box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18), 0 4px 15px 0 rgba(0,0,0,0.15);
-    margin: 0px 15px 0px 0px;
+    margin: 0px 10px 0px 0px;
 }
 
 .collapsible.popout>li {
     -webkit-box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
     box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
-    margin: 0 24px;
+    margin: 7px 10px;
     -webkit-transition: margin 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     transition: margin 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+#container {
+    width: 100%;
+    margin: 5em auto;
+    padding: 0;
+    background:#fff;
+}
+
+.items {
+    /* max-width:300px; */
+    height:300px;
+    background:rgba(10, 1, 1, 0);
 }

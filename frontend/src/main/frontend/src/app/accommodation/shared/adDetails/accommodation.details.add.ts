@@ -18,10 +18,18 @@ export class AddDetails {
     @Input()
     selectedAccommodationAdd: AccommodationAdd;
 
+    items: Array<any> = []
+
     constructor(private dialog: MatDialog,
         private userService: UserService,
         private fb: FacebookService) { }
     ngOnInit() {
+
+
+        this.items = [
+            { name: 'http://i.telegraph.co.uk/multimedia/archive/01722/cambridge_universi_1722980b.jpg' },
+            { name: 'https://www.thecompleteuniversityguide.co.uk/imagecache/file/width/650/media/3321537/lboro2.jpg' },
+        ]
 
     }
 
