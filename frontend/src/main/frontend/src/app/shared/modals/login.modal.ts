@@ -4,7 +4,6 @@ import { FacebookService } from 'ngx-facebook/dist/esm/providers/facebook';
 import { LoginResponse } from 'ngx-facebook/dist/esm/models/login-response';
 import { environment } from '../../../environments/environment';
 import { SharedDataService } from '../data/shared.data.service';
-import { University } from '../../accommodation/shared/models/universities.list.model';
 import { UserModel } from '../models/user.model';
 import { Http, Response } from '@angular/http';
 import { HttpInterceptorService } from '../Interceptor/HttpInterceptorService';

@@ -1,7 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
-import { University } from '../../accommodation/shared/models/universities.list.model';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { MatSnackBar } from '@angular/material';
 import { SharedDataService } from '../../shared/data/shared.data.service';
@@ -10,6 +9,7 @@ import { environment } from '../../../environments/environment';
 import { Subscription } from 'rxjs/Subscription';
 import { UserService } from 'app/shared/userServices/user.service';
 import { UserModel } from 'app/shared/models/user.model';
+import { University } from 'app/universities/universities.model';
 
 @Component({
   selector: 'landing-search',

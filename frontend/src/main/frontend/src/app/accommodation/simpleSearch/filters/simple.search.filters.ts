@@ -2,11 +2,11 @@ import { Component } from "@angular/core";
 import { SharedDataService } from "../../../shared/data/shared.data.service";
 import { environment } from "../../../../environments/environment";
 import { AccommodationSearchModel } from "../../shared/models/accommodation.filter.model";
-import { University } from "../../shared/models/universities.list.model";
 import { SimpleSearchFilterService } from "./simple.search.filters.service";
 import { AccommodationDropdown } from "../../shared/models/accommodation.dropdown.model";
 import { MatSnackBar } from "@angular/material";
 import { Apartment } from "app/accommodation/shared/models/apartment.names.model";
+import { University } from "app/universities/universities.model";
 
 
 @Component({

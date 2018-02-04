@@ -4,11 +4,11 @@ import { NotificationSettingsService } from 'app/notifications/notifications.sub
 import { NotificationSettings } from 'app/notifications/models/notification.settings.model';
 import { UniversityApartments } from 'app/accommodation/shared/models/university.apartments.model';
 import { SharedDataService } from 'app/shared/data/shared.data.service';
-import { University } from "app/accommodation/shared/models/universities.list.model";
 import { CheckBoxModel } from 'app/shared/models/checkbox.model';
 import { Apartment } from 'app/accommodation/shared/models/apartment.names.model';
 import { checkAndUpdateBinding } from '@angular/core/src/view/util';
 import { environment } from 'environments/environment';
+import { University } from 'app/universities/universities.model';
 
 @Component({
     selector: 'notification-settings',

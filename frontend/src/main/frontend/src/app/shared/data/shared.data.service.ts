@@ -1,7 +1,6 @@
 import { Subject } from "rxjs/Subject";
 import { Observable } from "rxjs/Observable";
 import { AccommodationSearchModel } from "../../accommodation/shared/models/accommodation.filter.model";
-import { University } from "../../accommodation/shared/models/universities.list.model";
 import { AccommodationAdd } from "../../accommodation/shared/models/accommodation.model";
 import { MatSnackBar } from "@angular/material";
 import { UserModel } from "../models/user.model";
@@ -14,6 +13,7 @@ import { LoginResponse } from "ngx-facebook/dist/esm/models/login-response";
 import { Observer } from "rxjs/Observer";
 import { UserInfo } from "app/shared/models/user.info.model";
 import { Apartment } from "app/accommodation/shared/models/apartment.names.model";
+import { University } from "app/universities/universities.model";
 
 export class SharedDataService {
 
@@ -24,6 +24,8 @@ export class SharedDataService {
     dbUnivChips = new Subject<University[]>();
     userInfo = new Subject<UserInfo>();
     apartmentNames: Apartment[];
+    flashCardUniversityID : number;
+
     observeUserInfo(): Observable<UserInfo> {
         return this.userInfo;
     }

@@ -6,9 +6,9 @@ import { Observer } from "rxjs/Observer";
 import { Http } from '@angular/http';
 import { LoginResponse } from "ngx-facebook/dist/esm/models/login-response";
 import { FacebookService } from "ngx-facebook/dist/esm/providers/facebook";
-import { University } from "app/accommodation/shared/models/universities.list.model";
 import { SharedDataService } from "app/shared/data/shared.data.service";
 import { UserInfo } from "app/shared/models/user.info.model";
+import { University } from "app/universities/universities.model";
 
 @Injectable()
 export class UserService {

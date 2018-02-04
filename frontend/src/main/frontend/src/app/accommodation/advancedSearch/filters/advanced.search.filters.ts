@@ -3,9 +3,9 @@ import { AccommodationDropdown } from "../../shared/models/accommodation.dropdow
 import { environment } from "../../../../environments/environment";
 import { SharedDataService } from "../../../shared/data/shared.data.service";
 import { Apartment } from "../../shared/models/apartment.names.model";
-import { University } from "../../shared/models/universities.list.model";
 import { SimpleSearchFilterService } from "../../simpleSearch/filters/simple.search.filters.service";
 import { AccommodationSearchModel } from "../../shared/models/accommodation.filter.model";
+import { University } from "app/universities/universities.model";
 
 @Component({
     selector: 'advanced-search-filters',

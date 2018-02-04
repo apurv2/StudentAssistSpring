@@ -1,0 +1,242 @@
+!SESSION 2018-02-04 11:42:27.323 -----------------------------------------------
+eclipse.buildId=4.7.2.M20171130-0510
+java.version=1.8.0_162
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.egit.ui 2 0 2018-02-04 11:43:51.426
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\SaiKiran'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2018-02-04 11:50:48.542
+!MESSAGE The POM for org.crashub:crash.shell:jar:1.3.2 is invalid, transitive dependencies (if any) will not be available, enable debug logging for more details
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2018-02-04 11:51:08.554
+!MESSAGE The POM for org.crashub:crash.shell:jar:1.3.2 is invalid, transitive dependencies (if any) will not be available, enable debug logging for more details
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2018-02-04 11:51:12.869
+!MESSAGE The POM for org.crashub:crash.shell:jar:1.3.2 is invalid, transitive dependencies (if any) will not be available, enable debug logging for more details
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2018-02-04 11:52:22.270
+!MESSAGE npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@^1.0.0 (node_modules\chokidar\node_modules\fsevents):
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2018-02-04 11:52:22.291
+!MESSAGE npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.1.3: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"x64"})
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2018-02-04 11:52:22.300
+!MESSAGE npm WARN @schematics/angular@0.1.10 requires a peer of @angular-devkit/schematics@0.0.40 but none was installed.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2018-02-04 11:52:22.316
+!MESSAGE npm WARN @schematics/schematics@0.0.10 requires a peer of @angular-devkit/schematics@0.0.40 but none was installed.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2018-02-04 11:52:22.337
+!MESSAGE npm WARN ajv-keywords@2.1.1 requires a peer of ajv@^5.0.0 but none was installed.
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 11:53:27.380
+!MESSAGE   0% compiling 10% building modules 0/1 modules 1 active ...rontend\src\main\frontend\src\main.ts                                          10% building modules 1/1 modules 0 active 10% building modules 1/2 modules 1 active ...nd\src\main\frontend\src\polyfills.ts                                          10% building modules 2/2 modules 0 active 10% building modules 2/3 modules 1 active ...tend\src\main\frontend\src\styles.css                                          10% building modules 3/3 modules 0 active 10% building modules 3/4 modules 1 active ...tend\src\main\frontend\src\styles.css                                          10% building modules 4/4 modules 0 active 10% building modules 4/5 modules 1 active ...\prebuilt-themes\deeppurple-amber.css                                          10% building modules 5/5 modules 0 active 10% building modules 5/6 modules 1 active ...de_modules\css-loader\lib\css-base.js                                          10% building modules 6/6 modules 0 active 10% building modules 6/7 modules 1 active ...rontend\src\main\frontend\src\main.ts 10% building modules 6/8 modules 2 active ...nd\src\main\frontend\src\polyfills.ts 10% building modules 7/8 modules 1 active ...nd\src\main\frontend\src\polyfills.ts                                          10% building modules 8/8 modules 0 active                               71% sealing 72% optimizing 73% basic module optimization       74% module optimization 75% advanced module optimization     76% basic chunk optimization 76% basic chunk optimization pass 2 76% basic chunk optimization pass 3              77% chunk optimization 78% advanced chunk optimization 10% building modules 8/9 modules 1 active ...tend\src\main\frontend\src\styles.css                                          11% building modules 9/9 modules 0 active    79% module and chunk tree optimization         80% chunk modules optimization 81% advanced chunk modules optimization                     82% module reviving 83% module order optimization    84% module id optimization         85% chunk reviving 86% chunk order optimization    87% chunk id optimization               88% hashing 89% module assets processing  90% chunk assets processing 91% additional chunk assets processing        91% additional asset processing    92% chunk asset optimization       94% asset optimization                       [0m[0m
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 11:53:27.408
+!MESSAGE [0m[1m[31mERROR in src/app/notifications/notifications.subscribe.modal.service.ts(13,42): error TS2339: Property 'getNotificationSettings' does not exist on type '{ production: boolean; url: string; appId: string; APARTMENT_NAME: string; NO_OF_ROOMS: string; V...'.[39m[22m[0m
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 11:53:27.422
+!MESSAGE [0m[1m[31msrc/app/notifications/notifications.subscribe.modal.service.ts(18,42): error TS2339: Property 'subscribeNotifications' does not exist on type '{ production: boolean; url: string; appId: string; APARTMENT_NAME: string; NO_OF_ROOMS: string; V...'.[39m[22m[0m
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 11:53:27.437
+!MESSAGE [0m[1m[31msrc/app/notifications/notifications.subscribe.modal.ts(152,37): error TS2339: Property 'all' does not exist on type '{ production: boolean; url: string; appId: string; APARTMENT_NAME: string; NO_OF_ROOMS: string; V...'.[39m[22m[0m
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 11:53:27.453
+!MESSAGE [0m[1m[31msrc/app/dashboard/flashCards/landing.flash.cards.ts(33,9): error TS2554: Expected 1 arguments, but got 0.[39m[22m[0m
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 11:53:27.463
+!MESSAGE [0m[1m[31m[39m[22m[0m
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 11:53:27.492
+!MESSAGE npm ERR! code ELIFECYCLE
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 11:53:27.509
+!MESSAGE npm ERR! errno 1
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 11:53:27.517
+!MESSAGE npm ERR! ng2boot@0.0.0 prod: `ng build --prod`
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 11:53:27.526
+!MESSAGE npm ERR! Exit status 1
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 11:53:27.534
+!MESSAGE npm ERR! 
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 11:53:27.542
+!MESSAGE npm ERR! Failed at the ng2boot@0.0.0 prod script 'ng build --prod'.
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 11:53:27.549
+!MESSAGE npm ERR! Make sure you have the latest version of node.js and npm installed.
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 11:53:27.558
+!MESSAGE npm ERR! If you do, this is most likely a problem with the ng2boot package,
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 11:53:27.565
+!MESSAGE npm ERR! not with npm itself.
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 11:53:27.580
+!MESSAGE npm ERR! Tell the author that this fails on your system:
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 11:53:27.588
+!MESSAGE npm ERR!     ng build --prod
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 11:53:27.596
+!MESSAGE npm ERR! You can get information on how to open an issue for this project with:
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 11:53:27.602
+!MESSAGE npm ERR!     npm bugs ng2boot
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 11:53:27.619
+!MESSAGE npm ERR! Or if that isn't available, you can get their info via:
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 11:53:27.629
+!MESSAGE npm ERR!     npm owner ls ng2boot
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 11:53:27.638
+!MESSAGE npm ERR! There is likely additional logging output above.
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 11:53:27.646
+!MESSAGE 
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 11:53:27.659
+!MESSAGE npm ERR! A complete log of this run can be found in:
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 11:53:27.670
+!MESSAGE npm ERR!     C:\Users\SaiKiran\AppData\Roaming\npm-cache\_logs\2018-02-04T16_53_27_476Z-debug.log
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2018-02-04 11:53:32.143
+!MESSAGE The POM for org.crashub:crash.shell:jar:1.3.2 is invalid, transitive dependencies (if any) will not be available, enable debug logging for more details
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2018-02-04 12:28:03.086
+!MESSAGE npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@^1.0.0 (node_modules\chokidar\node_modules\fsevents):
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2018-02-04 12:28:03.093
+!MESSAGE npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.1.3: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"x64"})
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2018-02-04 12:28:03.100
+!MESSAGE npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@^1.0.0 (node_modules\webpack-dev-server\node_modules\chokidar\node_modules\fsevents):
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2018-02-04 12:28:03.107
+!MESSAGE npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.1.3: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"x64"})
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2018-02-04 12:28:03.116
+!MESSAGE npm WARN ajv-keywords@2.1.1 requires a peer of ajv@^5.0.0 but none was installed.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2018-02-04 12:28:03.124
+!MESSAGE npm WARN ng2-carouselamos@3.2.0 requires a peer of @angular/common@^4.0.0 but none was installed.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2018-02-04 12:28:03.136
+!MESSAGE npm WARN ng2-carouselamos@3.2.0 requires a peer of @angular/core@^4.0.0 but none was installed.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2018-02-04 12:28:03.143
+!MESSAGE npm WARN ng2-cloudinary@0.9.2 requires a peer of @angular/core@^2.2.0 but none was installed.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2018-02-04 12:28:03.154
+!MESSAGE npm WARN ng2-file-upload@1.1.4-2 requires a peer of @angular/common@^2.0.0 but none was installed.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2018-02-04 12:28:03.160
+!MESSAGE npm WARN ng2-file-upload@1.1.4-2 requires a peer of @angular/compiler@^2.0.0 but none was installed.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2018-02-04 12:28:03.171
+!MESSAGE npm WARN ng2-file-upload@1.1.4-2 requires a peer of @angular/core@^2.0.0 but none was installed.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2018-02-04 12:28:03.177
+!MESSAGE npm WARN ng2-file-upload@1.1.4-2 requires a peer of @angular/forms@^2.0.0 but none was installed.
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 12:28:20.377
+!MESSAGE [0m[0m
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 12:28:20.385
+!MESSAGE [0m[1m[31mERROR in app\dashboard\modals\landing.add.detail.modal.ts(3,2): Error during template compile of 'landingAddDetailModal'[39m[22m[0m
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 12:28:20.400
+!MESSAGE [0m[1m[31m  Only initialized variables and constants can be referenced in decorators because the value of this variable is needed by the template compiler in 'Component'[39m[22m[0m
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 12:28:20.407
+!MESSAGE [0m[1m[31m    'Component' is not initialized at ..\@angular\core\src\metadata\directives.ts(731,22).[39m[22m[0m
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 12:28:20.413
+!MESSAGE [0m[1m[31msrc/app/accommodation/post/accommodation.post.ts(196,75): error TS2339: Property 'cloudinaryURL' does not exist on type '{ production: boolean; url: string; appId: string; APARTMENT_NAME: string; NO_OF_ROOMS: string; V...'.[39m[22m[0m
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 12:28:20.422
+!MESSAGE [0m[1m[31msrc/app/accommodation/post/accommodation.post.ts(210,37): error TS2339: Property 'upload_preset' does not exist on type '{ production: boolean; url: string; appId: string; APARTMENT_NAME: string; NO_OF_ROOMS: string; V...'.[39m[22m[0m
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 12:28:20.437
+!MESSAGE [0m[1m[31msrc/app/accommodation/post/accommodation.post.ts(210,64): error TS2339: Property 'CLOUDINARY_PRESET_VALUE' does not exist on type '{ production: boolean; url: string; appId: string; APARTMENT_NAME: string; NO_OF_ROOMS: string; V...'.[39m[22m[0m
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 12:28:20.444
+!MESSAGE [0m[1m[31msrc/app/accommodation/post/accommodation.post.ts(211,37): error TS2339: Property 'file' does not exist on type '{ production: boolean; url: string; appId: string; APARTMENT_NAME: string; NO_OF_ROOMS: string; V...'.[39m[22m[0m
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 12:28:20.453
+!MESSAGE [0m[1m[31msrc/app/accommodation/post/accommodation.post.ts(219,44): error TS2339: Property 'createAccommodationAdd' does not exist on type '{ production: boolean; url: string; appId: string; APARTMENT_NAME: string; NO_OF_ROOMS: string; V...'.[39m[22m[0m
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 12:28:20.461
+!MESSAGE [0m[1m[31msrc/app/accommodation/post/accommodation.post.ts(238,58): error TS2339: Property 'success' does not exist on type '{ production: boolean; url: string; appId: string; APARTMENT_NAME: string; NO_OF_ROOMS: string; V...'.[39m[22m[0m
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 12:28:20.467
+!MESSAGE [0m[1m[31m[39m[22m[0m
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 12:28:20.476
+!MESSAGE npm ERR! code ELIFECYCLE
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 12:28:20.483
+!MESSAGE npm ERR! errno 1
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 12:28:20.491
+!MESSAGE npm ERR! ng2boot@0.0.0 prod: `ng build --prod`
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 12:28:20.504
+!MESSAGE npm ERR! Exit status 1
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 12:28:20.510
+!MESSAGE npm ERR! 
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 12:28:20.517
+!MESSAGE npm ERR! Failed at the ng2boot@0.0.0 prod script 'ng build --prod'.
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 12:28:20.525
+!MESSAGE npm ERR! Make sure you have the latest version of node.js and npm installed.
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 12:28:20.531
+!MESSAGE npm ERR! If you do, this is most likely a problem with the ng2boot package,
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 12:28:20.537
+!MESSAGE npm ERR! not with npm itself.
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 12:28:20.543
+!MESSAGE npm ERR! Tell the author that this fails on your system:
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 12:28:20.551
+!MESSAGE npm ERR!     ng build --prod
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 12:28:20.557
+!MESSAGE npm ERR! You can get information on how to open an issue for this project with:
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 12:28:20.565
+!MESSAGE npm ERR!     npm bugs ng2boot
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 12:28:20.572
+!MESSAGE npm ERR! Or if that isn't available, you can get their info via:
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 12:28:20.579
+!MESSAGE npm ERR!     npm owner ls ng2boot
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 12:28:20.586
+!MESSAGE npm ERR! There is likely additional logging output above.
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 12:28:20.592
+!MESSAGE 
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 12:28:20.599
+!MESSAGE npm ERR! A complete log of this run can be found in:
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-02-04 12:28:20.608
+!MESSAGE npm ERR!     C:\Users\SaiKiran\AppData\Roaming\npm-cache\_logs\2018-02-04T17_28_20_454Z-debug.log

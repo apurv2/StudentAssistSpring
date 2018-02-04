@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import { AccommodationDropdown } from '../shared/models/accommodation.dropdown.model';
-import { University } from '../shared/models/universities.list.model';
 import { Apartment } from '../shared/models/apartment.names.model';
 import { SharedDataService } from '../../shared/data/shared.data.service';
 import { SimpleSearchFilterService } from '../simpleSearch/filters/simple.search.filters.service';
@@ -17,6 +16,7 @@ import { PostAccommodationService } from 'app/accommodation/post/accommodation.p
 import { Observable } from 'rxjs/Observable';
 import { AccommodationAdd } from 'app/accommodation/shared/models/accommodation.model';
 import { SuccessOrFailureModal } from 'app/shared/modals/success.or.failure';
+import { University } from 'app/universities/universities.model';
 
 
 /** Error when invalid control is dirty, touched, or submitted. */
