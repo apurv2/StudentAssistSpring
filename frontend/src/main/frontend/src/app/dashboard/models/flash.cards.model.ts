@@ -5,4 +5,5 @@ export class FlashCardsModel {
     accomodationCards: AccommodationAdd[];
     airportCard: AirportModel;
     currentUniversityID: number;
+    
 }

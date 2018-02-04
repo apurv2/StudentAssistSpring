@@ -3,33 +3,15 @@ package com.studentAssist.response;
 import java.util.List;
 
 public class FlashCardsRequestDTO {
-	int numOfAccomodataionCards;
-	int numOfAirportCards;
-	List<Integer> universitiesIDs;
+	List<Integer> universityIDs;
 	int currentUniversityID;
 
-	public int getNumOfAccomodataionCards() {
-		return numOfAccomodataionCards;
+	public List<Integer> getUniversityIDs() {
+		return universityIDs;
 	}
 
-	public void setNumOfAccomodataionCards(int numOfAccomodataionCards) {
-		this.numOfAccomodataionCards = numOfAccomodataionCards;
-	}
-
-	public int getNumOfAirportCards() {
-		return numOfAirportCards;
-	}
-
-	public void setNumOfAirportCards(int numOfAirportCards) {
-		this.numOfAirportCards = numOfAirportCards;
-	}
-
-	public List<Integer> getUniversitiesIDs() {
-		return universitiesIDs;
-	}
-
-	public void setUniversitiesIDs(List<Integer> universitiesIDs) {
-		this.universitiesIDs = universitiesIDs;
+	public void setUniversityIDs(List<Integer> universityIDs) {
+		this.universityIDs = universityIDs;
 	}
 
 	public int getCurrentUniversityID() {

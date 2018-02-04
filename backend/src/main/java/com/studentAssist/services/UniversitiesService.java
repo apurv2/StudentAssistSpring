@@ -2,6 +2,7 @@ package com.studentAssist.services;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.codehaus.groovy.util.StringUtil;
@@ -153,43 +154,39 @@ public class UniversitiesService {
 		FlashCardsResponseDTO flashCardResponseDTO = new FlashCardsResponseDTO();
 		int selectedUniversityID;
 
-		if (flashCardsRequestDTO.getUniversitiesIDs() != null) {
-			selectedUniversityID = getSelectedUniversityID(flashCardsRequestDTO.getUniversitiesIDs(), flashCardsRequestDTO.getCurrentUniversityID());
+		if (flashCardsRequestDTO.getUniversityIDs() != null && !flashCardsRequestDTO.getUniversityIDs().isEmpty()) {
+			selectedUniversityID = getSelectedUniversityID(flashCardsRequestDTO.getUniversityIDs(),
+					flashCardsRequestDTO.getCurrentUniversityID());
 		} else {
 			selectedUniversityID = getRecentUniversityID();
 		}
 
-		flashCardResponseDTO.setAccomodationCards(getAccomodationCardsofSelectedUniversity(selectedUniversityID, 3));
-		flashCardResponseDTO.setAirportCard(getAirportCard(selectedUniversityID));
+		List<AirportDTO> airportCards = getAirportCards(selectedUniversityID);
+		flashCardResponseDTO.setAirportCards(airportCards); 
+		flashCardResponseDTO.setAccomodationCards(getAccomodationCardsofSelectedUniversity(selectedUniversityID, (4-airportCards.size())));
 		flashCardResponseDTO.setCurrentUniversityID(selectedUniversityID);
 
 		return flashCardResponseDTO;
 	}
 
-	private AirportDTO getAirportCard(int selectedUniversityID) {
+	private List<AirportDTO> getAirportCards(int selectedUniversityID) {
 
 		List<Airport> airports = airportService.getAirportServices(selectedUniversityID);
-		Airport airport = airports.get(0);
-
-		AirportDTO AirportAdd = new AirportDTO();
-		AirportAdd.setUniversityId(selectedUniversityID);
-
-		AirportAdd.setUnivAcronym(airport.getUniversity().getUnivAcronym());
-		AirportAdd.setUniversityName(airport.getUniversity().getUniversityName());
-
-		List<UniversityPhotos> universityPhotos = airport.getUniversity().getUniversityPhotos();
-
-		String universityLogo = SAConstants.EmptyText;
-		for (UniversityPhotos universityPhoto : universityPhotos) {
-			if (universityPhoto.getPhotoPriority() == 1) {
-				universityLogo = universityPhoto.getPhotoUrl();
-			}
-		}
-
-		AirportAdd.setUniversityPhotoUrl(universityLogo);
-
-		AirportAdd.setUniversityPickupUrl(airport.getGroupLink());
-		return AirportAdd;
+		
+		List<AirportDTO> airportDTOs = new LinkedList<AirportDTO>();	
+		
+		airports.forEach(x->{
+			airportDTOs.add(new AirportDTO() {{setUniversityId(selectedUniversityID);
+			setUnivAcronym(x.getUniversity().getUnivAcronym());
+			setUniversityName(x.getUniversity().getUniversityName());
+			setUniversityPhotoUrl(x.getUniversity().getUniversityPhotos().stream().filter(y->y.getPhotoPriority()==1).findFirst().get().getPhotoUrl());
+			setUniversityPickupUrl(x.getGroupLink());
+			}});
+		});
+			
+		
+		
+		return airportDTOs;
 	}
 
 	private List<RAccommodationAdd> getAccomodationCardsofSelectedUniversity(int selectedUniversityID,
@@ -207,15 +204,18 @@ public class UniversitiesService {
 
 	private int getSelectedUniversityID(List<Integer> universitiesIDs, int currentUniversityID) {
 		// TODO Auto-generated method stub
-		if(currentUniversityID!=0) {
-			 int currentUniversityIndex = universitiesIDs.indexOf(currentUniversityID);
-			 if(currentUniversityIndex!=universitiesIDs.size()-1) {
-				 return universitiesIDs.get(currentUniversityIndex+1);
-			 }else {
-				 return universitiesIDs.get(0);
-			 }
-		}
-		else {
+		if (currentUniversityID != 0) {
+			if (universitiesIDs.contains(currentUniversityID)) {
+				int currentUniversityIndex = universitiesIDs.indexOf(currentUniversityID);
+				if (currentUniversityIndex != universitiesIDs.size() - 1) {
+					return universitiesIDs.get(currentUniversityIndex + 1);
+				} else {
+					return universitiesIDs.get(0);
+				}
+			} else {
+				return universitiesIDs.get(0);
+			}
+		} else {
 			return universitiesIDs.get(0);
 		}
 	}
