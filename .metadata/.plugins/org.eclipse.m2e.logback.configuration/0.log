@@ -129,3 +129,9 @@
 2018-02-04 12:28:20,627 [Worker-17] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\SaiKiran\Documents\Apurv Project\StudentAssist\frontend\target\frontend
 2018-02-04 12:28:20,629 [Worker-17] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
 2018-02-04 12:28:20,629 [Worker-17] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\SaiKiran\Documents\Apurv Project\StudentAssist\frontend\src\test\resources
+2018-02-04 14:01:34,238 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - Skipping npm install as package.json unchanged
+2018-02-04 14:01:34,240 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - Skipping npm install as package.json unchanged
+2018-02-04 14:01:34,245 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2018-02-04 14:01:34,246 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\SaiKiran\Documents\Apurv Project\StudentAssist\frontend\target\frontend
+2018-02-04 14:01:34,248 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2018-02-04 14:01:34,248 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\SaiKiran\Documents\Apurv Project\StudentAssist\frontend\src\test\resources
