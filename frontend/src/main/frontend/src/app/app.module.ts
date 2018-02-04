@@ -49,6 +49,7 @@ import { PostAccommodationService } from 'app/accommodation/post/accommodation.p
 import { SuccessOrFailureModal } from 'app/shared/modals/success.or.failure';
 import { TopHeader } from 'app/shared/topHeader/top.header';
 import { Ng2CarouselamosModule } from 'ng2-carouselamos';
+import { UserPostsService } from 'app/accommodation/post/userPosts/user.posts.service';
 
 @NgModule({
   imports: [
@@ -111,6 +112,7 @@ import { Ng2CarouselamosModule } from 'ng2-carouselamos';
     UserService,
     NotificationSettingsService,
     PostAccommodationService,
+    UserPostsService,
     {
       provide: Http,
       useFactory: httpFactory,

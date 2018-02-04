@@ -40,7 +40,7 @@
                 </div>
             </div>
 
-            <div class="col-sm-6 col-md-3">
+            <div *ngFor="let airportCard of flashCardsData?.airportCards" class="col-sm-6 col-md-3">
                 <!--single card layout-->
                 <div class="rating-card vertical-card">
                     <div class="card-usr-img text-center green-indicator">

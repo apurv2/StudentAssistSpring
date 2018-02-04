@@ -99,7 +99,7 @@ public class AccommodationController extends AbstractController {
 		return accommodationService.deleteAccommodationAdd(Integer.parseInt(addId));
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/getUserPosts")
+	@RequestMapping(method = RequestMethod.GET, value = "profile/getUserPosts")
 	public List<RAccommodationAdd> getUserPosts(@RequestParam("position") int position, HttpServletRequest request)
 			throws Exception {
 

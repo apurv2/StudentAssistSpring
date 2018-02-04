@@ -30,8 +30,9 @@ export class AppComponent {
   ngOnInit() {
 
     if (!this.getUserUniversitiesFromLocalStorage()) {
-      this.userService.getLoginStatus().
-        switchMap(resp => resp ? this.userService.getUserUniversities() : new Observable).
+      this.userService.getLoginStatus()
+        .filter(resp => resp)
+        .switchMap(resp => this.userService.getUserUniversities()).
         subscribe(resp => this.processDbUnivChips(resp));
 
     }
