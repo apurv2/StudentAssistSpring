@@ -42,25 +42,27 @@
 
             <div *ngFor="let airportCard of flashCardsData?.airportCards" class="col-sm-6 col-md-3">
                 <!--single card layout-->
-                <div class="rating-card vertical-card">
-                    <div class="card-usr-img text-center green-indicator">
-                        <img src="./assets/images/card-img-usr-1.jpg" class="img-circle" />
-                    </div>
-                    <div class="card-usr-info text-center">
-                        <h4 class="margin-bottom-3">Diego Buchanan</h4>
-                        <span class="text-muted">Texas</span>
-                        <p class="small text-muted margin-top-10">30 students picked up</p>
-                    </div>
-                    <div class="card-actions">
-                        <div class="star-img pull-left">
-                            <img src="./assets/images/rating-stars.png" class="width-80" />
+                <a target="_blank" href="{{airportCard.universityPickupUrl}}">
+                    <div class="rating-card vertical-card">
+                        <div class="card-usr-img text-center green-indicator">
+                            <img src="./assets/images/card-img-usr-1.jpg" class="img-circle" />
                         </div>
-                        <div class="pull-right">
-                            <span class="label price-label pink-bg">free</span>
+                        <div class="card-usr-info text-center">
+                            <h4 class="margin-bottom-3">Diego Buchanan</h4>
+                            <span class="text-muted">Texas</span>
+                            <p class="small text-muted margin-top-10">30 students picked up</p>
                         </div>
+                        <div class="card-actions">
+                            <div class="star-img pull-left">
+                                <img src="./assets/images/rating-stars.png" class="width-80" />
+                            </div>
+                            <div class="pull-right">
+                                <span class="label price-label pink-bg">free</span>
+                            </div>
 
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </div>
