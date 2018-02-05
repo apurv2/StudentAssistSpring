@@ -18,7 +18,7 @@
     <div id="mySidenav" [class.sa-ease-in-out-transition]="showSideNav" class="sidenav useraccount">
       <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
       <ul class="list-unstyled">
-        <li>
+        <li *ngIf="userInfo!=null">
           <div class="media">
             <div class="media-left">
               <div class="user-thumb red-indicator">
@@ -45,7 +45,7 @@
           <a href="#">Notifications</a>
         </li>
         <li>
-          <a href="javascript:void(0)" (click)="logout()">Logout</a>
+          <a href="javascript:void(0)" (click)="loginOrLogout()">{{loginLogout}}</a>
         </li>
       </ul>
     </div>

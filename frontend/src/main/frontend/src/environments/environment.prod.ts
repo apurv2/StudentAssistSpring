@@ -87,5 +87,8 @@ export const environment = {
   CLOUDINARY_PRESET_VALUE: 'qdisf7f1',
   upload_preset: 'upload_preset',
   file: 'file',
-  success: 'success'
+  success: 'success',
+  getUserPosts: 'profile/getUserPosts',
+  login: 'Login',
+  logout: 'Logout'
 };

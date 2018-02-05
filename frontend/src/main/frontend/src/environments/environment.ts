@@ -93,5 +93,7 @@ export const environment = {
   upload_preset: 'upload_preset',
   file: 'file',
   success: 'success',
-  getUserPosts: 'profile/getUserPosts'
+  getUserPosts: 'profile/getUserPosts',
+  login: 'Login',
+  logout: 'Logout'
 }

@@ -17,6 +17,7 @@ import { Observable } from 'rxjs/Observable';
 import { AccommodationAdd } from 'app/accommodation/shared/models/accommodation.model';
 import { SuccessOrFailureModal } from 'app/shared/modals/success.or.failure';
 import { University } from 'app/universities/universities.model';
+import { UserService } from 'app/shared/userServices/user.service';
 
 
 /** Error when invalid control is dirty, touched, or submitted. */
@@ -64,6 +65,7 @@ export class PostAccommodation {
     constructor(private sharedDataService: SharedDataService,
         private simpleSearchFilterService: SimpleSearchFilterService,
         private dialog: MatDialog,
+        private userService: UserService,
         private postAccommodationService: PostAccommodationService) { }
 
     ngOnInit() {
@@ -128,19 +130,6 @@ export class PostAccommodation {
         this.universityNameSpinnerSelectedItem = Object.assign([], this.universityNameSpinnerValues[0]);
     }
 
-    searchClicked() {
-
-        let filterData: AccommodationSearchModel = new AccommodationSearchModel();
-
-        filterData.apartmentName = this.aptNameSpinnerSelectedItem.code;
-        filterData.apartmentType = this.aptTypeSpinnerSelectedItem.code;
-        filterData.gender = this.genderSpinnerSelectedItem.code;
-        filterData.selectedUniversityId = +this.universityNameSpinnerSelectedItem.code;
-
-        this.sharedDataService.emitAccommomdationSearchFilters(filterData);
-
-    }
-
     spinnerClick(clickedItem) {
         this.populateApartmentNameSpinner();
     }
@@ -168,17 +157,20 @@ export class PostAccommodation {
         }
     }
 
-    postAccommodation() {
-        this.photos.length > 0 ? this.uploadImages() : this.postAccommodationAdd(null)
+    submit() {
+        this.userService.getLoginStatus()
+            .flatMap(status => status ? this.postAccommodation() : this.openLoginDialog())
+            .filter(response => response.response)
             .subscribe(e => this.handlePostAccommodationResponse(e));
     }
 
-    openDialog(): void {
-        let dialogRef = this.dialog.open(LoginModal);
+    postAccommodation() {
+        return this.photos.length > 0 ? this.uploadImages() : this.postAccommodationAdd(null);
+    }
 
-        dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed');
-        });
+    openLoginDialog() {
+        let dialogRef = this.dialog.open(LoginModal);
+        return dialogRef.afterClosed();
     }
 
     addFile(files: any) {
@@ -196,12 +188,11 @@ export class PostAccommodation {
             obs.push(this.postAccommodationService.postImages(environment.cloudinaryURL, params));
         }
 
-        Observable.merge(obs)
+        return Observable.merge(obs)
             .flatMap(obs => obs)
             .map(cloudinaryResponse => this.cloudinaryUrls.push(cloudinaryResponse.url))
             .filter(e => this.cloudinaryUrls.length == this.photos.length)
             .switchMap(e => this.postAccommodationAdd(this.cloudinaryUrls))
-            .subscribe(e => this.handlePostAccommodationResponse(e));
 
     }
 

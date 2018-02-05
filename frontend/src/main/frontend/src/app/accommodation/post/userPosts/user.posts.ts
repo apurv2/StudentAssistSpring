@@ -20,7 +20,7 @@ export class UserPosts {
     }
 
     getUserPosts() {
-        this.userPostsService.getUserPosts(this.paginationCount)
+    this.userPostsService.getUserPosts(this.paginationCount)
             .subscribe(adds => this.accommodationAdds = adds);
 
     }

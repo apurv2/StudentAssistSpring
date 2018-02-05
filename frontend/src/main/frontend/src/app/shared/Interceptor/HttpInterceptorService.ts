@@ -68,8 +68,6 @@ export class HttpInterceptorService extends Http {
       options.headers = new Headers();
     }
     options.headers.append('Content-Type', 'application/json');
-    // options.headers.append('X-Requested-With', 'XMLHttpRequest');
-
     this.createAuthorizationHeader(options.headers);
 
     return options;

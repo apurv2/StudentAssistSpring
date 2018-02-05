@@ -37,9 +37,9 @@ export class AppComponent {
 
     }
 
-    this.userService.getLoginStatus().
-      switchMap(resp => resp ? this.userService.getUserInfoFromFb() :
-        Observable.empty<UserInfo>()).
+    this.userService.getLoginStatus()
+      .filter(resp => resp)
+      .switchMap(resp => this.userService.getUserInfoFromFb()).
       subscribe((userInfo: UserInfo) => this.sharedDataService.emitUserInfo(userInfo));
 
   }

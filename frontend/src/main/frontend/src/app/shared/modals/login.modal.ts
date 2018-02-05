@@ -25,16 +25,17 @@ export class LoginModal {
         private userService: UserService) { }
 
     login() {
-        this.userService.login().
-            flatMap(resp => this.userService.createOrUpdateUser()).
-            switchMap(resp => resp ? this.userService.getUserUniversities() :
-                this.userService.returnFalseObservable()).
-            subscribe(resp => resp ? this.processLogin() : null);
+        this.userService.login()
+            .filter(resp => resp)
+            .flatMap(resp => this.userService.createOrUpdateUser())
+            .switchMap(resp => this.userService.getUserInfoFromFb()).
+            subscribe(userInfo => this.processLogin(userInfo));
 
     }
 
-    processLogin() {
-
+    processLogin(userInfo) {
+        this.sharedDataService.emitLoginStatus(true);
+        this.sharedDataService.emitUserInfo(userInfo)
         var cookies = document.cookie.split(";");
         for (var i = 0; i < cookies.length; i++) {
             var cookie = cookies[i];
@@ -42,10 +43,10 @@ export class LoginModal {
             var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
             document.cookie = name + "=n";
         }
-
+        this.closeDialog(true);
     }
 
-    onNoClick(): void {
-        this.dialogRef.close();
+    closeDialog(loginResult: boolean): void {
+        this.dialogRef.close(loginResult);
     }
 }

@@ -24,7 +24,16 @@ export class SharedDataService {
     dbUnivChips = new Subject<University[]>();
     userInfo = new Subject<UserInfo>();
     apartmentNames: Apartment[];
-    flashCardUniversityID : number;
+    flashCardUniversityID: number;
+    loginStatus = new Subject<boolean>();
+
+    observeLoginStatus(): Observable<boolean> {
+        return this.loginStatus;
+    }
+
+    emitLoginStatus(loginStatus: boolean) {
+        this.loginStatus.next(loginStatus);
+    }
 
     observeUserInfo(): Observable<UserInfo> {
         return this.userInfo;
