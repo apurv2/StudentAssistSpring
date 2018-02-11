@@ -1,6 +1,7 @@
 package com.studentAssist.util;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class SAConstants {
 	public static final String welcome = "Welcome!";
@@ -115,6 +116,13 @@ public class SAConstants {
 	public static final String UNAUTHORIZED = "Unauthorized";
 	public static final String RESPONSE = "response";
 	public static final String RESPONSE_EXCEPTION = "Sorry we could not process your request at this time.";
+
+	public static final Map<String, String> ADMIN_USER_ID = new HashMap<>();
+
+	static {
+		ADMIN_USER_ID.put("10207639158073180", "10207639158073180"); //APURV
+		ADMIN_USER_ID.put("100002047925455", "100002047925455"); // KIRAN
+	}
 
 	static {
 		apartmentTypeCodeMap.put("on", "On-Campus");

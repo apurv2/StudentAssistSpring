@@ -102,9 +102,8 @@ public class AccommodationDAO extends AbstractDao {
 	}
 
 	public void deleteAccommodationAdd(AccommodationAdd add) throws Exception {
-
-		delete(add);
-		Hibernate.initialize(add.getAddPhotoIds());
+		add.setDelete_sw(true);
+		saveOrUpdate(add);
 	}
 
 	public List<AccommodationAdd> getUserPosts(String userId, int position) throws Exception {
@@ -145,8 +144,8 @@ public class AccommodationDAO extends AbstractDao {
 
 	}
 
-	public List<AccommodationAdd> getAdvancedAdvertisements(String apartmentName, String gender,
-			int universityId, int position) throws Exception {
+	public List<AccommodationAdd> getAdvancedAdvertisements(String apartmentName, String gender, int universityId,
+			int position) throws Exception {
 		List<AccommodationAdd> adds = null;
 
 		AccommodationAdd add = new AccommodationAdd();
@@ -191,7 +190,6 @@ public class AccommodationDAO extends AbstractDao {
 		AccommodationAdd exampleAccAdd = new AccommodationAdd();
 		List list1 = new ArrayList<>();
 
-		
 		List<AccommodationAdd> accommodationAddsList = new ArrayList<>();
 
 		if (SAConstants.APARTMENT_TYPE.equals(leftSpinner)) {

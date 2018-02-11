@@ -50,6 +50,8 @@ import { SuccessOrFailureModal } from 'app/shared/modals/success.or.failure';
 import { TopHeader } from 'app/shared/topHeader/top.header';
 import { Ng2CarouselamosModule } from 'ng2-carouselamos';
 import { UserPostsService } from 'app/accommodation/post/userPosts/user.posts.service';
+import { AddDetailsModal } from 'app/accommodation/shared/adDetails/accommodation.details.modal';
+import { AddDetailsService } from 'app/accommodation/shared/adDetails/accommodation.details.add.service';
 
 @NgModule({
   imports: [
@@ -97,6 +99,7 @@ import { UserPostsService } from 'app/accommodation/post/userPosts/user.posts.se
     LoginModal,
     NotificationSettingsFilter,
     SuccessOrFailureModal,
+    AddDetailsModal,
     TopHeader
 
   ],
@@ -113,6 +116,7 @@ import { UserPostsService } from 'app/accommodation/post/userPosts/user.posts.se
     NotificationSettingsService,
     PostAccommodationService,
     UserPostsService,
+    AddDetailsService,
     {
       provide: Http,
       useFactory: httpFactory,
@@ -121,7 +125,7 @@ import { UserPostsService } from 'app/accommodation/post/userPosts/user.posts.se
 
   ],
   bootstrap: [AppComponent, TopHeader],
-  entryComponents: [SubscribeNotificationsModal, LoginModal, SuccessOrFailureModal]
+  entryComponents: [SubscribeNotificationsModal, LoginModal, SuccessOrFailureModal, AddDetailsModal]
 })
 export class AppModule {
 

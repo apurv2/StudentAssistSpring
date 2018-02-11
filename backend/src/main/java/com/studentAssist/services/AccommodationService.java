@@ -70,33 +70,29 @@ public class AccommodationService {
 
 		AccommodationAdd advertisement = new AccommodationAdd(vacancies, gender, noOfRooms, cost, fbId, notes,
 				Utilities.getDate(), addPhotoIds);
-		
+
 		Universities university = new Universities();
 		university.setUniversityId(universityId);
 		advertisement.setUniversity(university);
-		
+
 		return accommmodationDAO.createAccommodationAdd(userId, advertisement, apartmentName);
 	}
 
-	public String deleteAccommodationAdd(int addId) throws Exception {
-
-		Cloudinary cloudinary;
-		cloudinary = new Cloudinary("cloudinary://647816789382186:5R3U1Oc9zwvnPOfI-TtlIeI0u_E@duf1ntj7z");
+	public String deleteAccommodationAdd(int addId, Users users) throws Exception {
 
 		AccommodationAdd add = accommmodationDAO.getByKey(AccommodationAdd.class, addId);
-		if (add != null) {
+		String userId = add != null ? add.getUser().getUserId() : SAConstants.EmptyText;
+
+		if (userId != null && !userId.isEmpty() && userId.equals(users.getUserId())
+				|| SAConstants.ADMIN_USER_ID.containsKey(userId)) {
 
 			accommmodationDAO.deleteAccommodationAdd(add);
-		}
-		for (String url : add.getAddPhotoIds()) {
 
-			String[] params = url.split("/");
-			String cloudId = params[params.length - 1].split("\\.")[0];
-			Map map = cloudinary.uploader().destroy(cloudId, Cloudinary.emptyMap());
+			return SAConstants.RESPONSE_SUCCESS;
 
-			System.out.println("map==" + map);
 		}
-		return SAConstants.RESPONSE_SUCCESS;
+
+		throw new RuntimeException();
 	}
 
 	public List<RAccommodationAdd> getUserPosts(String userId, int position) throws Exception {

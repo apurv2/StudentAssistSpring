@@ -32,11 +32,10 @@ export class UserService {
             user.selectedUniversityIds = universityIds;
         }
         return this.http.put(environment.createUser, user).
-            map(res => res.json());
+        map(res => res.json());
     }
 
     getLoginStatus(): Observable<boolean> {
-        console.log("came to login status")
         return Observable.create((observer: Observer<boolean>) =>
             this.fb.getLoginStatus().then(resp =>
                 observer.next(resp.status === environment.connected ? true : false)));

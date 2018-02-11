@@ -45,7 +45,7 @@
             </div>
             <div class="col-sm-3">
                 <div class="social-icons">
-                    <span>
+                    <span *ngIf="!(loggedInUserId != null && loggedInUserId == selectedAccommodationAdd?.userId)">
                         <a href="javascript:void(0)" (click)="subscribe()">
                             <i class="fa fa-rss-square" aria-hidden="true"></i>
                         </a>
@@ -60,9 +60,14 @@
                             <i aria-hidden="true" class="fa fa-share-alt-square"></i>
                         </a>
                     </span>
-                    <span>
+                    <span *ngIf="!(loggedInUserId != null && loggedInUserId == selectedAccommodationAdd?.userId)">
                         <a href="#">
                             <i aria-hidden="true" class="fa fa-envelope-square"></i>
+                        </a>
+                    </span>
+                    <span *ngIf="loggedInUserId != null && loggedInUserId == selectedAccommodationAdd.userId">
+                        <a href="javascript:void(0)" (click)="deleteAdd()">
+                            <i aria-hidden="true" class="fa fa-trash"></i>
                         </a>
                     </span>
                 </div>

@@ -3,8 +3,8 @@
     <div class="row">
         <div class="no-record">No record find</div>
         <div *ngFor="let accommodationAdd of accommodationAdds" class="col-xs-12 col-sm-6 col-md-12">
-            
-            <div class="card animated-card1 horizontal-card">
+
+            <div class="card animated-card1 horizontal-card" (click)="addClick(accommodationAdd)">
                 <div class="media">
                     <div class="media-left">
                         <img src="http://graph.facebook.com/{{accommodationAdd.userId}}/picture?type=normal" alt="" />

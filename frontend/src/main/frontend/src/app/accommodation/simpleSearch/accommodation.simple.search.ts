@@ -31,10 +31,6 @@ export class SimpleSearch {
     ngOnInit() {
         this.subscribeToAccommodationAddsFilters();
         this.subscribeToAddClick();
-
-        this.userService.getLoginStatus().
-            subscribe(res => console.log("status==" + res));
-
     }
     subscribeToAddClick() {
         this.accommodationAddSubscription = this.sharedDataservice.observeAccommodationAdd()
