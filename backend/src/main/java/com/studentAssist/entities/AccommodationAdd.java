@@ -24,6 +24,7 @@ public class AccommodationAdd {
 	private String cost;
 	private String fbId;
 	private String notes;
+	private boolean delete_sw;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "USER_ID")
@@ -191,6 +192,14 @@ public class AccommodationAdd {
 		int result = 1;
 		result = prime * result + ((datePosted == null) ? 0 : datePosted.hashCode());
 		return result;
+	}
+
+	public boolean isDelete_sw() {
+		return delete_sw;
+	}
+
+	public void setDelete_sw(boolean delete_sw) {
+		this.delete_sw = delete_sw;
 	}
 
 	@Override

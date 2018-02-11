@@ -60,6 +60,17 @@ export class PostAccommodation {
         Validators.email,
     ]);
 
+    validFormControl = new FormControl('', [
+        Validators.required
+    ]);
+
+    numberFormControl = new FormControl('', [
+        Validators.required,
+        Validators.min(0),
+        Validators.max(2000),
+    ]);
+
+
     cloudinaryUrls: string[] = [];
 
     constructor(private sharedDataService: SharedDataService,
@@ -71,6 +82,8 @@ export class PostAccommodation {
     ngOnInit() {
 
         this.initializeSpinners();
+
+        this.numberFormControl.hasError
     }
 
     initializeSpinners() {
@@ -143,16 +156,18 @@ export class PostAccommodation {
         let universityId = this.universityNameSpinnerSelectedItem.code;
         let apartmentType = this.aptTypeSpinnerSelectedItem.code;
         this.aptNameSpinnerValues = new Array();
-        for (let apartment of this.allApartments) {
+        if (this.allApartments != null) {
+            for (let apartment of this.allApartments) {
 
-            if (apartment.uinversityId == +universityId &&
-                apartment.apartmentType == apartmentType) {
+                if (apartment.uinversityId == +universityId &&
+                    apartment.apartmentType == apartmentType) {
 
-                this.aptNameSpinnerValues.push({
-                    'code': apartment.apartmentName,
-                    'description': apartment.apartmentName
-                });
-                this.aptNameSpinnerSelectedItem = Object.assign([], this.aptNameSpinnerValues[0]);
+                    this.aptNameSpinnerValues.push({
+                        'code': apartment.apartmentName,
+                        'description': apartment.apartmentName
+                    });
+                    this.aptNameSpinnerSelectedItem = Object.assign([], this.aptNameSpinnerValues[0]);
+                }
             }
         }
     }

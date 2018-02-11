@@ -23,9 +23,9 @@ export class LandingFlashCards {
 
     ngOnInit() {
         this.getFlashCards();
-        this.flashCardIntervalObservable = Observable.interval(10000).subscribe(x => {
-            this.getFlashCards();
-        });
+        this.flashCardIntervalObservable = Observable
+            .interval(10000)
+            .subscribe(x => this.getFlashCards());
     }
 
     searchResultCardClick() {
@@ -34,14 +34,17 @@ export class LandingFlashCards {
 
     getFlashCards() {
         let flashCardsRequestModel: FlashCardsRequestModel = new FlashCardsRequestModel();
-        if(this.sharedDataService.getUserSelectedUniversitiesList()!=null){
-            flashCardsRequestModel.universityIDs = this.sharedDataService.getUserSelectedUniversitiesList().map(a=>a.universityId);
-        }        
-        flashCardsRequestModel.currentUniversityID = this.sharedDataService.flashCardUniversityID;        
+        if (this.sharedDataService.getUserSelectedUniversitiesList() != null) {
+            flashCardsRequestModel.universityIDs = this.sharedDataService
+                .getUserSelectedUniversitiesList()
+                .map(a => a.universityId);
+        }
+        flashCardsRequestModel.currentUniversityID = this.sharedDataService.flashCardUniversityID;
         this.flashCardsService.getFlashCards(flashCardsRequestModel)
             .subscribe(flashCards => {
                 this.flashCardsData = flashCards;
-                this.sharedDataService.flashCardUniversityID = this.flashCardsData.currentUniversityID;
+                this.sharedDataService.flashCardUniversityID = this.flashCardsData
+                    .currentUniversityID;
             });
     }
 

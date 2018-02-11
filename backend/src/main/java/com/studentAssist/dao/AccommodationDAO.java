@@ -191,6 +191,7 @@ public class AccommodationDAO extends AbstractDao {
 		AccommodationAdd exampleAccAdd = new AccommodationAdd();
 		List list1 = new ArrayList<>();
 
+		
 		List<AccommodationAdd> accommodationAddsList = new ArrayList<>();
 
 		if (SAConstants.APARTMENT_TYPE.equals(leftSpinner)) {

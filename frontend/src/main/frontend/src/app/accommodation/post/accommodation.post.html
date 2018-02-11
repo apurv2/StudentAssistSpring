@@ -11,7 +11,7 @@
                             <div class="form-group col-md-6">
                                 <mat-form-field>
                                     <mat-select placeholder="University Name" [(ngModel)]="universityNameSpinnerSelectedItem.code" (ngModelChange)="spinnerClick($event)"
-                                        [ngModelOptions]="{standalone: true}">
+                                        [ngModelOptions]="{standalone: true}" required>
                                         <mat-option *ngFor="let spinnerValue of universityNameSpinnerValues" [value]="spinnerValue?.code">{{spinnerValue.description}}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
@@ -19,7 +19,7 @@
                             <div class="form-group col-md-6">
                                 <mat-form-field>
                                     <mat-select placeholder="Apartment Type" [(ngModel)]="aptTypeSpinnerSelectedItem.code" (ngModelChange)="spinnerClick($event)"
-                                        [ngModelOptions]="{standalone: true}">
+                                        [ngModelOptions]="{standalone: true}" required>
                                         <mat-option *ngFor="let spinnerValue of aptTypeSpinnerValues" [value]="spinnerValue?.code">{{spinnerValue.description}}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
@@ -27,14 +27,15 @@
                             <div class="form-group col-md-6">
                                 <mat-form-field>
                                     <mat-select placeholder="Apartment Name" [(ngModel)]="aptNameSpinnerSelectedItem.code" (ngModelChange)="spinnerClick1($event)"
-                                        [ngModelOptions]="{standalone: true}">
+                                        [ngModelOptions]="{standalone: true}" required>
                                         <mat-option *ngFor="let spinnerValue of aptNameSpinnerValues" [value]="spinnerValue?.code">{{spinnerValue.description}}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </div>
                             <div class="form-group col-md-6">
                                 <mat-form-field>
-                                    <mat-select placeholder="Gender" [(ngModel)]="genderSpinnerSelectedItem.code" (ngModelChange)="spinnerClick1($event)" [ngModelOptions]="{standalone: true}">
+                                    <mat-select placeholder="Gender" [(ngModel)]="genderSpinnerSelectedItem.code" (ngModelChange)="spinnerClick1($event)" [ngModelOptions]="{standalone: true}"
+                                        required>
                                         <mat-option *ngFor="let spinnerValue of genderSpinnerValues" [value]="spinnerValue?.code">{{spinnerValue.description}}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
@@ -42,7 +43,7 @@
                             <div class="form-group col-md-6">
                                 <mat-form-field>
                                     <mat-select placeholder="No Of Rooms" [(ngModel)]="noOfRoomsSpinnerSelectedItem.code" (ngModelChange)="spinnerClick1($event)"
-                                        [ngModelOptions]="{standalone: true}">
+                                        [ngModelOptions]="{standalone: true}" required>
                                         <mat-option *ngFor="let spinnerValue of noOfRoomsSpinnerValues" [value]="spinnerValue?.code">{{spinnerValue.description}}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
@@ -50,7 +51,7 @@
                             <div class="form-group col-md-6">
                                 <mat-form-field>
                                     <mat-select placeholder="Vacancies" [(ngModel)]="vacanciesSpinnerSelectedItem.code" (ngModelChange)="spinnerClick1($event)"
-                                        [ngModelOptions]="{standalone: true}">
+                                        [ngModelOptions]="{standalone: true}" required>
                                         <mat-option *ngFor="let spinnerValue of vacanciesSpinnerValues" [value]="spinnerValue?.code">{{spinnerValue.description}}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
@@ -58,13 +59,20 @@
                             <div class="form-group col-md-6">
                                 <mat-form-field>
                                     <span matPrefix>$&nbsp;</span>
-                                    <input matInput placeholder="Cost" [(ngModel)]="cost" [ngModelOptions]="{standalone: true}">
+                                    <input type="number" pattern="\d*" size="4" matInput placeholder="Cost" [formControl]="numberFormControl" [(ngModel)]="cost" required>
+                                    <mat-error *ngIf="numberFormControl.invalid && !numberFormControl.hasError('required')">
+                                        Please enter a valid amount between 0 to 2000$
+                                    </mat-error>
+                                    <mat-error *ngIf="numberFormControl.hasError('required')">
+                                        Cost is
+                                        <strong>required</strong>
+                                    </mat-error>
                                 </mat-form-field>
                             </div>
 
                             <div class="form-group col-md-6">
                                 <mat-form-field>
-                                    <input matInput placeholder="Email" [(ngModel)]="email" [formControl]="emailFormControl" [errorStateMatcher]="matcher">
+                                    <input matInput placeholder="Email" [(ngModel)]="email" [formControl]="emailFormControl" [errorStateMatcher]="matcher" required>
                                     <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
                                         Please enter a valid email address
                                     </mat-error>
@@ -89,7 +97,7 @@
                                 <img src="{{photo}}">
                             </div>
                             <div class="form-group col-md-4 col-md-push-4">
-                                <button type="submit" (click)="submit()" class="btn primary-btn btn-lg btn-block">Post</button>
+                                <button type="submit" class="btn primary-btn btn-lg btn-block" [disabled]="emailFormControl.invalid || numberFormControl.invalid">Post</button>
                             </div>
                         </form>
                     </div>
