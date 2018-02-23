@@ -25,6 +25,7 @@ public class AccommodationAdd {
 	private String fbId;
 	private String notes;
 	private boolean delete_sw;
+	private Date postedTill;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "USER_ID")
@@ -184,6 +185,14 @@ public class AccommodationAdd {
 
 	public void setUserVisitedAdds(List<UserVisitedAdds> userVisitedAdds) {
 		this.userVisitedAdds = userVisitedAdds;
+	}
+
+	public Date getPostedTill() {
+		return postedTill;
+	}
+
+	public void setPostedTill(Date postedTill) {
+		this.postedTill = postedTill;
 	}
 
 	@Override

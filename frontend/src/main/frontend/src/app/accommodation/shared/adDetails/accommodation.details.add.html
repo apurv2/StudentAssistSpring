@@ -13,14 +13,11 @@
             <i class="material-icons" id="left">keyboard_arrow_right</i>
         </ng-template>
         <ng-template #item let-item let-i="index">
-
             <div class="items">
                 <img src="{{ item.name }}">
             </div>
 
         </ng-template>
-
-
     </div>
     <div class="panel-footer white-bg padding-30">
         <div class="row">
@@ -38,34 +35,34 @@
                 </p>
                 <p class="text-muted address">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    ... The first word, “Lorem,” isn't even a word; instead it's a piece of the word “dolorem,” meaning pain,
-                    suffering, or sorrow.
+                    ... The first word, â€œLorem,â€� isn't even a word; instead it's a piece of the word â€œdolorem,â€� meaning
+                    pain, suffering, or sorrow.
                 </p>
 
             </div>
             <div class="col-sm-3">
                 <div class="social-icons">
-                    <span *ngIf="!(loggedInUserId != null && loggedInUserId == selectedAccommodationAdd?.userId)">
+                    <span *ngIf="enableSubscription">
                         <a href="javascript:void(0)" (click)="subscribe()">
                             <i class="fa fa-rss-square" aria-hidden="true"></i>
                         </a>
                     </span>
                     <span>
-                        <a href="#">
+                        <a href="javascript:void(0)">
                             <i aria-hidden="true" class="fa fa-facebook-square"></i>
                         </a>
                     </span>
                     <span>
-                        <a href="#">
+                        <a href="javascript:void(0)" (click)="share()">
                             <i aria-hidden="true" class="fa fa-share-alt-square"></i>
                         </a>
                     </span>
                     <span *ngIf="!(loggedInUserId != null && loggedInUserId == selectedAccommodationAdd?.userId)">
-                        <a href="#">
+                        <a href="javascript:void(0)" (click)="getBranchData()">
                             <i aria-hidden="true" class="fa fa-envelope-square"></i>
                         </a>
                     </span>
-                    <span *ngIf="loggedInUserId != null && loggedInUserId == selectedAccommodationAdd.userId">
+                    <span *ngIf="loggedInUserId != null && loggedInUserId == selectedAccommodationAdd?.userId">
                         <a href="javascript:void(0)" (click)="deleteAdd()">
                             <i aria-hidden="true" class="fa fa-trash"></i>
                         </a>

@@ -107,7 +107,7 @@ public class GlobalExceptionHandler {
 
 			String userId = "";
 			if (user != null) {
-				userId = user.getUserId();
+				userId = user.getUserId() + "";
 			} else {
 				userId = request.getHeader(SAConstants.ACCESS_TOKEN);
 			}

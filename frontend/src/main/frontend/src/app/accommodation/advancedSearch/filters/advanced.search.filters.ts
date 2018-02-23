@@ -89,7 +89,7 @@ export class AdvancedSearchFilters {
 
         let filterData: AccommodationSearchModel = new AccommodationSearchModel();
 
-        filterData.apartmentName = this.aptNameSpinnerSelectedItem.code;
+        filterData.apartmentName = this.aptNameSpinnerSelectedItem.description;
         filterData.apartmentType = this.aptTypeSpinnerSelectedItem.code;
         filterData.gender = this.genderSpinnerSelectedItem.code;
         filterData.selectedUniversityId = +this.universityNameSpinnerSelectedItem.code;
@@ -109,17 +109,15 @@ export class AdvancedSearchFilters {
         this.aptNameSpinnerValues = new Array();
         for (let apartment of this.allApartments) {
 
-            if (apartment.uinversityId == +universityId &&
+            if (apartment.universityId == +universityId &&
                 apartment.apartmentType == apartmentType) {
 
                 this.aptNameSpinnerValues.push({
-                    'code': apartment.apartmentName,
+                    'code': apartment.apartmentId + "",
                     'description': apartment.apartmentName
                 });
                 this.aptNameSpinnerSelectedItem = Object.assign([], this.aptNameSpinnerValues[0]);
             }
         }
     }
-
-    spinnerClick1(clickedItem) { }
 }

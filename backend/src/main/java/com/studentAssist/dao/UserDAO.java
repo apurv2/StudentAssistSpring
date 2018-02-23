@@ -59,4 +59,8 @@ public class UserDAO extends AbstractDao {
 		return SAConstants.RESPONSE_SUCCESS;
 	}
 
+	public long getUserByUserId(String userId) {
+		return getByKey(Users.class, userId);
+	}
+
 }

@@ -31,6 +31,7 @@ import com.studentAssist.entities.UserVisitedAdds;
 import com.studentAssist.entities.Users;
 import com.studentAssist.response.AccommodationSearchDTO;
 import com.studentAssist.util.SAConstants;
+import com.studentAssist.util.Utilities;
 
 import javassist.bytecode.stackmap.TypeData.ClassName;
 
@@ -78,24 +79,19 @@ public class AccommodationDAO extends AbstractDao {
 
 	}
 
-	public String createAccommodationAdd(String userId, AccommodationAdd advertisement, String apartmentName)
+	public String createAccommodationAdd(long userId, AccommodationAdd advertisement, int apartmentId)
 			throws Exception {
 
-		// Users user = (Users) session.get((Class) Users.class, (Serializable)
-		// ((Object) userId));
 		Users user = getByKey(Users.class, userId);
-		Apartments examplApartment = new Apartments();
+		Apartments apartment = getByKey(Apartments.class, apartmentId);
 
-		examplApartment.setApartmentName(apartmentName);
-		Example example = Example.create((Object) examplApartment);
-		Criteria criteria = getCriteria(Apartments.class).add((Criterion) example);
-		List apartments = criteria.list();
+		advertisement.setDatePosted(Utilities.getDate());
 
-		Apartments apartment = (Apartments) apartments.get(0);
-		this.addAccommodationAddToApartment(apartment, advertisement);
-		this.addAccommodationToUser(user, advertisement);
+		addAccommodationAddToApartment(apartment, advertisement);
+		addAccommodationToUser(user, advertisement);
+		addUniversityToAdd(apartment.getUniversity(), advertisement);
 
-		// persist(advertisement);
+		persist(advertisement);
 
 		// sendNotification(apartment, advertisement, user);
 		return SAConstants.RESPONSE_SUCCESS;
@@ -106,21 +102,14 @@ public class AccommodationDAO extends AbstractDao {
 		saveOrUpdate(add);
 	}
 
-	public List<AccommodationAdd> getUserPosts(String userId, int position) throws Exception {
-		List userAdds = null;
-
-		// Users user = (Users) session.get((Class) Users.class, (Serializable)
-		// ((Object) userId));
-		// userAdds = user.getAccommodationAdd();
-
+	public List<AccommodationAdd> getUserPosts(long userId, int position) throws Exception {
 		Query query = getSession().createQuery("from AccommodationAdd where user.userId=" + userId);
 
 		// for pagination
 		query.setFirstResult(position);
 		query.setMaxResults(SAConstants.PAGE_SIZE);
 
-		userAdds = query.list();
-
+		List userAdds = query.list();
 		lazyLoadAdds(userAdds);
 
 		return userAdds;
@@ -184,7 +173,6 @@ public class AccommodationDAO extends AbstractDao {
 	public List<AccommodationAdd> getSimpleSearchAdds(String leftSpinner, String rightSpinner,
 			List<Integer> universityIds) throws Exception {
 
-		List<Universities> universities = new ArrayList<>();
 		Apartments apt = new Apartments();
 		String secondParameter = "";
 		AccommodationAdd exampleAccAdd = new AccommodationAdd();
@@ -423,8 +411,11 @@ public class AccommodationDAO extends AbstractDao {
 	}
 
 	private void addAccommodationAddToApartment(Apartments apartment, AccommodationAdd add) {
-		apartment.getAccommodationAdd().add(add);
 		add.setApartment(apartment);
+	}
+
+	private void addUniversityToAdd(Universities university, AccommodationAdd add) {
+		add.setUniversity(university);
 	}
 
 	private void lazyLoadAdds(List<AccommodationAdd> adds) {

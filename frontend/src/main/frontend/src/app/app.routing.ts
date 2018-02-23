@@ -3,6 +3,7 @@ import { SimpleSearch } from 'app/accommodation/simpleSearch/accommodation.simpl
 import { Dashboard } from 'app/dashboard/landing.dashboard';
 import { PostAccommodation } from './accommodation/post/accommodation.post';
 import { AdvancedSearch } from './accommodation/advancedSearch/accommodation.advanced.search';
+import { AddDetails } from './accommodation/shared/adDetails/accommodation.details.add';
 
 const appRoutes: Routes = [
     {
@@ -19,6 +20,13 @@ const appRoutes: Routes = [
     {
         path: 'advanced-search',
         component: AdvancedSearch
+    },
+    {
+        path: 'adDetails',
+        component: AddDetails,
+        data: {
+            sharedLink: true
+        }
     },
     { path: '**', redirectTo: 'dashboard' }
 

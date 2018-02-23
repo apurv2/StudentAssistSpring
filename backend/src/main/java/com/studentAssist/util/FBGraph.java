@@ -66,7 +66,7 @@ public class FBGraph {
 		JSONObject json = new JSONObject(flag);
 
 		user.setFirstName(json.getString("first_name"));
-		user.setUserId(json.getString("id"));
+		user.setUserId(Long.valueOf(json.getString("id")));
 		user.setLastName(json.getString("last_name"));
 
 		// optional paramaters

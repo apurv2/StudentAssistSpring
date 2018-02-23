@@ -34,7 +34,7 @@ public class NotificationsDAO extends AbstractDao {
 	 * @param session
 	 * @return
 	 */
-	public List<NotificationSettings> getNotificationSettings(String userId) throws Exception {
+	public List<NotificationSettings> getNotificationSettings(long userId) throws Exception {
 		List<NotificationSettings> settings = null;
 
 		Users user = getByKey(Users.class, userId);

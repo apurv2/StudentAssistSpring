@@ -39,7 +39,7 @@ export class HttpInterceptorService extends Http {
   post(url: string, body: string, options?: RequestOptionsArgs): Observable<Response> {
     url = this.updateUrl(url);
     return url.indexOf("cloudinary") == -1 ? super.post(url, body,
-      this.getRequestOptionArgs(options)) : super.post(url, body);
+      this.getRequestOptionArgs(options, url)) : super.post(url, body);
   }
 
   put(url: string, body: string, options?: RequestOptionsArgs): Observable<Response> {
@@ -54,21 +54,22 @@ export class HttpInterceptorService extends Http {
 
   private updateUrl(req: string) {
 
-    let finalUrl: string = req.indexOf("cloudinary") == -1 ? environment.url + req : req;
+    let finalUrl: string = req.indexOf("branch") == -1 ? environment.url + req : req;
     console.log(finalUrl);
     return finalUrl;
 
   }
 
-  private getRequestOptionArgs(options?: RequestOptionsArgs): RequestOptionsArgs {
+  private getRequestOptionArgs(options?: RequestOptionsArgs, url?: string): RequestOptionsArgs {
     if (options == null) {
       options = new RequestOptions();
     }
     if (options.headers == null) {
       options.headers = new Headers();
     }
-    options.headers.append('Content-Type', 'application/json');
+
     this.createAuthorizationHeader(options.headers);
+    options.headers.append('Content-Type', 'application/json');
 
     return options;
   }

@@ -2,6 +2,7 @@ package com.studentAssist.response;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -14,7 +15,7 @@ public class RAccommodationAdd {
 	private String cost;
 	private String fbId;
 	private String notes;
-	private String userId;
+	private long userId;
 	private String apartmentName;
 	private String firstName;
 	private String lastName;
@@ -30,9 +31,11 @@ public class RAccommodationAdd {
 	private String city;
 	private String state;
 	private int zip;
+	private int apartmentId;
+	private Date postedTill;
 
 	public RAccommodationAdd(String vacancies, String gender, String noOfRooms, String cost, String fbId, String notes,
-			String userId, String apartmentName, String firstName, String lastName, String emailId, String phoneNumber,
+			long userId, String apartmentName, String firstName, String lastName, String emailId, String phoneNumber,
 			long addId, boolean userVisitedSw, String createDate, List<String> apartmentPictureId, int universityId,
 			String universityName, String universityPhotoUrl, String univAcronym, String city, String state, int zip) {
 		super();
@@ -63,7 +66,7 @@ public class RAccommodationAdd {
 	}
 
 	public RAccommodationAdd(String vacancies, String gender, String noOfRooms, String cost, String fbId, String notes,
-			String userId, String apartmentName, String firstName, String lastName, String emailId, String phoneNumber,
+			long userId, String apartmentName, String firstName, String lastName, String emailId, String phoneNumber,
 			long addId, boolean userVisitedSw, String createDate, List<String> apartmentPictureId, int universityId,
 			String universityName, String universityPhotoUrl, String univAcronym) {
 		super();
@@ -261,12 +264,12 @@ public class RAccommodationAdd {
 		this.notes = notes;
 	}
 
-	public String getUserId() {
+	public long getUserId() {
 		return this.userId;
 	}
 
 	@XmlElement
-	public void setUserId(String userId) {
+	public void setUserId(long userId) {
 		this.userId = userId;
 	}
 
@@ -294,6 +297,22 @@ public class RAccommodationAdd {
 
 	public void setUniversityPhotoUrl(String universityPhotoUrl) {
 		this.universityPhotoUrl = universityPhotoUrl;
+	}
+
+	public int getApartmentId() {
+		return apartmentId;
+	}
+
+	public void setApartmentId(int apartmentId) {
+		this.apartmentId = apartmentId;
+	}
+
+	public Date getPostedTill() {
+		return postedTill;
+	}
+
+	public void setPostedTill(Date postedTill) {
+		this.postedTill = postedTill;
 	}
 
 }

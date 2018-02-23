@@ -117,11 +117,11 @@ public class SAConstants {
 	public static final String RESPONSE = "response";
 	public static final String RESPONSE_EXCEPTION = "Sorry we could not process your request at this time.";
 
-	public static final Map<String, String> ADMIN_USER_ID = new HashMap<>();
+	public static final Map<Long, Long> ADMIN_USER_ID = new HashMap<>();
 
 	static {
-		ADMIN_USER_ID.put("10207639158073180", "10207639158073180"); //APURV
-		ADMIN_USER_ID.put("100002047925455", "100002047925455"); // KIRAN
+		ADMIN_USER_ID.put(10207639158073180L, 10207639158073180L); // APURV
+		ADMIN_USER_ID.put(100002047925455L, 100002047925455L); // KIRAN
 	}
 
 	static {

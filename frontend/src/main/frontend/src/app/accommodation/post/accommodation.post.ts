@@ -18,6 +18,7 @@ import { AccommodationAdd } from 'app/accommodation/shared/models/accommodation.
 import { SuccessOrFailureModal } from 'app/shared/modals/success.or.failure';
 import { University } from 'app/universities/universities.model';
 import { UserService } from 'app/shared/userServices/user.service';
+import { NewApartmentModal } from './newApartment/new.apartment.modal';
 
 
 /** Error when invalid control is dirty, touched, or submitted. */
@@ -55,6 +56,9 @@ export class PostAccommodation {
     notes: string;
     email: string;
 
+    minDate: Date = new Date();
+    maxDate: Date = new Date();
+
     emailFormControl = new FormControl('', [
         Validators.required,
         Validators.email,
@@ -69,6 +73,7 @@ export class PostAccommodation {
         Validators.min(0),
         Validators.max(2000),
     ]);
+    dateAvailableTill = new FormControl(new Date());
 
 
     cloudinaryUrls: string[] = [];
@@ -82,8 +87,7 @@ export class PostAccommodation {
     ngOnInit() {
 
         this.initializeSpinners();
-
-        this.numberFormControl.hasError
+        this.maxDate.setMonth(new Date().getMonth() + 1);
     }
 
     initializeSpinners() {
@@ -159,11 +163,11 @@ export class PostAccommodation {
         if (this.allApartments != null) {
             for (let apartment of this.allApartments) {
 
-                if (apartment.uinversityId == +universityId &&
+                if (apartment.universityId == +universityId &&
                     apartment.apartmentType == apartmentType) {
 
                     this.aptNameSpinnerValues.push({
-                        'code': apartment.apartmentName,
+                        'code': apartment.apartmentId + "",
                         'description': apartment.apartmentName
                     });
                     this.aptNameSpinnerSelectedItem = Object.assign([], this.aptNameSpinnerValues[0]);
@@ -228,7 +232,6 @@ export class PostAccommodation {
     private preparePostAccommodationParams(): AccommodationAdd {
 
         let accommodationAdd: AccommodationAdd = new AccommodationAdd();
-        accommodationAdd.apartmentName = this.aptNameSpinnerSelectedItem.code;
         accommodationAdd.gender = this.genderSpinnerSelectedItem.code;
         accommodationAdd.vacancies = +this.vacanciesSpinnerSelectedItem.code;
         accommodationAdd.cost = this.cost;
@@ -236,6 +239,8 @@ export class PostAccommodation {
         accommodationAdd.universityId = +this.universityNameSpinnerSelectedItem.code;
         accommodationAdd.emailId = this.email;
         accommodationAdd.noOfRooms = this.noOfRoomsSpinnerSelectedItem.code;
+        accommodationAdd.postedTill = this.dateAvailableTill.value;
+        accommodationAdd.apartmentId = +this.aptNameSpinnerSelectedItem.code;
         return accommodationAdd;
     }
 
@@ -252,6 +257,14 @@ export class PostAccommodation {
             });
 
 
+    }
+
+    apartmentNameClick() {
+
+        this.dialog.open(NewApartmentModal).
+            afterClosed().subscribe(result => {
+                console.log('The dialog was closed');
+            });
     }
 
 

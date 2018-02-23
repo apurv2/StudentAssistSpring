@@ -23,4 +23,12 @@ export class AccommodationAdd {
     state: string;
     zip: number;
     addPhotoIds: string[];
+    postedTill: Date;
+    apartmentId: number;
+    branch_key: string;
+    channel: string;
+    feature: string;
+    stage: string;
+    bla: string;
+
 }
