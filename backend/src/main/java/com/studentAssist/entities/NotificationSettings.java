@@ -17,19 +17,11 @@ public class NotificationSettings implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private String checkerUserId;
+	private long checkerUserId;
 
 	@ManyToOne
 	@JoinColumn(name = "UNIV_ID")
 	private Universities universityId;
-
-	public String getCheckerUserId() {
-		return checkerUserId;
-	}
-
-	public void setCheckerUserId(String checkerUserId) {
-		this.checkerUserId = checkerUserId;
-	}
 
 	@ManyToOne
 	@JoinColumn(name = "USER_ID")
@@ -114,6 +106,14 @@ public class NotificationSettings implements Serializable {
 
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+	}
+
+	public long getCheckerUserId() {
+		return checkerUserId;
+	}
+
+	public void setCheckerUserId(long checkerUserId) {
+		this.checkerUserId = checkerUserId;
 	}
 
 	@Override

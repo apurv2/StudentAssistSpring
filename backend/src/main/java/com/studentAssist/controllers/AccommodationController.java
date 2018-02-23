@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cloudinary.Cloudinary;
 import com.google.gson.Gson;
+import com.studentAssist.entities.AccommodationAdd;
 import com.studentAssist.entities.Users;
 import com.studentAssist.exception.InvalidTokenException;
 import com.studentAssist.response.AccommodationSearchDTO;
@@ -43,12 +45,17 @@ public class AccommodationController extends AbstractController {
 	@Autowired
 	InsertApartmentDetails aptDetails;
 
+	@Autowired
+	private Mapper mapper;
+
 	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT, value = "profile/createAccommodationAddFromFacebook")
 	public String createAccommodationAddFromFacebook(@RequestBody RAccommodationAdd rAccommodationAdd,
 			HttpServletRequest request) throws Exception {
 
 		Users user = getUserFromRequest(request);
-		if (user.getUserId().equals("10207639158073180")) {
+		if (SAConstants.ADMIN_USER_ID.containsKey(user.getUserId())) {
+
+			AccommodationAdd add = mapper.map(rAccommodationAdd, AccommodationAdd.class);
 
 			return accommodationService.createAccommodationAddFromFacebook(rAccommodationAdd.getFbId(),
 					rAccommodationAdd.getApartmentName(), rAccommodationAdd.getNoOfRooms(),
@@ -84,12 +91,9 @@ public class AccommodationController extends AbstractController {
 			throws Exception {
 
 		Users user = getUserFromRequest(request);
-		String userId = user.getUserId();
-
-		return accommodationService.createAccommodationAdd(userId, rAccommodationAdd.getApartmentName(),
-				rAccommodationAdd.getNoOfRooms(), rAccommodationAdd.getVacancies(), rAccommodationAdd.getCost(),
-				rAccommodationAdd.getGender(), rAccommodationAdd.getFbId(), rAccommodationAdd.getNotes(),
-				rAccommodationAdd.getAddPhotoIds(), rAccommodationAdd.getUniversityId());
+		long userId = user.getUserId();
+		AccommodationAdd add = mapper.map(rAccommodationAdd, AccommodationAdd.class);
+		return accommodationService.createAccommodationAdd(add, userId, rAccommodationAdd.getApartmentId());
 
 	}
 
@@ -113,22 +117,6 @@ public class AccommodationController extends AbstractController {
 		return accommodationService.getAllApartmentNames(getUserFromRequest(request));
 	}
 
-	// @RequestMapping(method = RequestMethod.GET, value =
-	// "/getAdvancedAdvertisements")
-	// public List<RAccommodationAdd>
-	// getAdvancedAdvertisements(@RequestParam("apartmentName") String
-	// apartmentName,
-	// @RequestParam("position") int position, @RequestParam("gender") String
-	// gender,
-	// @RequestParam("universityId") String universityId, HttpServletRequest
-	// request) throws Exception {
-	//
-	// return accommodationService.getAdvancedAdvertisements(apartmentName,
-	// gender, getUserFromRequest(request),
-	// position);
-	//
-	// }
-
 	@RequestMapping(method = RequestMethod.POST, value = "/getAdvancedSearchAdds")
 	public List<RAccommodationAdd> getAdvancedSearchAddsWebApp(@RequestBody AccommodationSearchDTO searchParams,
 			HttpServletRequest request) throws Exception {
@@ -137,31 +125,6 @@ public class AccommodationController extends AbstractController {
 				searchParams.getSelectedUniversityId(), 0);
 
 	}
-
-	// @RequestMapping(method = RequestMethod.GET, value =
-	// "/getSimpleSearchAddsAndroid")
-	// public List<RAccommodationAdd>
-	// getSimpleSearchAddsAndroid(@RequestParam("leftSpinner") String
-	// leftSpinner,
-	// @RequestParam("rightSpinner") String rightSpinner, HttpServletRequest
-	// request) throws Exception {
-	//
-	// return accommodationService.getSimpleSearchAdds(leftSpinner,
-	// rightSpinner, getUserFromRequest(request));
-	// }
-
-	// @RequestMapping(method = RequestMethod.GET, value =
-	// "/getSimpleSearchAddsForWebApp")
-	// public List<RAccommodationAddJson>
-	// getSimpleSearchAddsForWebApp(@RequestParam("leftSpinner") String
-	// leftSpinner,
-	// @RequestParam("rightSpinner") String rightSpinner, HttpServletRequest
-	// request) throws Exception {
-	//
-	// return accommodationService.getSimpleSearchAddsForWebApp(leftSpinner,
-	// rightSpinner,
-	// getUserFromRequest(request));
-	// }
 
 	/**
 	 * Pagination for returning additional accommodation Adds
@@ -209,7 +172,6 @@ public class AccommodationController extends AbstractController {
 
 	}
 
-	// javascript code to be added for accesstoken
 	@RequestMapping(method = RequestMethod.POST, value = "/getAllApartmentsWithType")
 	public List<RApartmentNamesWithType> getAllApartmentsWithType(HttpServletRequest request,
 			@RequestBody AccommodationSearchDTO aptNames) throws Exception {

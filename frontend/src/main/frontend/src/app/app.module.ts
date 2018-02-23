@@ -24,7 +24,7 @@ import { SimpleSearchAddsFilters } from './accommodation/simpleSearch/filters/si
 import { SharedDataService } from './shared/data/shared.data.service';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatChipsModule, MatIconModule, MatSnackBarModule, MatSelectModule, MatInputModule, MatNativeDateModule, MatDialog, MatDialogModule, MatCheckbox, MatCheckboxModule, MatRadioModule, MatSidenavModule, MatListModule, } from '@angular/material';
+import { MatChipsModule, MatIconModule, MatSnackBarModule, MatSelectModule, MatInputModule, MatNativeDateModule, MatDialog, MatDialogModule, MatCheckbox, MatCheckboxModule, MatRadioModule, MatSidenavModule, MatListModule, MatDatepicker, MatDatepickerModule, } from '@angular/material';
 
 import 'hammerjs';
 import { LandingFlashCards } from './dashboard/flashCards/landing.flash.cards';
@@ -52,11 +52,17 @@ import { Ng2CarouselamosModule } from 'ng2-carouselamos';
 import { UserPostsService } from 'app/accommodation/post/userPosts/user.posts.service';
 import { AddDetailsModal } from 'app/accommodation/shared/adDetails/accommodation.details.modal';
 import { AddDetailsService } from 'app/accommodation/shared/adDetails/accommodation.details.add.service';
+import { CopyLinkModal } from './accommodation/shared/modals/copy.link.modal';
+import { NewApartmentModal } from './accommodation/post/newApartment/new.apartment.modal';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
-  imports: [
+  imports: [AgmCoreModule.forRoot({
+    apiKey: "AIzaSyAVW7umN-Y1GC69fOsqQlCfjus6hW1Ux84",
+    libraries: ["places"]
+  }),
     BrowserModule,
-    FacebookModule.forRoot(),
+  FacebookModule.forRoot(),
     routing,
     HttpModule,
     FormsModule,
@@ -72,7 +78,9 @@ import { AddDetailsService } from 'app/accommodation/shared/adDetails/accommodat
     MatRadioModule,
     Ng2CarouselamosModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    MatNativeDateModule,
+    MatDatepickerModule
   ],
   declarations: [
     AppComponent,
@@ -100,8 +108,9 @@ import { AddDetailsService } from 'app/accommodation/shared/adDetails/accommodat
     NotificationSettingsFilter,
     SuccessOrFailureModal,
     AddDetailsModal,
-    TopHeader
-
+    TopHeader,
+    CopyLinkModal,
+    NewApartmentModal
   ],
   providers: [UniversitiesService,
     HttpInterceptorService,
@@ -125,7 +134,7 @@ import { AddDetailsService } from 'app/accommodation/shared/adDetails/accommodat
 
   ],
   bootstrap: [AppComponent, TopHeader],
-  entryComponents: [SubscribeNotificationsModal, LoginModal, SuccessOrFailureModal, AddDetailsModal]
+  entryComponents: [SubscribeNotificationsModal, LoginModal, SuccessOrFailureModal, AddDetailsModal, CopyLinkModal, NewApartmentModal]
 })
 export class AppModule {
 
@@ -138,5 +147,7 @@ export class AppModule {
     };
 
     fb.init(initParams);
+
   }
 }
+

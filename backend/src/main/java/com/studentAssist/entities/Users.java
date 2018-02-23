@@ -35,7 +35,7 @@ public class Users {
 	private List<UserAccommodationNotifications> userNotifications = new ArrayList<>();
 
 	@Id
-	private String userId;
+	private long userId;
 
 	@OneToOne
 	private UserDummy user_Id;
@@ -132,14 +132,6 @@ public class Users {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public String getUserId() {
-		return this.userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
 	public List<GCMIds> getGcmIds() {
 		return gcmIds;
 	}
@@ -154,6 +146,14 @@ public class Users {
 
 	public void setUserVisitedAdds(List<UserVisitedAdds> userVisitedAdds) {
 		this.userVisitedAdds = userVisitedAdds;
+	}
+
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 
 }

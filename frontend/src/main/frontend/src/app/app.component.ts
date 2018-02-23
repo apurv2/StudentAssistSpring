@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { SharedDataService } from './shared/data/shared.data.service';
 import { environment } from '../environments/environment';
 import { UserService } from './shared/userServices/user.service';
@@ -24,7 +24,8 @@ export class AppComponent {
   constructor(private router: Router,
     private sharedDataService: SharedDataService,
     private userService: UserService,
-    private fb: FacebookService
+    private fb: FacebookService,
+    private route: ActivatedRoute
   ) {
   }
   ngOnInit() {

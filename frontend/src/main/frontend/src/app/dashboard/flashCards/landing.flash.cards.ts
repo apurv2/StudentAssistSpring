@@ -7,6 +7,9 @@ import { Observable } from 'rxjs/Rx';
 import { Subscription } from 'rxjs/Subscription';
 import { FlashCardsRequestModel } from 'app/dashboard/models/flash.cards.request.model';
 import { SharedDataService } from 'app/shared/data/shared.data.service';
+import { AccommodationAdd } from '../../accommodation/shared/models/accommodation.model';
+import { MatDialog } from '@angular/material';
+import { AddDetailsModal } from '../../accommodation/shared/adDetails/accommodation.details.modal';
 
 @Component({
     selector: 'landing-flash-cards',
@@ -18,18 +21,29 @@ export class LandingFlashCards {
 
     constructor(private router: Router,
         private flashCardsService: LandingFlashCardsService,
-        private sharedDataService: SharedDataService) {
+        private sharedDataService: SharedDataService,
+        private dialog: MatDialog) {
     }
 
     ngOnInit() {
         this.getFlashCards();
+        this.startFlashCardsTimer();
+    }
+
+    startFlashCardsTimer() {
         this.flashCardIntervalObservable = Observable
             .interval(10000)
+            .skip(1)
             .subscribe(x => this.getFlashCards());
     }
 
-    searchResultCardClick() {
-        this.router.navigate(['/simple-search/']);
+    openAddDetails(accommodationAdd: AccommodationAdd) {
+        this.unsubscribeFlashCards()
+        this.dialog.open(AddDetailsModal, {
+            data: accommodationAdd
+        }).afterClosed().subscribe(result => {
+            this.startFlashCardsTimer();
+        });
     }
 
     getFlashCards() {
@@ -48,7 +62,11 @@ export class LandingFlashCards {
             });
     }
 
-    ngOnDestroy() {
+    unsubscribeFlashCards() {
         this.flashCardIntervalObservable.unsubscribe();
+    }
+
+    ngOnDestroy() {
+        this.unsubscribeFlashCards();
     }
 }

@@ -3,7 +3,7 @@
         <div class="row">
             <div *ngFor="let accommodationCard of flashCardsData?.accomodationCards" class="col-sm-6 col-md-3">
                 <!--single card layout-->
-                <div class="card vertical-card" (click)="searchResultCardClick()">
+                <div class="card vertical-card" (click)="openAddDetails(accommodationCard)">
                     <div class="card-img-view">
                         <img src="{{accommodationCard.addPhotoIds[0]}}" />
                         <span class="card-tag">

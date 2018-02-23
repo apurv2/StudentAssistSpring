@@ -44,7 +44,7 @@ public class AccommodationService {
 
 		user.setFirstName(firstName);
 		user.setLastName(lastName);
-		user.setUserId(userId);
+		// user.setUserId(userId);
 
 		user.setRegisteredDate(Utilities.getDate());
 
@@ -64,27 +64,18 @@ public class AccommodationService {
 		return getRAccommodationAdds(accommodationAdds, addIds, -1);
 	}
 
-	public String createAccommodationAdd(String userId, String apartmentName, String noOfRooms, String vacancies,
-			String cost, String gender, String fbId, String notes, List<String> addPhotoIds, int universityId)
-			throws Exception {
+	public String createAccommodationAdd(AccommodationAdd add, long userId, int apartmentId) throws Exception {
 
-		AccommodationAdd advertisement = new AccommodationAdd(vacancies, gender, noOfRooms, cost, fbId, notes,
-				Utilities.getDate(), addPhotoIds);
-
-		Universities university = new Universities();
-		university.setUniversityId(universityId);
-		advertisement.setUniversity(university);
-
-		return accommmodationDAO.createAccommodationAdd(userId, advertisement, apartmentName);
+		add.setDatePosted(Utilities.getDate());
+		return accommmodationDAO.createAccommodationAdd(userId, add, apartmentId);
 	}
 
 	public String deleteAccommodationAdd(int addId, Users users) throws Exception {
 
 		AccommodationAdd add = accommmodationDAO.getByKey(AccommodationAdd.class, addId);
-		String userId = add != null ? add.getUser().getUserId() : SAConstants.EmptyText;
+		long userId = add != null ? add.getUser().getUserId() : 0;
 
-		if (userId != null && !userId.isEmpty() && userId.equals(users.getUserId())
-				|| SAConstants.ADMIN_USER_ID.containsKey(userId)) {
+		if (userId > 0 && userId == users.getUserId() || SAConstants.ADMIN_USER_ID.containsKey(userId)) {
 
 			accommmodationDAO.deleteAccommodationAdd(add);
 
@@ -95,7 +86,7 @@ public class AccommodationService {
 		throw new RuntimeException();
 	}
 
-	public List<RAccommodationAdd> getUserPosts(String userId, int position) throws Exception {
+	public List<RAccommodationAdd> getUserPosts(long userId, int position) throws Exception {
 
 		List<AccommodationAdd> userAdds = accommmodationDAO.getUserPosts(userId, position);
 		return getRAccommodationAdds(userAdds, null, -1);
@@ -134,56 +125,12 @@ public class AccommodationService {
 
 	}
 
-	// public List<RAccommodationAddJson> getSimpleSearchAddsForWebApp(String
-	// leftSpinner, String rightSpinner,
-	// Users currentUser) throws Exception {
-	//
-	// List<AccommodationAdd> simpleSearchAdds =
-	// accommmodationDAO.getSimpleSearchAdds(leftSpinner, rightSpinner,
-	// currentUser);
-	// List<Long> addIds = getUserVisitedAdds(currentUser);
-	// List<RAccommodationAdd> accomodationAdds =
-	// getRAccommodationAdds(simpleSearchAdds, addIds);
-	//
-	// List<Integer> universityIds = new ArrayList<>();
-	// // List<RAccommodationAddJson> addJson = new ArrayList<>();
-	// for (AccommodationAdd add : simpleSearchAdds) {
-	// if
-	// (!(universityIds.contains(add.getApartment().getUniversity().getUniversityId())))
-	// {
-	// universityIds.add(add.getApartment().getUniversity().getUniversityId());
-	// }
-	// }
-	//
-	// List<RAccommodationAddJson> accoAddsJson = new ArrayList<>();
-	// List<RAccommodationAdd> accoAdds = new ArrayList<>();
-	// for (int universityId : universityIds) {
-	// for (RAccommodationAdd add : accomodationAdds) {
-	// if (universityId == add.getUniversityId()) {
-	// accoAdds.add(add);
-	// }
-	// }
-	// List<RAccommodationAdd> uniAdds = new ArrayList<>();
-	// uniAdds.addAll(accoAdds);
-	// accoAddsJson.add(new RAccommodationAddJson(universityId, uniAdds));
-	// accoAdds.clear();
-	// }
-	//
-	// return accoAddsJson;
-	//
-	// }
-
 	public List<UniversityAccommodationDTO> getSimpleSearchAdds(AccommodationSearchDTO accommodationSearch)
 			throws Exception {
 
 		List<AccommodationAdd> simpleSearchAdds = accommmodationDAO.getSimpleSearchAdds(
 				accommodationSearch.getLeftSpinner(), accommodationSearch.getRightSpinner(),
 				accommodationSearch.getUniversityIds());
-
-		// List<AccommodationAdd> simpleSearchAdds =
-		// accommmodationDAO.getSimpleSearchAdds("gender", "Male",
-		// Arrays.asList(1, 2, 3));
-		// List<Long> addIds = getUserVisitedAdds(currentUser);
 
 		List<RAccommodationAdd> accomodationAdds = getRAccommodationAdds(simpleSearchAdds, null, 2);
 
@@ -253,7 +200,7 @@ public class AccommodationService {
 
 		for (Apartments apartment : apartments) {
 			rApartments.add(new RApartmentNamesWithType(apartment.getApartmentName(), apartment.getApartmentType(),
-					apartment.getUniversity().getUniversityId()));
+					apartment.getUniversity().getUniversityId(), apartment.getId()));
 		}
 		return rApartments;
 	}
