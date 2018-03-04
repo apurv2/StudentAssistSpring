@@ -1,5 +1,5 @@
 <div class="container">
-    <simple-search-filters></simple-search-filters>
-    <simple-search-list [accommodationSearchResults]="universityAccommodationAdds"></simple-search-list>
+    <simple-search-filters #filters></simple-search-filters>
+    <simple-search-list [accommodationSearchResults]="universityAccommodationAdds" [filters]="filters"></simple-search-list>
     <accommodation-details [selectedAccommodationAdd]="selectedAccommodationAdd" [enableSubscription]="true"></accommodation-details>
 </div>

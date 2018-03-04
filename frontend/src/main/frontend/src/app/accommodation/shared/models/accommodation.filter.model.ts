@@ -7,4 +7,5 @@ export class AccommodationSearchModel {
     apartmentType: string;
     gender: string;
     selectedUniversityId: number;
+    paginationPosition: number;
 }

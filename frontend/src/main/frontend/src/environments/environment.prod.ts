@@ -92,5 +92,8 @@ export const environment = {
   login: 'Login',
   logout: 'Logout',
   deleteAccommodationAdd: 'deleteAccommodationAdd',
-  addId: 'addId'
+  addId: 'addId',
+  branchUrl: 'https://api.branch.io/v1/url',
+  branchKey: 'key_live_ljvA7ojt1BPcO0zpTFFdEimoqqhfGSXF',
+  other: 'Other'
 };

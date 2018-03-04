@@ -76,7 +76,8 @@ public class GlobalExceptionHandler {
 			logger.info(ExceptionUtils.getStackTrace(e));
 		}
 	}
-
+	
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ExceptionHandler(value = Exception.class)
 	public ErrorInfo handleException(Exception e, HttpServletRequest request) {
 

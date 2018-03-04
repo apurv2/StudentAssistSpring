@@ -1,5 +1,5 @@
 import { Component, Inject, NgZone, ViewChild, ElementRef } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FacebookService } from 'ngx-facebook/dist/esm/providers/facebook';
 import { LoginResponse } from 'ngx-facebook/dist/esm/models/login-response';
 import { Http, Response } from '@angular/http';
@@ -8,6 +8,7 @@ import { Observable } from 'rxjs/Observable';
 import { MapsAPILoader } from '@agm/core';
 import { } from '@types/googlemaps';
 import { FormControl } from '@angular/forms';
+import { Apartment } from '../../shared/models/apartment.names.model';
 
 
 @Component({
@@ -31,7 +32,8 @@ export class NewApartmentModal {
 
     constructor(public dialogRef: MatDialogRef<NewApartmentModal>,
         private mapsApiLoader: MapsAPILoader,
-        private ngZone: NgZone) {
+        private ngZone: NgZone,
+        @Inject(MAT_DIALOG_DATA) public apartment: Apartment) {
     }
 
 
@@ -72,18 +74,25 @@ export class NewApartmentModal {
                         route: 'long_name',
                         locality: 'long_name',
                         administrative_area_level_1: 'short_name',
-                        country: 'long_name',
                         postal_code: 'short_name'
+                    };
+
+
+                    let apartmentItem = {
+                        street_number: 'street_num',
+                        route: 'addr_line',
+                        locality: 'city',
+                        administrative_area_level_1: 'state',
+                        postal_code: 'zip'
                     };
 
                     for (var i = 0; i < place.address_components.length; i++) {
                         var addressType = place.address_components[i].types[0];
                         if (componentForm[addressType]) {
                             var val = place.address_components[i][componentForm[addressType]];
-                            console.log(addressType + ',' + val);
+                            this.apartment[apartmentItem[addressType]] = val;
                         }
                     }
-
                 });
             });
         });
@@ -97,5 +106,10 @@ export class NewApartmentModal {
                 this.zoom = 16;
             });
         }
+    }
+
+    closeDialog(): void {
+        this.apartment.addr_line = this.apartment.street_num + " " + this.apartment.addr_line
+        this.dialogRef.close(this.apartment);
     }
 }

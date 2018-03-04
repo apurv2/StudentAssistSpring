@@ -6,7 +6,7 @@
             <div>Search for unique homes On/Off Campus and experience the university as your own.</div>
         </h1>
 
-        <div class="search-panel">
+        <div #searchPanel class="search-panel">
             <form>
                 <div class="input-group">
                     <mat-chip-list #chipList>
@@ -16,14 +16,15 @@
                         </mat-chip>
 
                         <input [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
-                            (keyup)="searchTerm$.next($event.target.value)" (keyup.enter)="onEnterClicked()" [(ngModel)]="searchBarText" class=" form-control type-search"
-                            [ngModelOptions]="{standalone: true}" placeholder="Enter University Name(s)...">
+                            (keyup)="searchTerm$.next($event.target.value)" (keyup.enter)="onEnterClicked()" [(ngModel)]="searchBarText"
+                            class=" form-control type-search" [ngModelOptions]="{standalone: true}" placeholder="Enter University Name(s)...">
 
                     </mat-chip-list>
                     <span class="input-group-addon padding-0">
-                        <!--<button type="button">Search</button>-->
-                        <a [routerLink]="['/simple-search']">
-                            <i class="fa fa-search" aria-hidden="true"></i>
+                        <a href="javascript:void(0)" [class.disabled]="selectedUniversities.length == 0" (click)="onEnterClicked()">
+                            <div matTooltip="{{selectedUniversities.length==0? 'Add Universities To Search' : 'Click to launch Search'}}" [matTooltipPosition]=" toolTipPosition ">
+                                <i [class.bounce]="selectedUniversities.length>0" class="fa fa-search" aria-hidden="true"></i>
+                            </div>
                         </a>
                     </span>
 

@@ -20,6 +20,7 @@ export class SimpleSearchAddsFilters {
     rightSpinnerValues: AccommodationDropdown[] = []
     leftSpinnerSelectedItem: AccommodationDropdown;
     rightSpinnerSelectedItem: AccommodationDropdown;
+    loading: boolean;
 
     ngOnInit() {
         this.initializeSpinners();
@@ -63,6 +64,7 @@ export class SimpleSearchAddsFilters {
 
     emitSpinnerClick(apartmentName: boolean) {
 
+        this.loading = true;
         let filterData: AccommodationSearchModel = new AccommodationSearchModel();
         filterData.leftSpinner = this.leftSpinnerSelectedItem.code;
         filterData.rightSpinner = this.rightSpinnerSelectedItem.code;
@@ -70,10 +72,8 @@ export class SimpleSearchAddsFilters {
         let universities: University[] = this.sharedDataService.getUserSelectedUniversitiesList();
         let universityIds: number[] = new Array<number>();
         if (universities != null) {
-            for (let university of universities) {
-                universityIds.push(university.universityId);
-            }
 
+            universityIds = universities.map(university => university.universityId);
             filterData.universityIds = universityIds;
             if (apartmentName) {
                 this.simpleSearchFilterService.getApartmentNames(filterData).
@@ -89,10 +89,9 @@ export class SimpleSearchAddsFilters {
         }
         else {
             this.sharedDataService.openSnackBar(this.snackBar, "No Universities selected", "Dismiss");
-
         }
     }
-    
+
     mapApartmentNames(apartments: Apartment[]) {
         this.rightSpinnerValues = new Array();
         this.rightSpinnerValues.length = 0;
@@ -103,6 +102,17 @@ export class SimpleSearchAddsFilters {
             });
         }
         this.rightSpinnerSelectedItem = Object.assign([], this.rightSpinnerValues[0]);
+    }
+
+    getSpinners(): AccommodationSearchModel {
+        let filterData: AccommodationSearchModel = new AccommodationSearchModel();
+        filterData.leftSpinner = this.leftSpinnerSelectedItem.code;
+        filterData.rightSpinner = this.rightSpinnerSelectedItem.code;
+        return filterData;
+    }
+
+    stopLoding() {
+        this.loading = false;
     }
 
 }

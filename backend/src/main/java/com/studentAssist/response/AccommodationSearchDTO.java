@@ -18,8 +18,18 @@ public class AccommodationSearchDTO {
 
 	private int selectedUniversityId;
 
+	private int paginationPosition;
+
 	public int getSelectedUniversityId() {
 		return selectedUniversityId;
+	}
+
+	public int getPaginationPosition() {
+		return paginationPosition;
+	}
+
+	public void setPaginationPosition(int paginationPosition) {
+		this.paginationPosition = paginationPosition;
 	}
 
 	public void setSelectedUniversityId(int selectedUniversityId) {

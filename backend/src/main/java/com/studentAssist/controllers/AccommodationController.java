@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cloudinary.Cloudinary;
 import com.google.gson.Gson;
 import com.studentAssist.entities.AccommodationAdd;
+import com.studentAssist.entities.Apartments;
 import com.studentAssist.entities.Users;
 import com.studentAssist.exception.InvalidTokenException;
 import com.studentAssist.response.AccommodationSearchDTO;
+import com.studentAssist.response.ApartmentDTO;
 import com.studentAssist.response.RAccommodationAdd;
 import com.studentAssist.response.RAccommodationAddJson;
 import com.studentAssist.response.RApartmentNames;
@@ -134,12 +136,12 @@ public class AccommodationController extends AbstractController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(method = RequestMethod.GET, value = "/getSimpleSearchAddsPagination")
-	public List<RAccommodationAdd> getSimpleSearchAddsPagination(@RequestParam("leftSpinner") String leftSpinner,
-			@RequestParam("rightSpinner") String rightSpinner, @RequestParam("position") int position,
-			@RequestParam("universityId") int universityId, HttpServletRequest request) {
+	@RequestMapping(method = RequestMethod.POST, value = "/getSimpleSearchAddsPagination")
+	public List<RAccommodationAdd> getSimpleSearchAddsPagination(@RequestBody AccommodationSearchDTO filterData,
+			HttpServletRequest request) {
 
-		return accommodationService.getSimpleSearchAddsPagination(leftSpinner, rightSpinner, position, universityId);
+		return accommodationService.getSimpleSearchAddsPagination(filterData.getLeftSpinner(),
+				filterData.getRightSpinner(), filterData.getPaginationPosition(), filterData.getSelectedUniversityId());
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/getApartmentNames")
@@ -165,10 +167,10 @@ public class AccommodationController extends AbstractController {
 
 	// code to be written in javascript
 	@RequestMapping(method = RequestMethod.POST, value = "/addNewApartment")
-	public String addNewApartment(@RequestParam("apartmentName") String apartmentName,
-			@RequestParam("apartmentType") String apartmentType, HttpServletRequest request) throws Exception {
+	public int addNewApartment(@RequestBody ApartmentDTO apartmentDto, HttpServletRequest request) throws Exception {
 
-		return accommodationService.addNewApartment(apartmentName, apartmentType);
+		Apartments apartment = mapper.map(apartmentDto, Apartments.class);
+		return accommodationService.addNewApartment(apartment, apartmentDto.getUniversityId());
 
 	}
 

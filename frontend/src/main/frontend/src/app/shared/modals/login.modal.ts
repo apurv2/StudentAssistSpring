@@ -46,6 +46,7 @@ export class LoginModal {
         this.closeDialog(true);
     }
 
+
     closeDialog(loginResult: boolean): void {
         this.dialogRef.close(loginResult);
     }

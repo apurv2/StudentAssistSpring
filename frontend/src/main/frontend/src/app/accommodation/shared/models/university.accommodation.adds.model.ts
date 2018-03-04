@@ -6,4 +6,7 @@ export class UniversityAccommodationAdds {
     universityId: number;
     universityName: string;
     urls: string;
+    paginating: boolean;
+    stopPagination:boolean;
+
 }

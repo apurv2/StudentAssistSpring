@@ -188,11 +188,6 @@ public class AccommodationService {
 		return rApartments;
 	}
 
-	public String addNewApartment(String apartmentName, String apartmentType) throws Exception {
-
-		return accommmodationDAO.addNewApartment(apartmentName, apartmentType);
-	}
-
 	public List<RApartmentNamesWithType> getApartmentNamesWithType(List<Integer> universityIds) throws Exception {
 
 		List<Apartments> apartments = accommmodationDAO.getApartmentNamesWithType(universityIds);
@@ -312,6 +307,11 @@ public class AccommodationService {
 		accommmodationDAO.getSimpleSearchAddsNg(accommodationSearch);
 
 		return null;
+	}
+
+	public int addNewApartment(Apartments apartment, int universityId) throws Exception {
+
+		return accommmodationDAO.addNewApartment(apartment, universityId);
 	}
 
 }

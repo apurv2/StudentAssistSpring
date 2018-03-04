@@ -1,5 +1,7 @@
 <div class="container">
     <advanced-search-filters></advanced-search-filters>
-    <adds-list [accommodationAdds]="accommodationAdds"></adds-list>
+    <div class="col-xs-12 col-sm-12 col-md-4 height-400 overflow-auto adv-card-list">
+        <adds-list [accommodationAdds]="accommodationAdds"></adds-list>
+    </div>
     <accommodation-details [selectedAccommodationAdd]="selectedAccommodationAdd" [enableSubscription]="true"></accommodation-details>
 </div>

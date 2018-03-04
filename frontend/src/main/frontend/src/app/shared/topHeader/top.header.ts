@@ -47,7 +47,7 @@ export class TopHeader {
 
     openNav() {
         document.getElementById("mySidenav").style.width = "250px";
-        // document.getElementById("navoverlap").style.display = "block";
+         document.getElementById("navoverlap").style.display = "block";
         this.showSideNav = true;
     }
 

@@ -3,7 +3,7 @@ import { AirportModel } from "../../airport/airport.model";
 
 export class FlashCardsModel {
     accomodationCards: AccommodationAdd[];
-    airportCard: AirportModel;
+    airportCards: AirportModel[];
     currentUniversityID: number;
     
 }

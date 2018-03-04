@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
@@ -22,6 +22,9 @@ export class LandingSearch {
   searchTerm$ = new Subject<string>();
   searchDropdownToggle: boolean;
   searchBarText: string = "";
+  toolTipText: string = "";
+  @ViewChild('searchPanel') searchPanel: ElementRef;
+
   constructor(private router: Router,
     private searchService: LandingSearchService,
     public snackBar: MatSnackBar,
@@ -36,6 +39,7 @@ export class LandingSearch {
   dbUnivChips: Subscription;
   selectable: boolean = true;
   removable: boolean = true;
+  toolTipPosition: string = "right";
 
   ngOnInit() {
 
@@ -108,12 +112,34 @@ export class LandingSearch {
   }
 
   onEnterClicked() {
-    this.router.navigate(['/simple-search']);
+    if (this.selectedUniversities.length > 0)
+      this.router.navigate(['/simple-search']);
   }
 
   @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(evt: KeyboardEvent) {
+    this.clearSearchResults();
+  }
+  private parentNode: any;
+  ngAfterViewInit(): void {
+    this.parentNode = this.searchPanel;
+  }
 
-    this.searchTerm$.next('');
+  @HostListener('document:click', ['$event.path'])
+  onClickOutside($event: Array<any>) {
+    const elementRefInPath = $event.find(node => node === this.parentNode);
+    if (!elementRefInPath) {
+      this.clearSearchResults();
+    }
+  }
 
+  clearSearchResults() {
+    if (this.universityResults) {
+      this.universityResults.length = 0;
+      this.searchDropdownToggle = false;
+      this.searchTerm$.next('');
+      this.searchBarText = '';
+
+    }
   }
 }
+

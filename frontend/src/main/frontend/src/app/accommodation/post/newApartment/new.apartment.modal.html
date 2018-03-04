@@ -1,10 +1,36 @@
-<div class="container">
-    <h1>Angular 2 + Google Maps Places Autocomplete</h1>
-    <div class="form-group">
-        <input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control"
-            #search [formControl]="searchControl">
+<div class="card accommodation_popup">
+    <div class="col-sm-12 col-md-12">
+        <div class="row popup-head">
+            <h3>
+                Add Apartment Information
+            </h3>
+        </div>
+        <div class="map-form">
+            <div class="row">
+                <div class="col-md-7">
+                    <input type="text" class="w400" matInput placeholder="Enter apartment name" [(ngModel)]="apartment.apartmentName" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-7">
+                    <input placeholder="Search apartment location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="w400"
+                        #search [formControl]="searchControl">
+
+                    <span>
+                        786 5th Avenue, New York, NY, USA
+                    </span>
+                </div>
+                <div class="col-md-5">
+                    <button type="submit" (click)="closeDialog()" class="btn primary-btn map-button btn-lg">Save</button>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="mapwindow">
+            <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
+                <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+            </agm-map>
+        </div>
     </div>
-    <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
-        <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
-    </agm-map>
 </div>

@@ -14,4 +14,9 @@ export class SimpleSearchFilterService {
 
     }
 
+    getSimpleSearchAddsForPagination(url: string, accommodationAdd: AccommodationSearchModel) {
+        return this.http.post(url, accommodationAdd)
+            .map(res => res.json());
+    }
+
 }

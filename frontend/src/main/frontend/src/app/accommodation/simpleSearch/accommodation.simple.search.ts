@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
 import { FacebookService } from "ngx-facebook";
 import { SharedDataService } from "../../shared/data/shared.data.service";
 import { AccommodationSearchModel } from "../shared/models/accommodation.filter.model";
@@ -9,6 +9,7 @@ import { UniversityAccommodationAdds } from "../shared/models/university.accommo
 import { Subscription } from "rxjs/Subscription";
 import { LoginResponse } from "ngx-facebook/dist/esm/models/login-response";
 import { UserService } from "app/shared/userServices/user.service";
+import { SimpleSearchAddsFilters } from "./filters/simple.search.filters";
 
 
 @Component({
@@ -49,18 +50,6 @@ export class SimpleSearch {
         // this.universityAccommodationAdds = [];
         return this.simpleSearchService.getSimpleSearchAdds(filters);
     }
-
-    makeLink() {
-        var copyFrom = document.createElement("textarea");
-        //  copyFrom.textContent = $scope.link;
-        var body = document.getElementsByTagName('body')[0];
-        body.appendChild(copyFrom);
-        copyFrom.select();
-        document.execCommand('copy');
-        body.removeChild(copyFrom);
-        //  Materialize.toast('Copied to clipboard', 4000);
-    }
-
     ngOnDestroy() {
 
         this.accommodationAddSubscription.unsubscribe();

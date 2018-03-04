@@ -29,6 +29,10 @@ public abstract class AbstractDao {
 		getSession().persist(entity);
 	}
 
+	public <T extends Object> T save(Object entity) {
+		return (T) getSession().save(entity);
+	}
+
 	public void delete(Object entity) {
 		getSession().delete(entity);
 	}

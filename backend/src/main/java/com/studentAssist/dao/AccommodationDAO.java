@@ -103,7 +103,8 @@ public class AccommodationDAO extends AbstractDao {
 	}
 
 	public List<AccommodationAdd> getUserPosts(long userId, int position) throws Exception {
-		Query query = getSession().createQuery("from AccommodationAdd where user.userId=" + userId);
+		Query query = getSession().createQuery("from AccommodationAdd where user.userId=" + userId
+				+ " and delete_sw= 0 and (postedTill > sysdate()" + " or postedTill is null)");
 
 		// for pagination
 		query.setFirstResult(position);
@@ -148,6 +149,10 @@ public class AccommodationDAO extends AbstractDao {
 				.setFetchMode("apartment", FetchMode.JOIN).createAlias("apartment", "a")
 				.add((Criterion) Restrictions.eq("university.universityId", universityId))
 				.add((Criterion) Restrictions.eq((String) "a.apartmentName", (Object) apartmentName));
+
+		criteria.add(Restrictions.eq("add.delete_sw", false));
+		criteria.add(Restrictions.or(Restrictions.gt("add.postedTill", Utilities.getDate()),
+				Restrictions.isNull("add.postedTill")));
 
 		criteria.addOrder(Order.desc("add.datePosted"));
 
@@ -204,6 +209,9 @@ public class AccommodationDAO extends AbstractDao {
 						.add(Restrictions.eq("b.universityId", universityId));
 
 			}
+			criteria.add(Restrictions.eq("add.delete_sw", false));
+			criteria.add(Restrictions.or(Restrictions.gt("add.postedTill", Utilities.getDate()),
+					Restrictions.isNull("add.postedTill")));
 
 			criteria.addOrder(Order.desc("add.datePosted"));
 			criteria.setFirstResult(0);
@@ -266,6 +274,9 @@ public class AccommodationDAO extends AbstractDao {
 						.add(Restrictions.eq("b.universityId", university.getUniversityId()));
 
 			}
+			criteria.add(Restrictions.eq("add.delete_sw", false));
+			criteria.add(Restrictions.or(Restrictions.gt("add.postedTill", Utilities.getDate()),
+					Restrictions.isNull("add.postedTill")));
 
 			criteria.addOrder(Order.desc("add.datePosted"));
 			criteria.setFirstResult(0);
@@ -303,7 +314,12 @@ public class AccommodationDAO extends AbstractDao {
 		userNotifications.setUser(user);
 
 		Example example = Example.create((Object) userNotifications);
-		Criteria criteria = getCriteria(UserAccommodationNotifications.class).add((Criterion) example);
+		Criteria criteria = getCriteria(UserAccommodationNotifications.class, "userAdds").add((Criterion) example)
+				.add(Restrictions.or(Restrictions.gt("userAdds.accommodationAdd.postedTill", Utilities.getDate()),
+						Restrictions.eq("userAdds.accommodationAdd.postedTill", null)))
+				.add(Restrictions.eq("userAdds.accommodationAdd.delete_sw", false));
+		criteria.setFetchMode("AccommodationAdd", FetchMode.JOIN);
+
 		criteria.setFirstResult(position);
 		criteria.setMaxResults(SAConstants.PAGE_SIZE);
 		userAccommodationNotifications = criteria.list();
@@ -316,14 +332,12 @@ public class AccommodationDAO extends AbstractDao {
 		return adds;
 	}
 
-	public String addNewApartment(String apartmentName, String apartmentType) throws Exception {
-
-		Apartments apartments = new Apartments();
-
-		apartments.setApartmentName(apartmentName);
-		apartments.setApartmentType(apartmentType);
-		persist(apartments);
-		return SAConstants.RESPONSE_SUCCESS;
+	public int addNewApartment(Apartments apartment, int universityId) throws Exception {
+		Universities univ = new Universities();
+		univ.setUniversityId(universityId);
+		apartment.setUniversity(univ);
+		apartment.setAddedDate(Utilities.getDate());
+		return save(apartment);
 	}
 
 	public List<Apartments> getApartmentNamesWithType(List<Integer> universityIds) throws Exception {
@@ -370,10 +384,16 @@ public class AccommodationDAO extends AbstractDao {
 
 		List<UserVisitedAdds> userVisitedAdds;
 
-		return getCriteria(UserVisitedAdds.class, "userVisited").createAlias("userVisited.user", "user")
+		Criteria crit = getCriteria(UserVisitedAdds.class, "userVisited").createAlias("userVisited.user", "user")
 				.setProjection(Projections.property("userVisited.accommodationAdd.addId"))
 				.add(Restrictions.eq("userVisited.user.userId", user.getUserId()))
-				.setFetchMode("AccommodationAdd", FetchMode.JOIN).list();
+				.setFetchMode("AccommodationAdd", FetchMode.JOIN);
+
+		crit.add(Restrictions.eq("userVisited.accommodationAdd.delete_sw", false));
+		crit.add(Restrictions.or(Restrictions.gt("userVisited.accommodationAdd.postedTill", Utilities.getDate()),
+				Restrictions.eq("userVisited.accommodationAdd.postedTill", null)));
+
+		return crit.list();
 
 	}
 
@@ -385,7 +405,8 @@ public class AccommodationDAO extends AbstractDao {
 		stringBuilder.append("FROM UserVisitedAdds u join u.accommodationAdd a");
 		stringBuilder.append(" where a.addId= u.accommodationAdd.addId and u.user.userId = '");
 		stringBuilder.append(user.getUserId());
-		stringBuilder.append("' order by u.createDate desc");
+		stringBuilder.append("' and a.delete_sw= 0 and (postedTill > sysdate()"
+				+ " or postedTill is null) order by u.createDate desc");
 		Query query = getSession().createQuery(stringBuilder.toString());
 
 		// for pagination
@@ -546,8 +567,15 @@ public class AccommodationDAO extends AbstractDao {
 		DetachedCriteria innerCriteria = DetachedCriteria.forClass(AccommodationAdd.class, "add")
 				.setProjection(Projections.projectionList().add(Projections.max("add.datePosted")));
 
+		innerCriteria.add(Restrictions.eq("add.delete_sw", false));
+		innerCriteria.add(Restrictions.or(Restrictions.gt("add.postedTill", Utilities.getDate()),
+				Restrictions.isNull("add.postedTill")));
+
 		Criteria crit = getSession().createCriteria(AccommodationAdd.class, "outer");
 		crit.add(Subqueries.propertyEq("outer.datePosted", innerCriteria));
+		crit.add(Restrictions.eq("outer.delete_sw", false));
+		crit.add(Restrictions.or(Restrictions.gt("outer.postedTill", Utilities.getDate()),
+				Restrictions.isNull("outer.postedTill")));
 
 		List<AccommodationAdd> adds = crit.list();
 

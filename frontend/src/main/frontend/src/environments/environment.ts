@@ -100,5 +100,12 @@ export const environment = {
   addId: 'addId',
   branchUrl: 'https://api.branch.io/v1/url',
   branchKey: 'key_live_ljvA7ojt1BPcO0zpTFFdEimoqqhfGSXF',
-  other: 'Other'
+  other: 'Other',
+  addNewApartment: 'addNewApartment',
+  apartmentTooltipText: "Add New Apartment",
+  apartmentAlreadyAdded: "New Apartment Already Added",
+  apartmentSuccess: "Apartment Added Successfully",
+  getSimpleSearchAddsPagination: 'getSimpleSearchAddsPagination',
+  landingTooltipText:'Click to launch Search',
+  landingEmptyTooltipText:'Add Universities To Search'
 }

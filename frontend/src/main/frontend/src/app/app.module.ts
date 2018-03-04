@@ -24,7 +24,7 @@ import { SimpleSearchAddsFilters } from './accommodation/simpleSearch/filters/si
 import { SharedDataService } from './shared/data/shared.data.service';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatChipsModule, MatIconModule, MatSnackBarModule, MatSelectModule, MatInputModule, MatNativeDateModule, MatDialog, MatDialogModule, MatCheckbox, MatCheckboxModule, MatRadioModule, MatSidenavModule, MatListModule, MatDatepicker, MatDatepickerModule, } from '@angular/material';
+import { MatChipsModule, MatIconModule, MatSnackBarModule, MatSelectModule, MatInputModule, MatNativeDateModule, MatDialog, MatDialogModule, MatCheckbox, MatCheckboxModule, MatRadioModule, MatSidenavModule, MatListModule, MatDatepicker, MatDatepickerModule, MatTooltipModule, MatProgressBarModule, MatProgressSpinnerModule, } from '@angular/material';
 
 import 'hammerjs';
 import { LandingFlashCards } from './dashboard/flashCards/landing.flash.cards';
@@ -80,7 +80,10 @@ import { AgmCoreModule } from '@agm/core';
     MatSidenavModule,
     MatListModule,
     MatNativeDateModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatTooltipModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule
   ],
   declarations: [
     AppComponent,

@@ -33,7 +33,6 @@ export class LandingFlashCards {
     startFlashCardsTimer() {
         this.flashCardIntervalObservable = Observable
             .interval(10000)
-            .skip(1)
             .subscribe(x => this.getFlashCards());
     }
 
@@ -55,10 +54,13 @@ export class LandingFlashCards {
         }
         flashCardsRequestModel.currentUniversityID = this.sharedDataService.flashCardUniversityID;
         this.flashCardsService.getFlashCards(flashCardsRequestModel)
-            .subscribe(flashCards => {
+            .subscribe((flashCards: FlashCardsModel) => {
+
+                if (flashCards.accomodationCards.length > 0 || flashCards.airportCards.length > 0) {
                 this.flashCardsData = flashCards;
-                this.sharedDataService.flashCardUniversityID = this.flashCardsData
-                    .currentUniversityID;
+                    this.sharedDataService.flashCardUniversityID = this.flashCardsData
+                        .currentUniversityID;
+                }
             });
     }
 

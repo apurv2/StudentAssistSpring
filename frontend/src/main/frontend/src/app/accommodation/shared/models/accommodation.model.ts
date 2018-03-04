@@ -30,5 +30,4 @@ export class AccommodationAdd {
     feature: string;
     stage: string;
     bla: string;
-
 }
