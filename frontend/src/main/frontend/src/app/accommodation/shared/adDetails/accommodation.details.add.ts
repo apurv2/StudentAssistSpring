@@ -37,22 +37,14 @@ export class AddDetails {
         private http: Http) { }
     ngOnInit() {
 
-        this.items = [
-            { name: 'http://i.telegraph.co.uk/multimedia/archive/01722/cambridge_universi_1722980b.jpg' },
-            { name: 'https://www.thecompleteuniversityguide.co.uk/imagecache/file/width/650/media/3321537/lboro2.jpg' },
-        ]
         this.getUserId();
-
         this.route
             .queryParams
             .filter(params => params['addId'] > 0)
-            // .flatMap()
-            .subscribe(params => {
-
-                console.log(params);
-
+            .flatMap(data => this.addDetailService.getAddDetailsFromAddId(data.addId))
+            .subscribe((params: AccommodationAdd) => {
+                this.selectedAccommodationAdd = params;
             });
-
     }
 
     getUserId() {
@@ -68,8 +60,8 @@ export class AddDetails {
         this.selectedAccommodationAdd.channel = 'facebook';
         this.selectedAccommodationAdd.feature = 'dashboard';
         this.selectedAccommodationAdd.stage = 'old user';
-        this.selectedAccommodationAdd.bla = 'lol';
 
+        this.selectedAccommodationAdd.addPhotoIds
 
         var data = {};
         data['data'] = this.selectedAccommodationAdd;

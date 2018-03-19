@@ -55,6 +55,8 @@ import { AddDetailsService } from 'app/accommodation/shared/adDetails/accommodat
 import { CopyLinkModal } from './accommodation/shared/modals/copy.link.modal';
 import { NewApartmentModal } from './accommodation/post/newApartment/new.apartment.modal';
 import { AgmCoreModule } from '@agm/core';
+import { CarouselComponent } from './shared/carousel/carousel.component';
+import { AdsListService } from './accommodation/shared/adsList/ads.list.service';
 
 @NgModule({
   imports: [AgmCoreModule.forRoot({
@@ -113,7 +115,8 @@ import { AgmCoreModule } from '@agm/core';
     AddDetailsModal,
     TopHeader,
     CopyLinkModal,
-    NewApartmentModal
+    NewApartmentModal,
+    CarouselComponent
   ],
   providers: [UniversitiesService,
     HttpInterceptorService,
@@ -129,6 +132,7 @@ import { AgmCoreModule } from '@agm/core';
     PostAccommodationService,
     UserPostsService,
     AddDetailsService,
+    AdsListService,
     {
       provide: Http,
       useFactory: httpFactory,
@@ -150,6 +154,7 @@ export class AppModule {
     };
 
     fb.init(initParams);
+    fb.api
 
   }
 }

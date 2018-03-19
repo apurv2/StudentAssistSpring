@@ -9,7 +9,7 @@
         </div>
         <div class="collapsible-body height-400 overflow-auto">
           <div *ngFor="let accommodationAdd of university?.accommodationAdds">
-            <div [class.dark-bg]="accommodationAdd.addId==selectedItemId" class="card animated-card1 horizontal-card" (click)="addClick(accommodationAdd)">
+            <div [class.active-bg]="accommodationAdd.addId==selectedItemId" class="card animated-card1 horizontal-card" (click)="addClick(accommodationAdd, $event)">
               <div class="media">
                 <div class="media-left">
                   <img src="http://graph.facebook.com/{{accommodationAdd.userId}}/picture?type=normal" alt="" />
@@ -37,8 +37,8 @@
             </div>
           </div>
           <div *ngIf="university.accommodationAdds.length >= 10 && !university.stopPagination">
-            <a *ngIf="!university.paginating" href="javascript:void(0)" (click)="paginationClick(university)">Load More</a>
-            <mat-spinner [diameter]="40" *ngIf="university.paginating"></mat-spinner>
+            <a class="load-more" *ngIf="!university.paginating" href="javascript:void(0)" (click)="paginationClick(university)">Load More</a>
+            <mat-spinner class="load-more" [diameter]="40" *ngIf="university.paginating"></mat-spinner>
           </div>
         </div>
       </li>

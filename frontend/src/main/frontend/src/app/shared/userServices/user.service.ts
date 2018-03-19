@@ -32,7 +32,7 @@ export class UserService {
             user.selectedUniversityIds = universityIds;
         }
         return this.http.put(environment.createUser, user).
-        map(res => res.json());
+            map(res => res.json());
     }
 
     getLoginStatus(): Observable<boolean> {
@@ -60,20 +60,34 @@ export class UserService {
             map(res => res.json());
     }
 
-    getUserInfoFromFb(): Observable<UserInfo> {
+    getUserInfoFromFb(userId?: string): Observable<UserInfo> {
+        let id: string = userId != null ? userId : environment.me;
         return Observable.create((observer: Observer<UserInfo>) =>
-            this.fb.api('/me/', 'get').then(resp => {
+            this.fb.api('/' + id + '/', 'get', {
+                fields: 'first_name,last_name,name'
+            }).then(resp => {
+
+                if (resp == null) {
+                    throw new Error('user not logged in');
+                }
 
                 let userInfo: UserInfo = new UserInfo();
                 userInfo.fullName = resp.name;
                 userInfo.userId = resp.id;
-
+                userInfo.firstName = resp.first_name;
+                userInfo.lastName = resp.last_name;
                 observer.next(userInfo);
             }));
     }
 
     returnFalseObservable(): Observable<boolean> {
         return Observable.create().next(false);
+    }
+
+    checkAdmin() {
+        return this.http.get(environment.getAdminUserIds).
+            map(res => res.json());
+
     }
 
 }

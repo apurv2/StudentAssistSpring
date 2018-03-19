@@ -9,6 +9,8 @@ import { SimpleSearch } from "../accommodation.simple.search";
 import { SimpleSearchAddsFilters } from "../filters/simple.search.filters";
 import { Observable } from 'rxjs/Rx';
 import { Subscription } from 'rxjs/Subscription';
+import { AdsListService } from "../../shared/adsList/ads.list.service";
+import { UserService } from "../../../shared/userServices/user.service";
 
 
 declare var $: any;
@@ -29,7 +31,8 @@ export class SimpleSearchAddsList {
 
 
     constructor(private sharedDataService: SharedDataService,
-        private simpleSearchService: SimpleSearchFilterService) { }
+        private simpleSearchService: SimpleSearchFilterService,
+        private adsListService: AdsListService) { }
 
     ngOnInit() {
         $('.collapsible').collapsible();
@@ -49,6 +52,13 @@ export class SimpleSearchAddsList {
     }
 
     addClick(accommodationAdd: AccommodationAdd) {
+
+        if (!accommodationAdd.userVisitedSw) {
+            this.adsListService.setUserVisitedAdd(accommodationAdd)
+                .subscribe(e => {
+                    accommodationAdd.userVisitedSw = true;
+                });
+        }
         this.selectedItemId = accommodationAdd.addId;
         this.sharedDataService.emitAccommodationAdd(accommodationAdd);
     }

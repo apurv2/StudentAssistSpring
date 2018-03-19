@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ElementRef, ViewChild, HostListener } from "@angular/core";
 import { Router } from '@angular/router';
 import { SharedDataService } from "app/shared/data/shared.data.service";
 import { UserInfo } from "app/shared/models/user.info.model";
@@ -20,6 +20,9 @@ export class TopHeader {
     userInfoSubscription: Subscription;
     loginLogout: string;
     loginStatusSubscription: Subscription;
+    @ViewChild('overlay') overlay: ElementRef;
+    @ViewChild('hamburger') hamburger: ElementRef;
+
 
 
     constructor(private router: Router,
@@ -47,13 +50,11 @@ export class TopHeader {
 
     openNav() {
         document.getElementById("mySidenav").style.width = "250px";
-         document.getElementById("navoverlap").style.display = "block";
         this.showSideNav = true;
     }
 
     closeNav() {
         document.getElementById("mySidenav").style.width = "0px";
-        document.getElementById("navoverlap").style.display = "none";
         this.showSideNav = false;
     }
 

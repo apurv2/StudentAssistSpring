@@ -40,7 +40,8 @@ export class SimpleSearch {
     }
 
     subscribeToAccommodationAddsFilters() {
-        this.accommodationFiltersObservable = this.sharedDataservice.observeAccommomdationSearchFilters().
+        this.accommodationFiltersObservable = this.sharedDataservice.
+            observeAccommomdationSearchFilters().
             switchMap(filters => this.getSimpleSearchAdds(filters)).
             subscribe(universityAccommodationAdds =>
                 this.universityAccommodationAdds = universityAccommodationAdds);

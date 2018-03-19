@@ -3,6 +3,8 @@ package com.studentAssist.dao;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+import org.hibernate.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,6 +63,14 @@ public class UserDAO extends AbstractDao {
 
 	public long getUserByUserId(String userId) {
 		return getByKey(Users.class, userId);
+	}
+
+	public List<Users> checkAdminUserId(long userId) {
+
+		Query query = getSession().createQuery("from Users where userId =" + userId + " and sup = 1");
+		List<Users> users = query.list();
+
+		return users;
 	}
 
 }

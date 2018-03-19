@@ -56,11 +56,9 @@ export class LandingFlashCards {
         this.flashCardsService.getFlashCards(flashCardsRequestModel)
             .subscribe((flashCards: FlashCardsModel) => {
 
-                if (flashCards.accomodationCards.length > 0 || flashCards.airportCards.length > 0) {
                 this.flashCardsData = flashCards;
-                    this.sharedDataService.flashCardUniversityID = this.flashCardsData
-                        .currentUniversityID;
-                }
+                this.sharedDataService.flashCardUniversityID = this.flashCardsData
+                    .currentUniversityID;
             });
     }
 

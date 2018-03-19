@@ -21,6 +21,7 @@ public class Users {
 	private String lastName;
 	private String email;
 	private String phoneNumber;
+	private boolean sup;
 
 	@Column(insertable = true, updatable = false)
 	private Date registeredDate;
@@ -154,6 +155,14 @@ public class Users {
 
 	public void setUserId(long userId) {
 		this.userId = userId;
+	}
+
+	public boolean isSup() {
+		return sup;
+	}
+
+	public void setSup(boolean sup) {
+		this.sup = sup;
 	}
 
 }

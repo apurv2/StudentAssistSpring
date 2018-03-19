@@ -1,2 +1,8 @@
-<label>{{data.response ==='success'? 'Successful' : 'Failure'}}</label>
-<label>{{data.message}}</label>
+<div class="sucess-popup"> <!-- failure-popup>>
+<!-- For sucsess--><i class="material-icons">done</i>
+<!-- For failure --> <i class="material-icons">error_outline</i>
+<p>Congratulation {{data.message}}</p>
+<span>{{data.response ==='success'? 'Successful' : 'Failure'}}</span>
+
+<button class="btn primary-btn btn-lg btn-block">OK</button>
+</div>

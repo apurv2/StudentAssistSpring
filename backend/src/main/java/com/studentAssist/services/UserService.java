@@ -10,6 +10,7 @@ import com.studentAssist.dao.UserDAO;
 import com.studentAssist.entities.GCMIds;
 import com.studentAssist.entities.Universities;
 import com.studentAssist.entities.Users;
+import com.studentAssist.exception.BadStudentRequestException;
 import com.studentAssist.util.Utilities;
 
 @Service
@@ -45,6 +46,21 @@ public class UserService {
 			user.setUniversities(universities);
 		}
 		return userDAO.createUser(user, id);
+	}
+
+	public boolean checkAdminUserId(long userId) {
+
+		List<Users> users = userDAO.checkAdminUserId(userId);
+		return (users != null && !users.isEmpty()) ? true : false;
+
+	}
+
+	public void validateAdminUser(long userId) throws BadStudentRequestException {
+
+		if (!checkAdminUserId(userId)) {
+			throw new BadStudentRequestException();
+		}
+
 	}
 
 }

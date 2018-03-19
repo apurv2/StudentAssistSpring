@@ -2,9 +2,12 @@
 package com.studentAssist.services;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -21,6 +24,7 @@ import com.studentAssist.entities.Universities;
 import com.studentAssist.entities.UniversityPhotos;
 import com.studentAssist.entities.UserVisitedAdds;
 import com.studentAssist.entities.Users;
+import com.studentAssist.exception.BadStudentRequestException;
 import com.studentAssist.response.AccommodationSearchDTO;
 import com.studentAssist.response.RAccommodationAdd;
 import com.studentAssist.response.RAccommodationAddJson;
@@ -36,22 +40,12 @@ public class AccommodationService {
 	@Autowired
 	AccommodationDAO accommmodationDAO;
 
-	public String createAccommodationAddFromFacebook(String userId, String apartmentName, String noOfRooms,
-			String vacancies, String cost, String gender, String fbId, String notes, String firstName, String lastName,
-			List<String> addPhotoIds) throws Exception {
-
-		Users user = new Users();
-
-		user.setFirstName(firstName);
-		user.setLastName(lastName);
-		// user.setUserId(userId);
+	public String createAccommodationAddFromFacebook(AccommodationAdd add, Users user, int apartmentId)
+			throws Exception {
 
 		user.setRegisteredDate(Utilities.getDate());
-
-		AccommodationAdd advertisement = new AccommodationAdd(vacancies, gender, noOfRooms, cost, fbId, notes,
-				Utilities.getDate(), addPhotoIds);
-
-		return accommmodationDAO.createAccommodationAddFromFacebook(user, advertisement, apartmentName);
+		add.setDatePosted(Utilities.getDate());
+		return accommmodationDAO.createAccommodationAddFromFacebook(user, add, apartmentId);
 
 	}
 
@@ -67,6 +61,9 @@ public class AccommodationService {
 	public String createAccommodationAdd(AccommodationAdd add, long userId, int apartmentId) throws Exception {
 
 		add.setDatePosted(Utilities.getDate());
+
+		validatePostAccommodation(userId, add, apartmentId);
+
 		return accommmodationDAO.createAccommodationAdd(userId, add, apartmentId);
 	}
 
@@ -75,7 +72,7 @@ public class AccommodationService {
 		AccommodationAdd add = accommmodationDAO.getByKey(AccommodationAdd.class, addId);
 		long userId = add != null ? add.getUser().getUserId() : 0;
 
-		if (userId > 0 && userId == users.getUserId() || SAConstants.ADMIN_USER_ID.containsKey(userId)) {
+		if (userId > 0 && userId == users.getUserId()) {
 
 			accommmodationDAO.deleteAccommodationAdd(add);
 
@@ -125,14 +122,19 @@ public class AccommodationService {
 
 	}
 
-	public List<UniversityAccommodationDTO> getSimpleSearchAdds(AccommodationSearchDTO accommodationSearch)
+	public List<UniversityAccommodationDTO> getSimpleSearchAdds(AccommodationSearchDTO accommodationSearch, Users user)
 			throws Exception {
 
 		List<AccommodationAdd> simpleSearchAdds = accommmodationDAO.getSimpleSearchAdds(
 				accommodationSearch.getLeftSpinner(), accommodationSearch.getRightSpinner(),
 				accommodationSearch.getUniversityIds());
 
-		List<RAccommodationAdd> accomodationAdds = getRAccommodationAdds(simpleSearchAdds, null, 2);
+		List<Long> userVisitedAdds = null;
+		if (user != null) {
+			userVisitedAdds = getUserVisitedAdds(user);
+		}
+
+		List<RAccommodationAdd> accomodationAdds = getRAccommodationAdds(simpleSearchAdds, userVisitedAdds, 2);
 
 		Map<Integer, UniversityAccommodationDTO> perUnivListing = new HashMap<Integer, UniversityAccommodationDTO>();
 
@@ -171,11 +173,17 @@ public class AccommodationService {
 	}
 
 	public List<RAccommodationAdd> getSimpleSearchAddsPagination(String leftSpinner, String rightSpinner, int position,
-			int universityId) {
+			int universityId, Users users) throws Exception {
 
 		List<AccommodationAdd> simpleSearchAdds = accommmodationDAO.getSimpleSearchAddsPagination(leftSpinner,
 				rightSpinner, position, universityId);
-		return getRAccommodationAdds(simpleSearchAdds, null, -1);
+
+		List<Long> userVisitedAdds = null;
+		if (users != null) {
+			userVisitedAdds = getUserVisitedAdds(users);
+		}
+
+		return getRAccommodationAdds(simpleSearchAdds, userVisitedAdds, -1);
 	}
 
 	public List<RApartmentNames> getApartmentNames(String apartmentType) throws Exception {
@@ -288,7 +296,7 @@ public class AccommodationService {
 				rAdds.add(new RAccommodationAdd(add.getVacancies(), add.getGender(), add.getNoOfRooms(), add.getCost(),
 						add.getFbId(), add.getNotes(), user.getUserId(), add.getApartment().getApartmentName(),
 						user.getFirstName(), user.getLastName(), user.getEmail(), user.getPhoneNumber(), add.getAddId(),
-						true, new SimpleDateFormat("dd MMM").format(add.getDatePosted()), add.getAddPhotoIds(),
+						false, new SimpleDateFormat("dd MMM").format(add.getDatePosted()), add.getAddPhotoIds(),
 						add.getApartment().getUniversity().getUniversityId(),
 						add.getApartment().getUniversity().getUniversityName(), universityPhoto,
 						add.getApartment().getUniversity().getUnivAcronym(), add.getApartment().getCity(),
@@ -311,7 +319,48 @@ public class AccommodationService {
 
 	public int addNewApartment(Apartments apartment, int universityId) throws Exception {
 
+		validateNewApartment(apartment, universityId);
 		return accommmodationDAO.addNewApartment(apartment, universityId);
+	}
+
+	private void validatePostAccommodation(long userId, AccommodationAdd advertisement, int apartmentId)
+			throws BadStudentRequestException {
+
+		if (userId < 1 || advertisement == null || apartmentId < 1) {
+			throw new BadStudentRequestException();
+		}
+
+		LocalDate _30daysLocalDate = LocalDate.now().plusDays(30);
+		LocalDate postedTill = advertisement.getPostedTill().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+		if (!(postedTill.isBefore(_30daysLocalDate) || postedTill.isAfter(Utilities.getLocaleDate()))) {
+			throw new BadStudentRequestException();
+		}
+
+		if (Integer.parseInt(advertisement.getCost()) < 1) {
+			throw new BadStudentRequestException();
+		}
+
+	}
+
+	private void validateNewApartment(Apartments apartment, int universityId) throws BadStudentRequestException {
+
+		if (apartment == null || universityId < 1) {
+			throw new BadStudentRequestException();
+		}
+
+		if (apartment.getZip() < 1 || apartment.getApartmentName() == null || apartment.getApartmentName().isEmpty()) {
+			throw new BadStudentRequestException();
+		}
+	}
+
+	public RAccommodationAdd getAccommodationFromId(int addId) {
+
+		List<AccommodationAdd> adds = new ArrayList<>();
+		adds.add(accommmodationDAO.getAccommodationFromId(addId));
+
+		return getRAccommodationAdds(adds, null, 2).get(0);
+
 	}
 
 }

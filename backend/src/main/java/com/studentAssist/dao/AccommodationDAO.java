@@ -19,6 +19,7 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.Subqueries;
 import org.hibernate.type.StandardBasicTypes;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,31 +51,16 @@ public class AccommodationDAO extends AbstractDao {
 	 * @return
 	 * @throws Exception
 	 */
-	public String createAccommodationAddFromFacebook(Users user, AccommodationAdd advertisement, String apartmentName)
-			throws Exception {
+	public String createAccommodationAddFromFacebook(Users user, AccommodationAdd advertisement, int apartmentId) throws Exception {
 
-		// session.saveOrUpdate((Object) user);
 		saveOrUpdate(user);
-
-		Apartments examplApartment = new Apartments();
-
-		// fetch apartement type using apartmentName and update it in
-		// Apartments class
-		examplApartment.setApartmentName(apartmentName);
-		Example example = Example.create((Object) examplApartment);
-		Criteria criteria = getSession().createCriteria((Class) Apartments.class).add((Criterion) example);
-		// Criteria criteria = getCriteria(Apartments.class);
-		List apartments = criteria.list();
-
-		// add the user and accommodation to each other
-		Apartments apartment = (Apartments) apartments.get(0);
+		Apartments apartment = getByKey(Apartments.class, apartmentId);
 		this.addAccommodationAddToApartment(apartment, advertisement);
 		this.addAccommodationToUser(user, advertisement);
+		addUniversityToAdd(apartment.getUniversity(), advertisement);
 
-		// session.save((Object) advertisement);
 		persist(advertisement);
-		notificationsDAO.sendNotification(apartment, advertisement, user);
-
+//		notificationsDAO.sendNotification(apartment, advertisement, user);
 		return SAConstants.RESPONSE_SUCCESS;
 
 	}
@@ -316,7 +302,7 @@ public class AccommodationDAO extends AbstractDao {
 		Example example = Example.create((Object) userNotifications);
 		Criteria criteria = getCriteria(UserAccommodationNotifications.class, "userAdds").add((Criterion) example)
 				.add(Restrictions.or(Restrictions.gt("userAdds.accommodationAdd.postedTill", Utilities.getDate()),
-						Restrictions.eq("userAdds.accommodationAdd.postedTill", null)))
+						Restrictions.isNull("userAdds.accommodationAdd.postedTill")))
 				.add(Restrictions.eq("userAdds.accommodationAdd.delete_sw", false));
 		criteria.setFetchMode("AccommodationAdd", FetchMode.JOIN);
 
@@ -382,16 +368,14 @@ public class AccommodationDAO extends AbstractDao {
 	@SuppressWarnings("unchecked")
 	public List<Long> getUserVisitedAdds(Users user) throws Exception {
 
-		List<UserVisitedAdds> userVisitedAdds;
-
 		Criteria crit = getCriteria(UserVisitedAdds.class, "userVisited").createAlias("userVisited.user", "user")
+				.createAlias("userVisited.accommodationAdd", "accommodationAdd")
 				.setProjection(Projections.property("userVisited.accommodationAdd.addId"))
-				.add(Restrictions.eq("userVisited.user.userId", user.getUserId()))
+				.add(Restrictions.eq("user.userId", user.getUserId()))
+				.add(Restrictions.eq("accommodationAdd.delete_sw", false))
+				.add(Restrictions.or(Restrictions.gt("accommodationAdd.postedTill", Utilities.getDate()),
+						Restrictions.isNull("accommodationAdd.postedTill")))
 				.setFetchMode("AccommodationAdd", FetchMode.JOIN);
-
-		crit.add(Restrictions.eq("userVisited.accommodationAdd.delete_sw", false));
-		crit.add(Restrictions.or(Restrictions.gt("userVisited.accommodationAdd.postedTill", Utilities.getDate()),
-				Restrictions.eq("userVisited.accommodationAdd.postedTill", null)));
 
 		return crit.list();
 
@@ -591,12 +575,26 @@ public class AccommodationDAO extends AbstractDao {
 
 		Criteria criteria = getCriteria(AccommodationAdd.class, "add")
 				.add(Restrictions.eq("add.university.universityId", selectedUniversityID)).addOrder(Order.asc("cost"))
+				.add(Restrictions.eq("add.delete_sw", false))
+				.add(Restrictions.or(Restrictions.gt("add.postedTill", Utilities.getDate()),
+						Restrictions.isNull("add.postedTill")))
 				.setMaxResults(numberOfCards);
 
 		List adds = criteria.list();
 		lazyLoadAdds(adds);
 
 		return adds;
+	}
+
+	@Cacheable(value = "accommodationAdd")
+	public AccommodationAdd getAccommodationFromId(int addId) {
+
+		AccommodationAdd add = getByKey(AccommodationAdd.class, addId);
+		Hibernate.initialize(add.getAddPhotoIds());
+		Hibernate.initialize(add.getApartment().getUniversity().getUniversityPhotos());
+
+		return add;
+
 	}
 
 }

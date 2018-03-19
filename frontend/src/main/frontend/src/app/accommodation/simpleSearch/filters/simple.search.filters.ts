@@ -7,6 +7,9 @@ import { AccommodationDropdown } from "../../shared/models/accommodation.dropdow
 import { MatSnackBar } from "@angular/material";
 import { Apartment } from "app/accommodation/shared/models/apartment.names.model";
 import { University } from "app/universities/universities.model";
+import { Router, ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd } from "@angular/router";
+import { Subscription } from "rxjs";
+import { UserService } from "../../../shared/userServices/user.service";
 
 
 @Component({
@@ -21,16 +24,17 @@ export class SimpleSearchAddsFilters {
     leftSpinnerSelectedItem: AccommodationDropdown;
     rightSpinnerSelectedItem: AccommodationDropdown;
     loading: boolean;
+    routerEvents: Subscription;
 
     ngOnInit() {
         this.initializeSpinners();
         this.emitSpinnerClick(false);
-
     }
 
     constructor(private sharedDataService: SharedDataService,
         private simpleSearchFilterService: SimpleSearchFilterService,
-        private snackBar: MatSnackBar) {
+        private snackBar: MatSnackBar,
+        private userService: UserService) {
     }
 
     initializeSpinners() {
@@ -84,7 +88,8 @@ export class SimpleSearchAddsFilters {
                     subscribe(data => this.sharedDataService.emitAccommomdationSearchFilters(filterData));
             }
             else {
-                this.sharedDataService.emitAccommomdationSearchFilters(filterData);
+                this.userService.getLoginStatus().
+                    subscribe(data => this.sharedDataService.emitAccommomdationSearchFilters(filterData));
             }
         }
         else {

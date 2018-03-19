@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, RequestOptionsArgs, RequestOptions } from "@angular/http";
+import { AccommodationAdd } from '../shared/models/accommodation.model';
 
 @Injectable()
 export class PostAccommodationService {
@@ -11,8 +12,9 @@ export class PostAccommodationService {
             .map(res => res.json());
     }
 
-    postAccommodation(url, params) {
-        return this.http.put(url, params)
+    postAccommodation(url, accommodationAdd: AccommodationAdd ) {
+        console.log(accommodationAdd.postedTill);
+        return this.http.put(url, accommodationAdd)
             .map(res => res.json());
     }
 

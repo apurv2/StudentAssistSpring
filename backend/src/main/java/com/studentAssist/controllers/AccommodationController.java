@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,6 +32,8 @@ import com.studentAssist.response.RApartmentNamesWithType;
 import com.studentAssist.response.UniversityAccommodationDTO;
 import com.studentAssist.services.AccommodationService;
 import com.studentAssist.services.NotificationsService;
+import com.studentAssist.services.UserService;
+import com.studentAssist.util.FBGraph;
 import com.studentAssist.util.InsertApartmentDetails;
 import com.studentAssist.util.SAConstants;
 import com.studentAssist.util.UserVisitedAddsRest;
@@ -50,24 +53,21 @@ public class AccommodationController extends AbstractController {
 	@Autowired
 	private Mapper mapper;
 
+	@Autowired
+	FBGraph fbGraph;
+
+	@Autowired
+	UserService userService;
+
 	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT, value = "profile/createAccommodationAddFromFacebook")
 	public String createAccommodationAddFromFacebook(@RequestBody RAccommodationAdd rAccommodationAdd,
 			HttpServletRequest request) throws Exception {
 
-		Users user = getUserFromRequest(request);
-		if (SAConstants.ADMIN_USER_ID.containsKey(user.getUserId())) {
+		userService.validateAdminUser(getUserFromRequest(request).getUserId());
+		AccommodationAdd add = mapper.map(rAccommodationAdd, AccommodationAdd.class);
+		Users user = mapper.map(rAccommodationAdd, Users.class);
 
-			AccommodationAdd add = mapper.map(rAccommodationAdd, AccommodationAdd.class);
-
-			return accommodationService.createAccommodationAddFromFacebook(rAccommodationAdd.getFbId(),
-					rAccommodationAdd.getApartmentName(), rAccommodationAdd.getNoOfRooms(),
-					rAccommodationAdd.getVacancies(), rAccommodationAdd.getCost(), rAccommodationAdd.getGender(),
-					rAccommodationAdd.getFbId(), rAccommodationAdd.getNotes(), rAccommodationAdd.getFirstName(),
-					rAccommodationAdd.getLastName(), rAccommodationAdd.getAddPhotoIds());
-
-		} else {
-			return null;
-		}
+		return accommodationService.createAccommodationAddFromFacebook(add, user, rAccommodationAdd.getApartmentId());
 
 	}
 
@@ -135,13 +135,16 @@ public class AccommodationController extends AbstractController {
 	 * @param universityId
 	 * @param request
 	 * @return
+	 * @throws Exception
+	 * @throws InvalidTokenException
 	 */
 	@RequestMapping(method = RequestMethod.POST, value = "/getSimpleSearchAddsPagination")
 	public List<RAccommodationAdd> getSimpleSearchAddsPagination(@RequestBody AccommodationSearchDTO filterData,
-			HttpServletRequest request) {
+			HttpServletRequest request) throws InvalidTokenException, Exception {
 
 		return accommodationService.getSimpleSearchAddsPagination(filterData.getLeftSpinner(),
-				filterData.getRightSpinner(), filterData.getPaginationPosition(), filterData.getSelectedUniversityId());
+				filterData.getRightSpinner(), filterData.getPaginationPosition(), filterData.getSelectedUniversityId(),
+				getUserFromToken(request));
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/getApartmentNames")
@@ -183,7 +186,7 @@ public class AccommodationController extends AbstractController {
 
 	}
 
-	@RequestMapping(method = RequestMethod.PUT, value = "/setUserVisitedAdds")
+	@RequestMapping(method = RequestMethod.PUT, value = "profile/setUserVisitedAdds")
 	public String setUserVisitedAdds(@RequestBody UserVisitedAddsRest userVisited, HttpServletRequest request)
 			throws NumberFormatException, Exception {
 
@@ -217,66 +220,25 @@ public class AccommodationController extends AbstractController {
 	public List<UniversityAccommodationDTO> getSimpleSearchAddsUnregisteredUser(
 			@RequestBody AccommodationSearchDTO accommodationSearch, HttpServletRequest request) throws Exception {
 
-		return accommodationService.getSimpleSearchAdds(accommodationSearch);
+		return accommodationService.getSimpleSearchAdds(accommodationSearch, getUserFromToken(request));
 	}
 
-	@RequestMapping("/getCl")
-	public String getCl(HttpServletRequest request) throws InvalidTokenException {
+	@RequestMapping(method = RequestMethod.GET, value = "/getAccommodationFromAddId/{addId}")
+	public RAccommodationAdd getAccommodationFromAddId(@PathVariable int addId, HttpServletRequest request)
+			throws Exception {
 
-		String timestamp = (new Long(System.currentTimeMillis() / 1000L)).toString();
-
-		Cloudinary cloudinary = new Cloudinary("cloudinary://647816789382186:5R3U1Oc9zwvnPOfI-TtlIeI0u_E@duf1ntj7z");
-
-		Map<String, Object> params = new HashMap<String, Object>();
-		Map options = Cloudinary.emptyMap();
-
-		boolean returnError = Cloudinary.asBoolean(options.get("return_error"), false);
-
-		String apiKey = Cloudinary.asString(options.get("api_key"), cloudinary.getStringConfig("api_key"));
-		if (apiKey == null)
-			throw new IllegalArgumentException("Must supply api_key");
-		String apiSecret = Cloudinary.asString(options.get("api_secret"), cloudinary.getStringConfig("api_secret"));
-		if (apiSecret == null)
-			throw new IllegalArgumentException("Must supply api_secret"); //
-		params.put("callback", //
-				"");
-		params.put("timestamp", timestamp);
-		String expected_signature = cloudinary.apiSignRequest(params, apiSecret);
-
-		System.out.println(timestamp);
-		System.out.println(expected_signature);
-
-		CloudinaryDetails details = new CloudinaryDetails(expected_signature, timestamp);
-		Gson gson = new Gson();
-		return gson.toJson(details);
-
+		return accommodationService.getAccommodationFromId(addId);
 	}
 
-	private class CloudinaryDetails {
-		String signature;
-		String timeStamp;
+	private Users getUserFromToken(HttpServletRequest request) throws InvalidTokenException {
 
-		public String getSignature() {
-			return signature;
+		String access_token = request.getHeader(SAConstants.ACCESS_TOKEN);
+		Users user = null;
+		if (access_token != null && !access_token.isEmpty() && !"0".equals(access_token)) {
+			user = fbGraph.getUserDetails(access_token);
 		}
 
-		public CloudinaryDetails(String signature, String timeStamp) {
-			super();
-			this.signature = signature;
-			this.timeStamp = timeStamp;
-		}
-
-		public void setSignature(String signature) {
-			this.signature = signature;
-		}
-
-		public String getTimeStamp() {
-			return timeStamp;
-		}
-
-		public void setTimeStamp(String timeStamp) {
-			this.timeStamp = timeStamp;
-		}
+		return user;
 
 	}
 

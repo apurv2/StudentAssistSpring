@@ -12,6 +12,7 @@
             
             <div *ngIf="showUnivs">
                 <div class="row">
+                        <div class="col-md-8">   
                     <h4>Please select a university</h4>
                 
                 <mat-radio-group [(ngModel)]="selectedUniversityId">
@@ -19,23 +20,25 @@
                         {{university.universityName}}
                     </mat-radio-button>
                 </mat-radio-group>
-               
-                
-            </div>
-            <div class="row">
-                <span>
-                    <a href="javascript:void(0)" (click)="selectUniversity()">
-                        <i class="fa fa-2x fa-arrow-right" aria-hidden="true"></i>
-                    </a>
-                </span>
-            </div>
+             </div>
+             <div class="col-md-4">
+                    <span class="rightarrow">
+                            <a href="javascript:void(0)" (click)="selectUniversity()">
+                                <!--<i class="fa fa-2x fa-arrow-right" aria-hidden="true"></i>-->
+                                <i class="material-icons">send</i>
+                            </a>
+                        </span>
+             </div>
+             </div>
+          
         </div>
 
             <div *ngIf="!showUnivs">
                     <div class="row">
                 <span class="back-arrow">
                     <a href="javascript:void(0)" (click)="backClicked()">
-                        <i class="fa fa-2x fa-arrow-left" aria-hidden="true"></i>
+                        <!-- <i class="fa fa-2x fa-arrow-left" aria-hidden="true"></i> -->
+                        <i class="material-icons">reply_all</i>
                     </a>
                 </span>
                 </div>

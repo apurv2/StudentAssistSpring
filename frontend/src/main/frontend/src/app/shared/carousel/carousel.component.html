@@ -1,0 +1,33 @@
+<!-- <div class="carousel">
+    <ul class="slides">
+        <li *ngFor="let image of images">
+            <img src="{{image}}" alt="">
+        </li>
+    </ul>
+</div> -->
+
+
+<div class="wrapper">
+    <input *ngFor="let image of images;  let index = index" [attr.checked]="index == 0" type=radio name="slider" [attr.id]="'slide'+(index+1)"
+    />
+
+    <div class="slider-wrapper ">
+        <div class=inner>
+            <article *ngFor="let image of images">
+                <img src="{{image}}" />
+            </article>
+        </div>
+        <!-- .inner -->
+    </div>
+    <!-- .slider-wrapper -->
+
+    <div class="slider-prev-next-control">
+        <label *ngFor="let image of images;  let index = index" [attr.for]="'slide'+(index+1)"></label>
+    </div>
+    <!-- .slider-prev-next-control -->
+
+    <div class="slider-dot-control">
+        <label *ngFor="let image of images;  let index = index" [attr.for]="'slide'+(index+1)"></label>
+    </div>
+    <!-- .slider-dot-control -->
+</div>

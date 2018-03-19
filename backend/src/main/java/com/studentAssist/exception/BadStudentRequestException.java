@@ -1,6 +1,6 @@
 package com.studentAssist.exception;
 
-public class InvalidTokenException extends Exception {
+public class BadStudentRequestException extends Exception {
 
 	String msg;
 	int code;
@@ -9,7 +9,7 @@ public class InvalidTokenException extends Exception {
 		return code;
 	}
 
-	public void setCode(int  code) {
+	public void setCode(int code) {
 		this.code = code;
 	}
 
@@ -20,10 +20,10 @@ public class InvalidTokenException extends Exception {
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}
-	
-	public String toString(String msg,int code)
-	{
-		return msg+code;
-		
+
+	public String toString(String msg, int code) {
+		return msg + code;
+
 	}
+
 }

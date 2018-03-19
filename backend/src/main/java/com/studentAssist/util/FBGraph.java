@@ -13,6 +13,8 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 
 import com.studentAssist.entities.Users;
+import com.studentAssist.exception.InvalidTokenException;
+import com.studentAssist.exception.StudenAssitException;
 
 @Component
 public class FBGraph {
@@ -56,23 +58,26 @@ public class FBGraph {
 		return fbProfile;
 	}
 
-	public Users getUserDetails(String accessToken) throws IOException {
+	public Users getUserDetails(String accessToken) throws InvalidTokenException {
 
-		System.out.println("accesstoken==" + accessToken);
 		Users user = new Users();
+		try {
 
-		this.accessToken = accessToken;
-		String flag = getFBGraph();
-		JSONObject json = new JSONObject(flag);
+			this.accessToken = accessToken;
+			String flag = getFBGraph();
+			JSONObject json = new JSONObject(flag);
 
-		user.setFirstName(json.getString("first_name"));
-		user.setUserId(Long.valueOf(json.getString("id")));
-		user.setLastName(json.getString("last_name"));
+			user.setFirstName(json.getString("first_name"));
+			user.setUserId(Long.valueOf(json.getString("id")));
+			user.setLastName(json.getString("last_name"));
 
-		// optional paramaters
-		if (json.has("email"))
-			user.setEmail(json.getString("email"));
+			// optional paramaters
+			if (json.has("email"))
+				user.setEmail(json.getString("email"));
 
+		} catch (IOException e) {
+			throw new InvalidTokenException();
+		}
 		return user;
 
 	}

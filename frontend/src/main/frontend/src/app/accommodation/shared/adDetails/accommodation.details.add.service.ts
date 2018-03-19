@@ -14,8 +14,13 @@ export class AddDetailsService {
     }
 
     makeLink(url: string, body: any) {
-        return this.http.post(environment.branchUrl,body)
+        return this.http.post(environment.branchUrl, body)
             .map(res => res.json());
     }
 
+    getAddDetailsFromAddId(addId: string) {
+
+        return this.http.get(environment.getAccommodationFromAddId + '/' + addId)
+            .map(res => res.json());
+    }
 }

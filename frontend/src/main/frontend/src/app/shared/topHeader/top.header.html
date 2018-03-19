@@ -10,7 +10,7 @@
     </div>
     <div class="col-sm-9 col-xs-6">
       <div class="menu useraccount margin-top-20">
-        <button class="btn btn-default pull-right" type="button" (click)="openNav()">
+        <button #hamburger class="btn btn-default pull-right" type="button" (click)="openNav()">
           <i class="material-icons">menu</i>
         </button>
       </div>
@@ -36,7 +36,7 @@
           <a href="javascript:void(0)" (click)="openPostAccommodation()">Post Accomodation</a>
         </li>
         <li>
-          <a href="#">My Posts</a>
+          <a href="#">Recently Viewed</a>
         </li>
         <li>
           <a href="#">Notifications</a>
@@ -47,5 +47,5 @@
       </ul>
     </div>
   </div>
-  <div class="nav-overlap" id="navoverlap" style="display: none;"></div>
+  <div class="nav-overlap" *ngIf="showSideNav" (click)="closeNav()"></div>
 </div>

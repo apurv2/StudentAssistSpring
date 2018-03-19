@@ -1,5 +1,5 @@
 import { Component, Inject, NgZone, ViewChild, ElementRef } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, ErrorStateMatcher } from '@angular/material';
 import { FacebookService } from 'ngx-facebook/dist/esm/providers/facebook';
 import { LoginResponse } from 'ngx-facebook/dist/esm/models/login-response';
 import { Http, Response } from '@angular/http';
@@ -7,7 +7,7 @@ import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { MapsAPILoader } from '@agm/core';
 import { } from '@types/googlemaps';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators, FormGroupDirective, NgForm } from '@angular/forms';
 import { Apartment } from '../../shared/models/apartment.names.model';
 
 
@@ -20,6 +20,7 @@ import { Apartment } from '../../shared/models/apartment.names.model';
     }
   `]
 })
+
 export class NewApartmentModal {
 
     @ViewChild("search")
@@ -36,6 +37,9 @@ export class NewApartmentModal {
         @Inject(MAT_DIALOG_DATA) public apartment: Apartment) {
     }
 
+    validFormControl = new FormControl('', [
+        Validators.required
+    ]);
 
     ngOnInit() {
 
@@ -45,8 +49,9 @@ export class NewApartmentModal {
         this.longitude = -98.5795;
 
         //create search FormControl
-        this.searchControl = new FormControl();
-
+        this.searchControl = new FormControl('', [
+            Validators.required
+        ]);
         this.setCurrentPosition();
 
 

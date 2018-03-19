@@ -24,14 +24,20 @@
                                     </mat-select>
                                 </mat-form-field>
                             </div>
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-5">
                                 <mat-form-field>
-                                    <mat-select placeholder="Apartment Name" [(ngModel)]="aptNameSpinnerSelectedItem.code" (ngModelChange)="spinnerClick1($event)"
-                                        [ngModelOptions]="{standalone: true}" required>
+                                    <mat-select placeholder="Apartment Name" [(ngModel)]="aptNameSpinnerSelectedItem.code" [ngModelOptions]="{standalone: true}"
+                                        required>
                                         <mat-option *ngFor="let spinnerValue of aptNameSpinnerValues" [value]="spinnerValue?.code">{{spinnerValue.description}}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </div>
+                            <div class="form-group col-md-1 addbtn">
+                                    <button class="btn" [disabled]="!showAddApartment" (click)="apartmentNameClick()">
+                                <i class="material-icons">add</i>
+                                </button>
+                            </div>
+                           
                             <div class="form-group col-md-6">
                                 <mat-form-field>
                                     <mat-select placeholder="Gender" [(ngModel)]="genderSpinnerSelectedItem.code" (ngModelChange)="spinnerClick1($event)" [ngModelOptions]="{standalone: true}"
@@ -92,6 +98,16 @@
                                 </mat-form-field>
                             </div>
 
+                            <div *ngIf="adminUser">
+                                <div class="form-group col-md-6">
+                                    <mat-form-field>
+                                        <input (keyup)="onFbIdChange()" type="number" name="fbId" matInput placeholder="Facebook Id" [(ngModel)]="fbId" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>{{name}}</label>
+                                </div>
+                            </div>
                             <div class="form-group col-md-12">
                                 <mat-form-field>
                                     <textarea matInput placeholder="Notes" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" [(ngModel)]="notes"
@@ -107,15 +123,16 @@
                                     <img src="{{photo}}">
                                 </li>
                             </ul>
-                            <div class="form-group col-md-4 col-md-push-4">
-                                <button type="submit" class="btn primary-btn btn-lg btn-block" (click)="submit()" [disabled]="numberFormControl.invalid || dateAvailableTill.invalid">Post</button>
+                            <div class="form-group col-md-4 col-md-push-8">
+                                <mat-spinner [diameter]="40" *ngIf="loading"></mat-spinner>
+                                <button *ngIf="!loading" type="submit" class="btn primary-btn btn-lg btn-block" (click)="submit()" [disabled]="numberFormControl.invalid || dateAvailableTill.invalid">Save post</button>
                             </div>
 
-                            <div class="form-group col-md-4 col-md-push-4">
-                                <div matTooltip="{{apartmentTooltipText}}" [matTooltipPosition]="toolTipPosition">
+                            <!-- <div class="form-group col-md-4 col-md-push-4">
+                                <div *ngIf="!loading" matTooltip="{{apartmentTooltipText}}" [matTooltipPosition]="toolTipPosition">
                                     <button class="btn primary-btn btn-lg btn-block" [disabled]="!showAddApartment" (click)="apartmentNameClick()">Add Apartment</button>
                                 </div>
-                            </div>
+                            </div> -->
 
                         </form>
                     </div>

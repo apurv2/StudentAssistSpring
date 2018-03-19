@@ -38,7 +38,7 @@ export class HttpInterceptorService extends Http {
 
   post(url: string, body: string, options?: RequestOptionsArgs): Observable<Response> {
     url = this.updateUrl(url);
-    return url.indexOf("cloudinary") == -1 ? super.post(url, body,
+    return this.nonNativeUrl(url) ? super.post(url, body,
       this.getRequestOptionArgs(options, url)) : super.post(url, body);
   }
 
@@ -52,9 +52,9 @@ export class HttpInterceptorService extends Http {
     return super.delete(url, this.getRequestOptionArgs(options));
   }
 
-  private updateUrl(req: string) {
+  private updateUrl(url: string) {
 
-    let finalUrl: string = req.indexOf("branch") == -1 ? environment.url + req : req;
+    let finalUrl: string = this.nonNativeUrl(url) ? environment.url + url : url;
     console.log(finalUrl);
     return finalUrl;
 
@@ -72,5 +72,9 @@ export class HttpInterceptorService extends Http {
     options.headers.append('Content-Type', 'application/json');
 
     return options;
+  }
+
+  nonNativeUrl(url: string): boolean {
+    return environment.nonNativeURLs.find(token => url.indexOf(token) != -1) == null;
   }
 }
