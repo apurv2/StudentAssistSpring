@@ -88,8 +88,8 @@ export class SharedDataService {
 
     openSuccessFailureDialog(response, dialog: MatDialog) {
         let data: any = {};
-        data.message = response.response === environment.success ? "success" : "failure";
         data.response = response.response;
+        data.success = response.response === environment.success ? true : false;
         dialog.open(SuccessOrFailureModal, { data: data }).afterClosed().subscribe();
     }
 

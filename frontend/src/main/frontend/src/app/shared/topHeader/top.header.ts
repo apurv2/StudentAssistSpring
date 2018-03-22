@@ -59,6 +59,7 @@ export class TopHeader {
     }
 
     openPostAccommodation() {
+        this.closeNav();
         this.router.navigate(['/post/']);
     }
 

@@ -1,8 +1,7 @@
 package com.studentAssist.controllers;
 
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cloudinary.Cloudinary;
-import com.google.gson.Gson;
 import com.studentAssist.entities.AccommodationAdd;
 import com.studentAssist.entities.Apartments;
 import com.studentAssist.entities.Users;
@@ -67,7 +64,8 @@ public class AccommodationController extends AbstractController {
 		AccommodationAdd add = mapper.map(rAccommodationAdd, AccommodationAdd.class);
 		Users user = mapper.map(rAccommodationAdd, Users.class);
 
-		return accommodationService.createAccommodationAddFromFacebook(add, user, rAccommodationAdd.getApartmentId());
+		return null;
+//		return accommodationService.createAccommodationAddFromFacebook(add, user, rAccommodationAdd.getApartmentId());
 
 	}
 

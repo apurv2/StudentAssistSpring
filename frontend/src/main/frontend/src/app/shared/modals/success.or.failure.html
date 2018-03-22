@@ -1,8 +1,13 @@
-<div class="sucess-popup"> <!-- failure-popup>>
-<!-- For sucsess--><i class="material-icons">done</i>
-<!-- For failure --> <i class="material-icons">error_outline</i>
-<p>Congratulation {{data.message}}</p>
-<span>{{data.response ==='success'? 'Successful' : 'Failure'}}</span>
+<div [ngClass]="data.success?'sucess-popup':'failure-popup'">
 
-<button class="btn primary-btn btn-lg btn-block">OK</button>
+    <div *ngIf="data.success">
+        <i class="material-icons">done</i>
+        <p *ngIf="data.success">Congratulations your listing has been successfully posted</p>
+    </div>
+
+    <div *ngIf="!data.success">
+        <i class="material-icons">error_outline</i>
+        <p>There was some error, please try again later</p>
+    </div>
+    <button (click)="closeDialog(data.success)" class="btn primary-btn btn-lg btn-block">OK</button>
 </div>
