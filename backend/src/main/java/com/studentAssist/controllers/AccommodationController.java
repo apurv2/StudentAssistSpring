@@ -130,9 +130,6 @@ public class AccommodationController extends AbstractController {
 
 	/**
 	 * Pagination for returning additional accommodation Adds
-	 * 
-	 * @param position
-	 * @param universityId
 	 * @param request
 	 * @return
 	 * @throws Exception
