@@ -57,6 +57,10 @@ import { NewApartmentModal } from './accommodation/post/newApartment/new.apartme
 import { AgmCoreModule } from '@agm/core';
 import { CarouselComponent } from './shared/carousel/carousel.component';
 import { AdsListService } from './accommodation/shared/adsList/ads.list.service';
+import { AccommodationNotificationService } from './notifications/accommodation/notifications.accommodation.service';
+import { AccommodationNotifications } from './notifications/accommodation/notifications.accommodation';
+import { RecentlyViewedAccommodations } from './accommodation/recentlyViewed/accommodation.recently.viewed';
+import { RecentlyViewedService } from './accommodation/recentlyViewed/accommodation.recently.viewed.service';
 
 @NgModule({
   imports: [AgmCoreModule.forRoot({
@@ -116,7 +120,9 @@ import { AdsListService } from './accommodation/shared/adsList/ads.list.service'
     TopHeader,
     CopyLinkModal,
     NewApartmentModal,
-    CarouselComponent
+    CarouselComponent,
+    AccommodationNotifications,
+    RecentlyViewedAccommodations
   ],
   providers: [UniversitiesService,
     HttpInterceptorService,
@@ -133,6 +139,8 @@ import { AdsListService } from './accommodation/shared/adsList/ads.list.service'
     UserPostsService,
     AddDetailsService,
     AdsListService,
+    AccommodationNotificationService,
+    RecentlyViewedService,
     {
       provide: Http,
       useFactory: httpFactory,

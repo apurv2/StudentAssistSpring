@@ -3,13 +3,12 @@ import { environment } from 'environments/environment';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Injectable } from '@angular/core';
-import { HttpInterceptorService } from 'app/shared/Interceptor/HttpInterceptorService';
 
 @Injectable()
 export class UniversitiesService {
-    constructor(public http: HttpInterceptorService) { }
+    constructor(public http: Http) { }
 
-    
+
     getUniversityDetailsForUser() {
         var unitInformationUrl = `${environment.url}${environment.getUniversityDetailsForUser}`;
         console.log(unitInformationUrl);

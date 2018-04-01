@@ -6,7 +6,6 @@ import { environment } from '../../../environments/environment';
 import { SharedDataService } from '../data/shared.data.service';
 import { UserModel } from '../models/user.model';
 import { Http, Response } from '@angular/http';
-import { HttpInterceptorService } from '../Interceptor/HttpInterceptorService';
 import 'rxjs/add/operator/map';
 import { UserService } from 'app/shared/userServices/user.service';
 import { Observable } from 'rxjs/Observable';
@@ -35,7 +34,7 @@ export class LoginModal {
 
     processLogin(userInfo) {
         this.sharedDataService.emitLoginStatus(true);
-        this.sharedDataService.emitUserInfo(userInfo)
+        this.sharedDataService.emitUserInfo(userInfo);
         var cookies = document.cookie.split(";");
         for (var i = 0; i < cookies.length; i++) {
             var cookie = cookies[i];

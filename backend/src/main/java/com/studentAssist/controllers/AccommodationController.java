@@ -212,7 +212,7 @@ public class AccommodationController extends AbstractController {
 
 	@RequestMapping(method = RequestMethod.POST, value = "/getSimpleSearchAdds", headers = {
 			"content-type=application/json" }, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public List<UniversityAccommodationDTO> getSimpleSearchAddsUnregisteredUser(
+	public List<UniversityAccommodationDTO> getSimpleSearchAdds(
 			@RequestBody AccommodationSearchDTO accommodationSearch, HttpServletRequest request) throws Exception {
 
 		return accommodationService.getSimpleSearchAdds(accommodationSearch, getUserFromToken(request));

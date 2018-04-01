@@ -1,4 +1,4 @@
-import { Component, Input, Host, Output, EventEmitter } from "@angular/core";
+import { Component, Input, Host, Output, EventEmitter, HostListener } from "@angular/core";
 import { AccommodationAdd } from "../../shared/models/accommodation.model";
 import { UniversityAccommodationAdds } from "../../shared/models/university.accommodation.adds.model";
 import { SharedDataService } from "../../../shared/data/shared.data.service";
@@ -61,6 +61,11 @@ export class SimpleSearchAddsList {
         }
         this.selectedItemId = accommodationAdd.addId;
         this.sharedDataService.emitAccommodationAdd(accommodationAdd);
+
+        if (window.innerWidth < 767) {
+            document.getElementById("detailCard").style.display = 'block';
+            document.getElementById("simpleSearchList").style.display = 'none';
+        }
     }
 
     paginationClick(selectedUniversity: UniversityAccommodationAdds) {
@@ -83,6 +88,21 @@ export class SimpleSearchAddsList {
                 selectedUniversity.stopPagination = data.length < 10;
 
             });
+    }
+
+    @HostListener('window:popstate', ['$event'])
+    onPopState(event) {
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        if (window.innerWidth < 767) {
+            document.getElementById("detailCard").style.display = 'none';
+            document.getElementById("simpleSearchList").style.display = 'block';
+        }
+        console.log('Back button pressed');
+
+        return false;
     }
 
     ngOnDestroy() {

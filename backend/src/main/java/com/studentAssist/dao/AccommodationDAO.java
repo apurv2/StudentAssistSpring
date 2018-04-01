@@ -51,7 +51,8 @@ public class AccommodationDAO extends AbstractDao {
 	 * @return
 	 * @throws Exception
 	 */
-	public String createAccommodationAddFromFacebook(Users user, AccommodationAdd advertisement, int apartmentId) throws Exception {
+	public String createAccommodationAddFromFacebook(Users user, AccommodationAdd advertisement, int apartmentId)
+			throws Exception {
 
 		saveOrUpdate(user);
 		Apartments apartment = getByKey(Apartments.class, apartmentId);
@@ -60,7 +61,7 @@ public class AccommodationDAO extends AbstractDao {
 		addUniversityToAdd(apartment.getUniversity(), advertisement);
 
 		persist(advertisement);
-//		notificationsDAO.sendNotification(apartment, advertisement, user);
+		// notificationsDAO.sendNotification(apartment, advertisement, user);
 		return SAConstants.RESPONSE_SUCCESS;
 
 	}
@@ -211,7 +212,6 @@ public class AccommodationDAO extends AbstractDao {
 		}
 		accommodationAddsList.addAll(list1);
 		lazyLoadAdds(accommodationAddsList);
-
 		return accommodationAddsList;
 	}
 
@@ -301,9 +301,10 @@ public class AccommodationDAO extends AbstractDao {
 
 		Example example = Example.create((Object) userNotifications);
 		Criteria criteria = getCriteria(UserAccommodationNotifications.class, "userAdds").add((Criterion) example)
-				.add(Restrictions.or(Restrictions.gt("userAdds.accommodationAdd.postedTill", Utilities.getDate()),
-						Restrictions.isNull("userAdds.accommodationAdd.postedTill")))
-				.add(Restrictions.eq("userAdds.accommodationAdd.delete_sw", false));
+				.createAlias("userAdds.accommodationAdd", "add")
+				.add(Restrictions.or(Restrictions.gt("add.postedTill", Utilities.getDate()),
+						Restrictions.isNull("add.postedTill")))
+				.add(Restrictions.eq("add.delete_sw", false));
 		criteria.setFetchMode("AccommodationAdd", FetchMode.JOIN);
 
 		criteria.setFirstResult(position);

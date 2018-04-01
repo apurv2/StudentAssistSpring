@@ -197,12 +197,13 @@ export class PostAccommodation {
             })
             .flatMap((userInfo: UserInfo) => this.postAccommodation(userInfo))
             .subscribe(e => {
-                this.sharedDataService.openSuccessFailureDialog(e, this.dialog);
+                this.sharedDataService.openSuccessFailureDialog(e, this.dialog)
+                    .subscribe(e => this.router.navigate(['/dashboard/']));
                 this.loading = false;
             }, err => {
                 this.loading = false;
                 console.log(err);
-                this.sharedDataService.openSuccessFailureDialog("failure", this.dialog);
+                this.sharedDataService.openSuccessFailureDialog("failure", this.dialog).subscribe();;
             });
     }
 
@@ -301,7 +302,7 @@ export class PostAccommodation {
             },
                 err => {
                     this.loading = false;
-                    this.sharedDataService.openSuccessFailureDialog("failure", this.dialog);
+                    this.sharedDataService.openSuccessFailureDialog("failure", this.dialog).subscribe();
                 });
 
     }
@@ -326,7 +327,6 @@ export class PostAccommodation {
                     this.name = userInfo.fullName;
 
                 })
-
         }
     }
 }

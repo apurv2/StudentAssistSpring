@@ -63,7 +63,8 @@ export class LandingFlashCards {
     }
 
     unsubscribeFlashCards() {
-        this.flashCardIntervalObservable.unsubscribe();
+        if (this.flashCardIntervalObservable != null)
+            this.flashCardIntervalObservable.unsubscribe();
     }
 
     ngOnDestroy() {

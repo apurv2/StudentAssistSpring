@@ -90,7 +90,16 @@ export class SharedDataService {
         let data: any = {};
         data.response = response.response;
         data.success = response.response === environment.success ? true : false;
-        dialog.open(SuccessOrFailureModal, { data: data }).afterClosed().subscribe();
+        return dialog.open(SuccessOrFailureModal, { data: data }).afterClosed();
+    }
+    processDbUnivChips(chips: University[]) {
+
+        if (chips != null && chips.length > 0) {
+            this.setUserSelectedUniversitiesList(chips);
+            localStorage.setItem(environment.userSelectedUnivs,
+                JSON.stringify(chips));
+            this.emitDbUnivChips(chips);
+        }
     }
 
 }

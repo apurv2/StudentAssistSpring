@@ -1,4 +1,4 @@
-<div class="card animated-card1 detail-card">
+<div id="detailCard" class="card animated-card1 detail-card">
     <div class="view-details image-container overflow-hidden">
         <div class="overlap-content">
             <h2 class="pull-left margin-top-0">{{selectedAccommodationAdd?.apartmentName}}</h2>
@@ -6,25 +6,30 @@
         </div>
         <css-carousel [images]="selectedAccommodationAdd?.addPhotoIds"></css-carousel>
     </div>
-    <div class="panel-footer white-bg padding-30">
+    <div class="panel-footer padding-30">
         <div class="row">
             <div class="col-sm-9">
                 <p class="text-muted address">
                     <b>Mapple road, taxes North main road</b>
                 </p>
 
-                <p class="text-muted address">
-                    On-Campus
+                <p class="text-muted">
+                    <b>Posted On:</b>
+                    <label>{{selectedAccommodationAdd?.createDate}}</label>
                 </p>
+                <p class="text-muted address">
+                    <i class="fa fa-building"></i>On-CampusOn-Campus
 
-                <p class="text-muted address">
-                    1 bhk / 1 bath for Male (2 Vacancies)
+                    <i class="fa fa-bed"></i>{{selectedAccommodationAdd?.noOfRooms | slice:0:1}} Bedroom(s)
+                    <i class="fa fa-bath"></i>{{selectedAccommodationAdd?.noOfRooms | slice:5:6}} Bathroom(s)
                 </p>
-                <p class="text-muted address">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    ... The first word, â€œLorem,â€� isn't even a word; instead it's a piece of the word â€œdolorem,â€� meaning
-                    pain, suffering, or sorrow.
-                </p>
+                <div class="text-muted address">
+                    <div *ngIf="selectedAccommodationAdd?.gender=='Male'">
+                        <i [ngClass]="selectedAccommodationAdd?.gender=='Male'? 'fa-male' : 'fa-female'" class="fa">
+                        </i>{{selectedAccommodationAdd?.vacancies}} {{selectedAccommodationAdd?.gender}} roommate(s) required</div>
+                </div>
+
+                <p class="text-muted address">{{selectedAccommodationAdd?.notes}}</p>
 
             </div>
             <div class="col-sm-3">

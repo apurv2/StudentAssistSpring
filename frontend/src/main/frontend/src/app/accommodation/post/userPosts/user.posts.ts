@@ -25,6 +25,7 @@ export class UserPosts {
     paginationCount: number = 0;
     addDetailsSubscription: Subscription;
     ngOnInit() {
+        this.paginationCount = 0;
         this.getUserPosts();
         this.subscribeAddClick();
     }

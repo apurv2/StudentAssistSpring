@@ -23,6 +23,9 @@ export class SimpleSearch {
     accommodationFiltersObservable: Subscription;
     accommodationAddSubscription: Subscription;
 
+    @ViewChild('filters') filters: SimpleSearchAddsFilters;
+
+
     constructor(private simpleSearchService: SimpleSearchService,
         private facebookService: FacebookService,
         private sharedDataservice: SharedDataService,
@@ -43,8 +46,10 @@ export class SimpleSearch {
         this.accommodationFiltersObservable = this.sharedDataservice.
             observeAccommomdationSearchFilters().
             switchMap(filters => this.getSimpleSearchAdds(filters)).
-            subscribe(universityAccommodationAdds =>
-                this.universityAccommodationAdds = universityAccommodationAdds);
+            subscribe(universityAccommodationAdds => {
+                this.universityAccommodationAdds = universityAccommodationAdds;
+                this.filters.stopLoding();
+            });
     }
 
     getSimpleSearchAdds(filters: AccommodationSearchModel): Observable<any> {

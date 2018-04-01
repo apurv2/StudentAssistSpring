@@ -1,41 +1,42 @@
 import { Component, Input } from "@angular/core";
 import { AccommodationAdd } from "../../accommodation/shared/models/accommodation.model";
+import { AccommodationNotificationService } from "./notifications.accommodation.service";
 import { UserService } from "../../shared/userServices/user.service";
-import { RecentlyViewedService } from "./accommodation.recently.viewed.service";
 
+declare var $: any;
 
 @Component({
-    selector: 'accommodation-recently-viewed',
-    templateUrl: 'accommodation.recently.viewed.html'
+    selector: 'accommodation-notifications',
+    templateUrl: 'notifications.accommodation.html'
 })
 
-export class RecentlyViewedAccommodations {
+export class AccommodationNotifications {
 
     accommodationAdds: AccommodationAdd[];
     paginationCount: number = 0;
     noData: boolean = false;
 
-    constructor(private recentlyViewedService: RecentlyViewedService,
+    constructor(private notificationService: AccommodationNotificationService,
         private userService: UserService) { }
     ngOnInit() {
         this.paginationCount = 0;
-        this.getRecentlyViewedAdds();
+        this.getAccommodationNotifications();
 
     }
 
-    getRecentlyViewedAdds() {
+    getAccommodationNotifications() {
         this.userService.getLoginStatus()
             .filter(resp => resp)
-            .switchMap(resp => this.recentlyViewedService.getRecentlyViewedAdds(this.paginationCount))
+            .switchMap(resp => this.notificationService.getAccommodationNotifications(this.paginationCount))
             .subscribe(adds => {
                 this.accommodationAdds = adds
                 this.noData = this.accommodationAdds != null && this.accommodationAdds.length > 0 ? false : true;
             });
     }
 
-    getNextSetOfRecentlyViewed() {
+    getNextSetOfUserPosts() {
         this.paginationCount++;
-        this.getRecentlyViewedAdds();
+        this.getAccommodationNotifications();
     }
 
 }

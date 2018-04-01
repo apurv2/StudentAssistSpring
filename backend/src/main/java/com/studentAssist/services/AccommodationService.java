@@ -1,38 +1,19 @@
 
 package com.studentAssist.services;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
+import com.studentAssist.dao.AccommodationDAO;
+import com.studentAssist.entities.*;
+import com.studentAssist.exception.BadStudentRequestException;
+import com.studentAssist.response.*;
+import com.studentAssist.util.SAConstants;
+import com.studentAssist.util.Utilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cloudinary.Cloudinary;
-import com.studentAssist.dao.AccommodationDAO;
-import com.studentAssist.entities.AccommodationAdd;
-import com.studentAssist.entities.Apartments;
-import com.studentAssist.entities.Universities;
-import com.studentAssist.entities.UniversityPhotos;
-import com.studentAssist.entities.UserVisitedAdds;
-import com.studentAssist.entities.Users;
-import com.studentAssist.exception.BadStudentRequestException;
-import com.studentAssist.response.AccommodationSearchDTO;
-import com.studentAssist.response.RAccommodationAdd;
-import com.studentAssist.response.RAccommodationAddJson;
-import com.studentAssist.response.RApartmentNames;
-import com.studentAssist.response.RApartmentNamesWithType;
-import com.studentAssist.response.UniversityAccommodationDTO;
-import com.studentAssist.util.SAConstants;
-import com.studentAssist.util.Utilities;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.*;
 
 @Service
 public class AccommodationService {
@@ -110,6 +91,15 @@ public class AccommodationService {
 		return rApartments;
 	}
 
+	/**
+	 *
+	 * @param apartmentName
+	 * @param gender
+	 * @param universityId
+	 * @param position
+	 * @return
+	 * @throws Exception
+	 */
 	public List<RAccommodationAdd> getAdvancedAdvertisements(String apartmentName, String gender, int universityId,
 			int position) throws Exception {
 
@@ -134,11 +124,11 @@ public class AccommodationService {
 			userVisitedAdds = getUserVisitedAdds(user);
 		}
 
-		List<RAccommodationAdd> accomodationAdds = getRAccommodationAdds(simpleSearchAdds, userVisitedAdds, 2);
+		List<RAccommodationAdd> accommodationAdds = getRAccommodationAdds(simpleSearchAdds, userVisitedAdds, 2);
 
 		Map<Integer, UniversityAccommodationDTO> perUnivListing = new HashMap<Integer, UniversityAccommodationDTO>();
 
-		for (RAccommodationAdd add : accomodationAdds) {
+		for (RAccommodationAdd add : accommodationAdds) {
 
 			if (perUnivListing.containsKey(add.getUniversityId())) {
 
@@ -254,6 +244,8 @@ public class AccommodationService {
 		List<RAccommodationAdd> rAdds = new ArrayList<RAccommodationAdd>();
 
 		for (AccommodationAdd add : accommodationAdds) {
+
+			add.setNoOfRooms(add.getNoOfRooms().replaceAll("\\s+", ""));
 
 			String universityPhoto = SAConstants.EmptyText;
 			List<UniversityPhotos> photos = add.getUniversity().getUniversityPhotos();

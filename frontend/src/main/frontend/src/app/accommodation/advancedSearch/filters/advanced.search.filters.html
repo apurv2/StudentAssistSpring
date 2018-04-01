@@ -3,6 +3,8 @@
     <div class="row">
         <div class="col-md-12 filter">
             <form class="form-inline">
+                    <a [routerLink]="['/simple-search']"><i class="material-icons">reply_all</i></a>
+
                 <mat-form-field>
                     <mat-select placeholder="University Name" [(ngModel)]="universityNameSpinnerSelectedItem.code" (ngModelChange)="spinnerClick($event)"
                         [ngModelOptions]="{standalone: true}">
@@ -31,18 +33,10 @@
 
                 <div class="form-group">
                     <div class="toggle-menu text-center">
-                        <a (click)="searchClicked()">
-                            <i aria-hidden="true" class="fa fa-2x fa-arrow-circle-o-right"></i>
+                        <a href="javascript:void(0)" (click)="searchClicked()">
+                            <!-- <i aria-hidden="true" class="fa fa-2x fa-arrow-circle-o-right"></i>-->
+                            <i class="material-icons">send</i>
                         </a>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="toggle-menu text-center">
-                        <ul>
-                            <li>
-                                <a [routerLink]="['/simple-search']">Back</a>
-                            </li>
-                        </ul>
                     </div>
                 </div>
             </form>

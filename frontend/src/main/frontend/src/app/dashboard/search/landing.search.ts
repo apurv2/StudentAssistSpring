@@ -101,16 +101,13 @@ export class LandingSearch {
   }
 
   updateDBChips() {
-    this.userService.getLoginStatus().
-      switchMap(resp => resp ? this.userService.createOrUpdateUser() : null).
-      subscribe(resp => null);
+    this.userService
+      .getLoginStatus()
+      .filter(resp => resp)
+      .switchMap(resp => this.userService.createOrUpdateUser())
+      .subscribe();
 
   }
-  ngOnDestroy() {
-    this.searchBarSubscription.unsubscribe();
-    this.dbUnivChips.unsubscribe();
-  }
-
   onEnterClicked() {
     if (this.selectedUniversities.length > 0)
       this.router.navigate(['/simple-search']);
@@ -141,5 +138,11 @@ export class LandingSearch {
 
     }
   }
+
+  ngOnDestroy() {
+    this.searchBarSubscription.unsubscribe();
+    this.dbUnivChips.unsubscribe();
+  }
+
 }
 

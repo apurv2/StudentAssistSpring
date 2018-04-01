@@ -34,7 +34,7 @@ export class AppComponent {
       this.userService.getLoginStatus()
         .filter(resp => resp)
         .switchMap(resp => this.userService.getUserUniversities()).
-        subscribe(resp => this.processDbUnivChips(resp));
+        subscribe(resp => this.sharedDataService.processDbUnivChips(resp));
 
     }
 
@@ -44,17 +44,6 @@ export class AppComponent {
       subscribe((userInfo: UserInfo) => this.sharedDataService.emitUserInfo(userInfo));
 
   }
-
-  processDbUnivChips(chips: University[]) {
-
-    if (chips != null && chips.length > 0) {
-      this.sharedDataService.setUserSelectedUniversitiesList(chips);
-      localStorage.setItem(environment.userSelectedUnivs,
-        JSON.stringify(chips));
-      this.sharedDataService.emitDbUnivChips(chips);
-    }
-  }
-
 
   getUserUniversitiesFromLocalStorage(): boolean {
 

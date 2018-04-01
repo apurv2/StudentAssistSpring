@@ -199,7 +199,7 @@ a{
 {
     padding-right: 8px;
     font-size: 30px;
-    color: #fb6362;
+   /* color: #fb6362;*/
 }
 .margin-bottom-30{
     margin-bottom: 30px;
@@ -1124,13 +1124,17 @@ input.mat-chip-input {
     position: relative;
     
     width: 450px;
-    height: 225px;
-    background: #FFF;
+    height: 300px;
+   /* background: #FFF;*/
     border-radius: 2px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-    border-top: 7px solid #32508E;
+ /*   border-top: 7px solid #32508E;*/
   }
-  
+  #login-box img
+{
+    padding: 0px 10px 30px 20px;
+    margin-left: 25%;
+}
   .left {
     position: absolute;
     top: 0;
@@ -1202,24 +1206,53 @@ input.mat-chip-input {
     border-radius: 0 2px 2px 0;
 }
   */
+  .fb-btn{
+    background-color: #32508E;
+    width: 200px;
+    left: 22%;
+    position: relative;
+    height: 30px;
+  }
+  .fb-btn i{
+    font-size: 55px;
+    color: #fff;
+    position: relative;
+    top: -28px;
+    right: -8px;
+  }
+  .fb-btn span
+  {position: relative;
+    top: -26px;
+    font-size: 23px;
+    color: #fff;
+}
+  .signup-opt
+  {
+    display: block;
+    margin: 15px;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: center; 
+  }
  .loginwith {
     display: block;
-    margin-bottom: 40px;
+    margin: 0px 10px 36px 10px;
     font-size: 24px;
+    font-weight: 300;
     text-align: center;
   }
   
   button.social-signin {
     margin-bottom: 20px;
-    width: 260px;
-    height: 52px;
+    width: 200px;
+    height: 40px;
     border: none;
     border-radius: 2px;
     color: #FFF;
     font-weight: 500;
     transition: 0.2s ease;
     cursor: pointer;
-    margin-left: 15%;
+    margin-left: 25%;
 }
 
 
@@ -1839,4 +1872,68 @@ box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 Pseudo ::scrollbar-track element
 *::-webkit-scrollbar-track {
 	background: rgba(255, 255, 255, .08);
+}
+.shared-detail-page
+{
+width: 780px;
+margin: 0 auto;
+}
+.fa-rss-square
+{
+    color: goldenrod;
+}
+.fa-facebook-square
+{
+    color: #32508E;
+}
+.fa-share-alt-square
+{
+    color: forestgreen;
+}
+.fa-envelope-square
+{
+    color: currentColor;
+}
+.fa-trash
+{
+    color:#fb6362;
+}
+.overlap-error-content{
+    position: absolute;
+    width: 100%;
+    padding: 15px;
+    background: #fb6362;
+    z-index: 4;
+    color:#000;
+}
+.address i{
+    font-size: 20px;
+    color: white;
+    background: darkgray;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    margin: 5px 5px 0px 0px;
+    border: 1px solid gray;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2), 0 5px 5px rgba(0,0,0,0.22);
+}
+.fa-bed
+{
+    padding: 6px;
+}
+.fa-bath
+{
+    padding: 7px;
+}
+.fa-male
+{
+    padding: 8px 12px;
+}
+.fa-female
+{
+    padding: 8px 10px;
+}
+.fa-building
+{
+    padding: 8px 10px; 
 }
