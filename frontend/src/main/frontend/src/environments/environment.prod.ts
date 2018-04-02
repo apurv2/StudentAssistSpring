@@ -108,5 +108,8 @@ export const environment = {
   me: 'me',
   getAdminUserIds: 'profile/supUser',
   createAccommodationAddFromFacebook: 'profile/createAccommodationAddFromFacebook',
-  getAccommodationFromAddId: 'getAccommodationFromAddId'
+  getAccommodationFromAddId: 'getAccommodationFromAddId',
+  noDataGif: '',
+  getAccommodationNotifications: 'profile/getAccommodationNotifications',
+  getRecentlyViewedAdds: 'profile/getRecentlyViewed'
 };
