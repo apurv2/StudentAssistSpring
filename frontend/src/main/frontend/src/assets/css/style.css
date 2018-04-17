@@ -1937,3 +1937,7 @@ margin: 0 auto;
 {
     padding: 8px 10px; 
 }
+.max-height-400
+{
+    max-height: 400px;
+}

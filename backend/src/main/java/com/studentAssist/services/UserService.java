@@ -54,7 +54,7 @@ public class UserService {
 		return (users != null && !users.isEmpty()) ? true : false;
 
 	}
-
+	
 	public void validateAdminUser(long userId) throws BadStudentRequestException {
 
 		if (!checkAdminUserId(userId)) {

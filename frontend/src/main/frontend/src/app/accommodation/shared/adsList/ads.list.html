@@ -1,7 +1,7 @@
 <div class="row">
     <div *ngFor="let accommodationAdd of accommodationAdds" class="col-xs-12 col-sm-6 col-md-12">
 
-        <div class="card animated-card1 horizontal-card" (click)="addClick(accommodationAdd)">
+        <div [class.active-bg]="accommodationAdd.addId==selectedItemId" class="card animated-card1 horizontal-card" (click)="addClick(accommodationAdd)">
             <div class="media">
                 <div class="media-left">
                     <img src="http://graph.facebook.com/{{accommodationAdd.userId}}/picture?type=normal" alt="" />
@@ -15,7 +15,6 @@
                                     fill="#4fc3f7"></path>
                             </svg>
                         </span>
-                        <!-- <span class="tickmark">&#10003;</span> -->
                     </h4>
                     <p class="text-muted  small">
                         <b>Mapple road, taxes North main road</b>
@@ -29,4 +28,9 @@
             </div>
         </div>
     </div>
+
+    <!-- <div *ngIf="accommodationAdds.length >= 10 && !stopPagination">
+        <a class="load-more" *ngIf="!paginating" href="javascript:void(0)" (click)="paginationClick(university)">Load More</a>
+        <mat-spinner class="load-more" [diameter]="40" *ngIf="paginating"></mat-spinner>
+    </div> -->
 </div>

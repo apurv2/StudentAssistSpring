@@ -1,12 +1,14 @@
 <div class="container">
-    <advanced-search-filters></advanced-search-filters>
-   <!-- Div for no record found-->
-    <div class="no-record">
+    <advanced-search-filters #filters></advanced-search-filters>
+    <!-- Div for no record found-->
+    <div *ngIf="noData" class="no-record">
         <img src="./assets/images/nodatafound.png" alt="" title="">
     </div>
-     <!-- End Div for no record found-->
-    <div class="col-xs-12 col-sm-12 col-md-4 height-400 overflow-auto adv-card-list">
-        <adds-list [accommodationAdds]="accommodationAdds"></adds-list>
+    <!-- End Div for no record found-->
+    <div *ngIf="!noData">
+        <div class="col-xs-12 col-sm-12 col-md-4 height-400 overflow-auto adv-card-list">
+            <adds-list [accommodationAdds]="accommodationAdds" [showVisited]="true"></adds-list>
+        </div>
+        <accommodation-details [selectedAccommodationAdd]="selectedAccommodationAdd" [enableSubscription]="true"></accommodation-details>
     </div>
-    <accommodation-details [selectedAccommodationAdd]="selectedAccommodationAdd" [enableSubscription]="true"></accommodation-details>
 </div>

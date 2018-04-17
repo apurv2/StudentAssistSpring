@@ -36,20 +36,26 @@ export class SimpleSearchAddsList {
 
     ngOnInit() {
         $('.collapsible').collapsible();
-
-        this.timerObservable = Observable
-            .interval(2000)
-            .first()
-            .subscribe(x => $('.collapsible').collapsible('open', 0));
     }
 
     ngOnChanges() {
         if (this.accommodationSearchResults != null && this.accommodationSearchResults.length > 0) {
-            this.sharedDataService.emitAccommodationAdd(
-                this.accommodationSearchResults[0].accommodationAdds[0]);
-            this.filters.stopLoding();
+            this.addClick(this.accommodationSearchResults[0].accommodationAdds[0]);
+
+            this.timerObservable = Observable
+                .interval(300)
+                .first()
+                .subscribe(x => {
+                    $('.collapsible').collapsible('open', 0);
+                    this.filters.stopLoding();
+                });
         }
     }
+
+    universityClick() {
+        this.timerObservable.unsubscribe();
+    }
+
 
     addClick(accommodationAdd: AccommodationAdd) {
 
@@ -106,6 +112,7 @@ export class SimpleSearchAddsList {
     }
 
     ngOnDestroy() {
+        if(this.timerObservable!=null)
         this.timerObservable.unsubscribe();
     }
 

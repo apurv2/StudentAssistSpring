@@ -22,9 +22,10 @@ export class SimpleSearch {
     universityAccommodationAdds: UniversityAccommodationAdds[];
     accommodationFiltersObservable: Subscription;
     accommodationAddSubscription: Subscription;
-
+    loadedFirstTime: boolean = false;
+    noData: boolean = false;
+    
     @ViewChild('filters') filters: SimpleSearchAddsFilters;
-
 
     constructor(private simpleSearchService: SimpleSearchService,
         private facebookService: FacebookService,
@@ -48,12 +49,17 @@ export class SimpleSearch {
             switchMap(filters => this.getSimpleSearchAdds(filters)).
             subscribe(universityAccommodationAdds => {
                 this.universityAccommodationAdds = universityAccommodationAdds;
-                this.filters.stopLoding();
+
+                if (this.universityAccommodationAdds.length == 0) {
+                    this.filters.stopLoding();
+                    this.noData = true;
+                }
+                this.loadedFirstTime = true;
+
             });
     }
 
     getSimpleSearchAdds(filters: AccommodationSearchModel): Observable<any> {
-        // this.universityAccommodationAdds = [];
         return this.simpleSearchService.getSimpleSearchAdds(filters);
     }
     ngOnDestroy() {

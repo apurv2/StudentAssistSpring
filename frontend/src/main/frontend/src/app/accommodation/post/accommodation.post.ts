@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ErrorHandler } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import { AccommodationDropdown } from '../shared/models/accommodation.dropdown.model';
@@ -15,7 +15,6 @@ import { CloudinaryOptions } from 'ng2-cloudinary/dist/esm/src/cloudinary-option
 import { PostAccommodationService } from 'app/accommodation/post/accommodation.post.service';
 import { Observable } from 'rxjs/Observable';
 import { AccommodationAdd } from 'app/accommodation/shared/models/accommodation.model';
-import { SuccessOrFailureModal } from 'app/shared/modals/success.or.failure';
 import { University } from 'app/universities/universities.model';
 import { UserService } from 'app/shared/userServices/user.service';
 import { NewApartmentModal } from './newApartment/new.apartment.modal';
@@ -34,7 +33,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
     selector: 'accommodation-post',
     templateUrl: 'accommodation.post.html'
 })
-export class PostAccommodation {
+export class PostAccommodation implements ErrorHandler {
 
     aptTypeSpinnerValues: AccommodationDropdown[] = []
     aptNameSpinnerValues: AccommodationDropdown[] = []
@@ -196,15 +195,14 @@ export class PostAccommodation {
                 else return resp;
             })
             .flatMap((userInfo: UserInfo) => this.postAccommodation(userInfo))
-            .subscribe(e => {
-                this.sharedDataService.openSuccessFailureDialog(e, this.dialog)
-                    .subscribe(e => this.router.navigate(['/dashboard/']));
-                this.loading = false;
-            }, err => {
-                this.loading = false;
-                console.log(err);
-                this.sharedDataService.openSuccessFailureDialog("failure", this.dialog).subscribe();;
-            });
+            .do(e => this.loading = false)
+            .flatMap(e => this.sharedDataService.openSuccessFailureDialog(e, this.dialog, "Congratulations your listing has been successfully posted"))
+            .subscribe(e => this.router.navigate(['/dashboard/']),
+                err => {
+                    this.loading = false;
+                    console.log(err);
+                    this.sharedDataService.openSuccessFailureDialog("failure", this.dialog).subscribe();;
+                });
     }
 
     postAccommodation(userInfo?: UserInfo) {
@@ -217,11 +215,27 @@ export class PostAccommodation {
     }
 
     addFile(files: any) {
+        let allowedExtensions = ["jpg", "png", "jpeg"];
+        if ((this.photos != null && this.photos.length == 3) || (files.files != null && files.files.length > 3)) {
+            this.sharedDataService.openSnackBar(this.snackBar, "We can only upload upto 3 photos for you :)", "");
+            return;
+        }
         for (let photoFile of files.files) {
+
+            let fileExtension: string = photoFile.name.split('.').pop();
+            if (!this.isInArray(allowedExtensions, fileExtension)) {
+                this.sharedDataService.openSnackBar(this.snackBar, "only  jpg, jpeg and png file extension are allowed", "");
+                continue;
+
+            }
             let reader = new FileReader();
             reader.onload = (e) => this.photos.push(e.target['result']);
             reader.readAsDataURL(photoFile);
         }
+    }
+
+    isInArray(array, word) {
+        return array.indexOf(word.toLowerCase()) > -1;
     }
 
     uploadImages() {
@@ -237,6 +251,10 @@ export class PostAccommodation {
             .filter(e => this.cloudinaryUrls.length == this.photos.length)
             .switchMap(e => this.postAccommodationAdd(this.cloudinaryUrls))
 
+    }
+
+    deleteAllPhotos() {
+        this.photos.length = 0;
     }
 
     private createUploadParams(photo) {
@@ -308,8 +326,9 @@ export class PostAccommodation {
     }
 
     checkAdminUser() {
-
-        this.getUserDetails()
+        this.userService.getLoginStatus()
+            .filter(resp => resp)
+            .flatMap(e => this.getUserDetails())
             .flatMap(userInfo => this.userService.checkAdmin())
             .subscribe(data => this.adminUser = data, err => console.log("not looged in"));
 
@@ -328,5 +347,10 @@ export class PostAccommodation {
 
                 })
         }
+    }
+
+    handleError(error) {
+        // exception occured in some service class method.
+        console.log('Error in MyErrorhandler - %s', error);
     }
 }

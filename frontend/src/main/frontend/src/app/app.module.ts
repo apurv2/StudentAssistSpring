@@ -158,12 +158,10 @@ export class AppModule {
     let initParams: InitParams = {
       appId: environment.appId,
       xfbml: true,
-      version: 'v2.8'
+      version: 'v2.12'
     };
 
     fb.init(initParams);
-    fb.api
-
   }
 }
 

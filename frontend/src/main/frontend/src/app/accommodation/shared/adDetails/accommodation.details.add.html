@@ -1,9 +1,18 @@
-<div id="detailCard" class="card animated-card1 detail-card">
+<div id="detailCard" class="card animated-card1 detail-card" [class.shared-detail-page]="sharedLink">
     <div class="view-details image-container overflow-hidden">
-        <div class="overlap-content">
+        <div *ngIf="!deletePrompt" class="overlap-content">
             <h2 class="pull-left margin-top-0">{{selectedAccommodationAdd?.apartmentName}}</h2>
             <span class="label price-label pull-right dark-bg font-size-18">${{selectedAccommodationAdd?.cost}}</span>
         </div>
+
+        <div *ngIf="deletePrompt" class="overlap-error-content">
+            <h2 class="pull-left margin-top-0">Are you sure you want to delete this listing?</h2>
+            <button (click)="deleteAdd()" class="btn primary-btn btn-lg btn-block">Yes</button>
+            <button (click)="deletePromptNo()" class="btn primary-btn btn-lg btn-block">No</button>
+            <!-- TODO : put YES NO buttons here -->
+            <!-- <span class="label price-label pull-right dark-bg font-size-18">${{selectedAccommodationAdd?.cost}}</span> -->
+        </div>
+
         <css-carousel [images]="selectedAccommodationAdd?.addPhotoIds"></css-carousel>
     </div>
     <div class="panel-footer padding-30">
@@ -12,13 +21,16 @@
                 <p class="text-muted address">
                     <b>Mapple road, taxes North main road</b>
                 </p>
+                <p class="text-muted ">
+                    <b>Posted By: {{selectedAccommodationAdd?.firstName}}</b>
+                </p>
 
                 <p class="text-muted">
                     <b>Posted On:</b>
                     <label>{{selectedAccommodationAdd?.createDate}}</label>
                 </p>
                 <p class="text-muted address">
-                    <i class="fa fa-building"></i>On-CampusOn-Campus
+                    <i class="fa fa-building"></i>On-Campus
 
                     <i class="fa fa-bed"></i>{{selectedAccommodationAdd?.noOfRooms | slice:0:1}} Bedroom(s)
                     <i class="fa fa-bath"></i>{{selectedAccommodationAdd?.noOfRooms | slice:5:6}} Bathroom(s)
@@ -28,9 +40,7 @@
                         <i [ngClass]="selectedAccommodationAdd?.gender=='Male'? 'fa-male' : 'fa-female'" class="fa">
                         </i>{{selectedAccommodationAdd?.vacancies}} {{selectedAccommodationAdd?.gender}} roommate(s) required</div>
                 </div>
-
                 <p class="text-muted address">{{selectedAccommodationAdd?.notes}}</p>
-
             </div>
             <div class="col-sm-3">
                 <div class="social-icons">
@@ -40,7 +50,7 @@
                         </a>
                     </span>
                     <span>
-                        <a href="javascript:void(0)">
+                        <a target="_blank" href="https://www.facebook.com/app_scoped_user_id/{{selectedAccommodationAdd?.userId}}">
                             <i aria-hidden="true" class="fa fa-facebook-square"></i>
                         </a>
                     </span>
@@ -55,59 +65,12 @@
                         </a>
                     </span>
                     <span *ngIf="loggedInUserId != null && loggedInUserId == selectedAccommodationAdd?.userId">
-                        <a href="javascript:void(0)" (click)="deleteAdd()">
+                        <a href="javascript:void(0)" (click)="showDeletePrompt()">
                             <i aria-hidden="true" class="fa fa-trash"></i>
                         </a>
                     </span>
                 </div>
                 <p class="text-muted posted-by">{{selectedAccommodationAdd?.notes}}</p>
-                <!-- <div class="form-group xs-display-inline">
-                    <button type="button" class="btn primary-btn btn-width-100">CALL</button>
-                </div>
-                <div class="form-group xs-display-inline">
-                    <button type="button" class="btn secondary-btn btn-width-100">ENQUIRY</button>
-                </div> -->
-
-            </div>
-        </div>
-    </div>
-    <!-- Modal window-->
-    <div class="modal fade" id="share-overlay" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span>&times;</span>
-                    </button>
-                    <h4 class="modal-title">Subscribe</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label class="display-block" for="selectdropdown">Checkbox sample</label>
-                        <div class="checkbox inline-checkbox">
-                            <label>
-                                <input type="checkbox" value="">
-                                <span class="cr">
-                                    <i class="cr-icon glyphicon glyphicon-ok"></i>
-                                </span>
-                                checkbox1
-                            </label>
-                        </div>
-                        <div class="checkbox inline-checkbox">
-                            <label>
-                                <input type="checkbox" value="">
-                                <span class="cr">
-                                    <i class="cr-icon glyphicon glyphicon-ok"></i>
-                                </span>
-                                checkbox2
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn secondary-btn" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn primary-btn">Save changes</button>
-                </div>
             </div>
         </div>
     </div>

@@ -1,9 +1,10 @@
 <div class="search-container overflow-inherit">
-
     <div class="row">
         <div class="col-md-12 filter">
             <form class="form-inline">
-                    <a [routerLink]="['/simple-search']"><i class="material-icons">reply_all</i></a>
+                <a [routerLink]="['/simple-search']">
+                    <i class="material-icons">reply_all</i>
+                </a>
 
                 <mat-form-field>
                     <mat-select placeholder="University Name" [(ngModel)]="universityNameSpinnerSelectedItem.code" (ngModelChange)="spinnerClick($event)"
@@ -42,4 +43,5 @@
             </form>
         </div>
     </div>
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
 </div>

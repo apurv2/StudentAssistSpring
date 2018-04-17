@@ -1,5 +1,11 @@
 <div class="container">
     <simple-search-filters #filters></simple-search-filters>
-    <simple-search-list id="simpleSearchList" [accommodationSearchResults]="universityAccommodationAdds" [filters]="filters"></simple-search-list>
-    <accommodation-details [selectedAccommodationAdd]="selectedAccommodationAdd" [enableSubscription]="true"></accommodation-details>
+    <div *ngIf="noData" class="no-record">
+        <img src="./assets/images/nodatafound.png" alt="" title="">
+    </div>
+    <div *ngIf="!noData">
+        <simple-search-list id="simpleSearchList" [accommodationSearchResults]="universityAccommodationAdds" [filters]="filters"></simple-search-list>
+        <accommodation-details *ngIf="!filters.loading || loadedFirstTime" [selectedAccommodationAdd]="selectedAccommodationAdd"
+            [enableSubscription]="true"></accommodation-details>
+    </div>
 </div>

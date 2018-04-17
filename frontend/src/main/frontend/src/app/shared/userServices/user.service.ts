@@ -64,7 +64,7 @@ export class UserService {
         let id: string = userId != null ? userId : environment.me;
         return Observable.create((observer: Observer<UserInfo>) =>
             this.fb.api('/' + id + '/', 'get', {
-                fields: 'first_name,last_name,name'
+                fields: 'first_name,last_name,name,link'
             }).then(resp => {
 
                 if (resp == null) {
@@ -76,6 +76,27 @@ export class UserService {
                 userInfo.userId = resp.id;
                 userInfo.firstName = resp.first_name;
                 userInfo.lastName = resp.last_name;
+                observer.next(userInfo);
+            }));
+    }
+
+    getLinkFromFb(userId?: string): Observable<UserInfo> {
+        let id: string = userId != null ? userId : environment.me;
+        return Observable.create((observer: Observer<UserInfo>) =>
+            this.fb.api('/' + id + '/', 'get', {
+                fields: 'link'
+            }).then(resp => {
+
+                if (resp == null) {
+                    throw new Error('user not logged in');
+                }
+
+                let userInfo: UserInfo = new UserInfo();
+                userInfo.fullName = resp.name;
+                userInfo.userId = resp.id;
+                userInfo.firstName = resp.first_name;
+                userInfo.lastName = resp.last_name;
+                console.log(resp);
                 observer.next(userInfo);
             }));
     }

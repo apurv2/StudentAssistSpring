@@ -11,7 +11,7 @@ import { AddDetailsService } from "app/accommodation/shared/adDetails/accommodat
 import { environment } from "environments/environment";
 import { Http } from "@angular/http";
 import { CopyLinkModal } from "../modals/copy.link.modal";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 
 
 @Component({
@@ -28,12 +28,16 @@ export class AddDetails {
 
     items: Array<any> = []
     loggedInUserId: number;
+    deletePrompt: boolean = false;
+    sharedLink: boolean = false;
 
     constructor(private dialog: MatDialog,
+        private sharedDataService: SharedDataService,
         private userService: UserService,
         private fb: FacebookService,
         private addDetailService: AddDetailsService,
         private route: ActivatedRoute,
+        private router: Router,
         private http: Http) { }
     ngOnInit() {
 
@@ -42,6 +46,7 @@ export class AddDetails {
             .queryParams
             .filter(params => params['addId'] > 0)
             .flatMap(data => this.addDetailService.getAddDetailsFromAddId(data.addId))
+            .do(e => this.sharedLink = true)
             .subscribe((params: AccommodationAdd) => {
                 this.selectedAccommodationAdd = params;
             });
@@ -78,6 +83,8 @@ export class AddDetails {
             });
     }
 
+
+
     subscribe() {
 
         this.userService.getLoginStatus().
@@ -99,11 +106,20 @@ export class AddDetails {
 
     }
 
+    showDeletePrompt() {
+        this.deletePrompt = true;
+    }
+
     deleteAdd() {
         let url: string = environment.deleteAccommodationAdd
             + '?' + environment.addId + '='
             + this.selectedAccommodationAdd.addId;
 
-        this.addDetailService.deleteAdd(url).subscribe(res => console.log(res));
+        this.addDetailService.deleteAdd(url).flatMap(res => this.sharedDataService.openSuccessFailureDialog(res, this.dialog, "Your listing has been removed!"))
+            .subscribe(e => this.router.navigate(['/dashboard/']))
+    }
+
+    deletePromptNo() {
+        this.deletePrompt = false;
     }
 }

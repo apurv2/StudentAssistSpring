@@ -2,7 +2,7 @@
 
     <div *ngIf="data.success">
         <i class="material-icons">done</i>
-        <p *ngIf="data.success">Congratulations your listing has been successfully posted</p>
+        <p *ngIf="data.success">{{data.message}}</p>
     </div>
 
     <div *ngIf="!data.success">

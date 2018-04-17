@@ -33,11 +33,11 @@
                                 </mat-form-field>
                             </div>
                             <div class="form-group col-md-1 addbtn">
-                                    <button class="btn" [disabled]="!showAddApartment" (click)="apartmentNameClick()">
-                                <i class="material-icons">add</i>
+                                <button class="btn" [disabled]="!showAddApartment" (click)="apartmentNameClick()">
+                                    <i class="material-icons">add</i>
                                 </button>
                             </div>
-                           
+
                             <div class="form-group col-md-6">
                                 <mat-form-field>
                                     <mat-select placeholder="Gender" [(ngModel)]="genderSpinnerSelectedItem.code" (ngModelChange)="spinnerClick1($event)" [ngModelOptions]="{standalone: true}"
@@ -65,7 +65,7 @@
                             <div class="form-group col-md-6">
                                 <mat-form-field>
                                     <span matPrefix>$&nbsp;</span>
-                                    <input type="number" pattern="\d*" size="4" matInput placeholder="Cost" [formControl]="numberFormControl" [(ngModel)]="cost"
+                                    <input type="number" pattern="\d*" size="4" matInput placeholder="Cost" [formControl]="numberFormControl" [(ngModel)]="cost" [attr.maxLength]="4"
                                         required>
                                     <mat-error *ngIf="numberFormControl.invalid && !numberFormControl.hasError('required')">
                                         Please enter a valid amount between 0 to 2000$
@@ -76,19 +76,6 @@
                                     </mat-error>
                                 </mat-form-field>
                             </div>
-
-                            <!-- <div class="form-group col-md-6">
-                                <mat-form-field>
-                                    <input matInput placeholder="Email" [(ngModel)]="email" [formControl]="emailFormControl" [errorStateMatcher]="matcher" required>
-                                    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-                                        Please enter a valid email address
-                                    </mat-error>
-                                    <mat-error *ngIf="emailFormControl.hasError('required')">
-                                        Email is
-                                        <strong>required</strong>
-                                    </mat-error>
-                                </mat-form-field>
-                            </div> -->
                             <div class="form-group col-md-6">
                                 <mat-form-field>
                                     <input matInput [matDatepicker]="dp3" [min]="minDate" [max]="maxDate" placeholder="Date available till" [formControl]="dateAvailableTill"
@@ -110,9 +97,13 @@
                             </div>
                             <div class="form-group col-md-12">
                                 <mat-form-field>
-                                    <textarea matInput placeholder="Notes" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" [(ngModel)]="notes"
-                                        [ngModelOptions]="{standalone: true}"></textarea>
+                                    <textarea #comments matInput placeholder="Notes" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" [attr.maxLength]="255"
+                                        [(ngModel)]="notes" [ngModelOptions]="{standalone: true}"></textarea>
                                 </mat-form-field>
+                                <p class="form-text text-muted character-count">
+                                    Characters Remaining:
+                                    <span>{{255- comments.value.length}}</span>
+                                </p>
                             </div>
                             <div class="form-group col-md-12">
                                 <label>Add Image</label>
@@ -123,17 +114,13 @@
                                     <img src="{{photo}}">
                                 </li>
                             </ul>
+                            <a href="javascript:void(0)" (click)="deleteAllPhotos()">
+                            <i *ngIf="photos?.length>0" aria-hidden="true" class="fa fa-trash"></i>
+                            </a>
                             <div class="form-group col-md-4 col-md-push-8">
                                 <mat-spinner [diameter]="40" *ngIf="loading"></mat-spinner>
                                 <button *ngIf="!loading" type="submit" class="btn primary-btn btn-lg btn-block" (click)="submit()" [disabled]="numberFormControl.invalid || dateAvailableTill.invalid">Save post</button>
                             </div>
-
-                            <!-- <div class="form-group col-md-4 col-md-push-4">
-                                <div *ngIf="!loading" matTooltip="{{apartmentTooltipText}}" [matTooltipPosition]="toolTipPosition">
-                                    <button class="btn primary-btn btn-lg btn-block" [disabled]="!showAddApartment" (click)="apartmentNameClick()">Add Apartment</button>
-                                </div>
-                            </div> -->
-
                         </form>
                     </div>
                 </div>

@@ -490,6 +490,10 @@ public class AccommodationDAO extends AbstractDao {
 
 		}
 
+		criteria.add(Restrictions.eq("add.delete_sw", false));
+		criteria.add(Restrictions.or(Restrictions.gt("add.postedTill", Utilities.getDate()),
+				Restrictions.isNull("add.postedTill")));
+
 		criteria.addOrder(Order.desc("add.datePosted"));
 		criteria.setFirstResult(position);
 		criteria.setMaxResults(SAConstants.PAGE_SIZE);

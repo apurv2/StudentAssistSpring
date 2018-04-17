@@ -86,9 +86,10 @@ export class SharedDataService {
         snackbar.open(message, action, { duration: 2000 });
     }
 
-    openSuccessFailureDialog(response, dialog: MatDialog) {
+    openSuccessFailureDialog(response, dialog: MatDialog, message?: string) {
         let data: any = {};
         data.response = response.response;
+        data.message = message;
         data.success = response.response === environment.success ? true : false;
         return dialog.open(SuccessOrFailureModal, { data: data }).afterClosed();
     }

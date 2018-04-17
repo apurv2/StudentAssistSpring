@@ -25,6 +25,7 @@ export class AdvancedSearchFilters {
     genderSpinnerSelectedItem: AccommodationDropdown;
     selectedUniversities: University[];
     allApartments: Apartment[];
+    loading: boolean;
 
     constructor(private sharedDataService: SharedDataService,
         private simpleSearchFilterService: SimpleSearchFilterService) { }
@@ -42,8 +43,9 @@ export class AdvancedSearchFilters {
         this.aptTypeSpinnerSelectedItem = Object.assign([], this.aptTypeSpinnerValues[0]);
         this.genderSpinnerSelectedItem = Object.assign([], this.genderSpinnerValues[0]);
 
-        this.initializtApartmentNames();
         this.initializeUniversityNames();
+        this.initializtApartmentNames().subscribe(e => this.searchClicked());
+
     }
 
     initializeUniversityNames() {
@@ -65,8 +67,8 @@ export class AdvancedSearchFilters {
             }
 
             filterData.universityIds = universityIds;
-            this.simpleSearchFilterService.getApartmentNames(filterData).
-                subscribe(apartmentNames => this.mapApartmentNames(apartmentNames));
+            return this.simpleSearchFilterService.getApartmentNames(filterData).
+                map(apartmentNames => this.mapApartmentNames(apartmentNames));
         }
     }
 
@@ -86,18 +88,17 @@ export class AdvancedSearchFilters {
     }
 
     searchClicked() {
-
+        this.sharedDataService.emitAccommomdationSearchFilters(this.getCurrentFilters());
+    }
+    getCurrentFilters(): AccommodationSearchModel {
         let filterData: AccommodationSearchModel = new AccommodationSearchModel();
 
         filterData.apartmentName = this.aptNameSpinnerSelectedItem.description;
         filterData.apartmentType = this.aptTypeSpinnerSelectedItem.code;
         filterData.gender = this.genderSpinnerSelectedItem.code;
         filterData.selectedUniversityId = +this.universityNameSpinnerSelectedItem.code;
-
-        this.sharedDataService.emitAccommomdationSearchFilters(filterData);
-
+        return filterData;
     }
-
     spinnerClick(clickedItem) {
         this.populateApartmentNameSpinner();
     }

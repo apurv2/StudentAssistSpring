@@ -21,6 +21,9 @@ public class AccommodationService {
 	@Autowired
 	AccommodationDAO accommmodationDAO;
 
+	@Autowired
+	UserService userService;
+
 	public String createAccommodationAddFromFacebook(AccommodationAdd add, Users user, int apartmentId)
 			throws Exception {
 
@@ -53,7 +56,7 @@ public class AccommodationService {
 		AccommodationAdd add = accommmodationDAO.getByKey(AccommodationAdd.class, addId);
 		long userId = add != null ? add.getUser().getUserId() : 0;
 
-		if (userId > 0 && userId == users.getUserId()) {
+		if (userId > 0 && (userId == users.getUserId() || userService.checkAdminUserId(userId))) {
 
 			accommmodationDAO.deleteAccommodationAdd(add);
 
@@ -61,7 +64,7 @@ public class AccommodationService {
 
 		}
 
-		throw new RuntimeException();
+		throw new BadStudentRequestException();
 	}
 
 	public List<RAccommodationAdd> getUserPosts(long userId, int position) throws Exception {
@@ -245,7 +248,9 @@ public class AccommodationService {
 
 		for (AccommodationAdd add : accommodationAdds) {
 
-			add.setNoOfRooms(add.getNoOfRooms().replaceAll("\\s+", ""));
+			if (add.getNoOfRooms() != null) {
+				add.setNoOfRooms(add.getNoOfRooms().replaceAll("\\s+", ""));
+			}
 
 			String universityPhoto = SAConstants.EmptyText;
 			List<UniversityPhotos> photos = add.getUniversity().getUniversityPhotos();
@@ -330,6 +335,10 @@ public class AccommodationService {
 		}
 
 		if (Integer.parseInt(advertisement.getCost()) < 1) {
+			throw new BadStudentRequestException();
+		}
+
+		if (advertisement.getAddPhotoIds().size() > 3) {
 			throw new BadStudentRequestException();
 		}
 
