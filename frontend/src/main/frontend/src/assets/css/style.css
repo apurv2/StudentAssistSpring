@@ -164,6 +164,13 @@ a{
     background: #404a58; 
     color: #fff;
 }
+.confirm-btn{
+    background-color: white;
+    padding: 3px;
+    width: 60px;
+    margin-left: 10px;
+    font-size: 20px;
+}
 .primary-btn:hover, .secondary-btn:hover, .primary-btn:focus, .secondary-btn:focus{
     color: #fff;
 }
@@ -315,7 +322,7 @@ line-height: 24px;
 
 /*user account dropdown*/
 .menu.useraccount{
-    margin-top: 20px;
+    margin-top: 5px;
 }
 .useraccount .media{
     background-color: #414a59;
@@ -1064,6 +1071,7 @@ box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     border: 2px solid rgba(255, 255, 255, 1);
     overflow: hidden;
     background-color: #fff;
+    padding: 5px;
 }
 .mat-chip-list-wrapper { 
        background: white;
@@ -1128,7 +1136,9 @@ input.mat-chip-input {
    /* background: #FFF;*/
     border-radius: 2px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
- /*   border-top: 7px solid #32508E;*/
+   border-top: 7px solid #32508E;
+   background: url('../images/login-bg.png') no-repeat fixed;
+    background-size: cover;
   }
   #login-box img
 {
@@ -1207,15 +1217,17 @@ input.mat-chip-input {
 }
   */
   .fb-btn{
-    background-color: #32508E;
+    background-color: #fff;
+    border: 1px solid #32508E;
     width: 200px;
     left: 22%;
     position: relative;
     height: 30px;
+    cursor: pointer;
   }
   .fb-btn i{
     font-size: 55px;
-    color: #fff;
+    color: #32508E;
     position: relative;
     top: -28px;
     right: -8px;
@@ -1224,7 +1236,7 @@ input.mat-chip-input {
   {position: relative;
     top: -26px;
     font-size: 23px;
-    color: #fff;
+    color: #32508E;
 }
   .signup-opt
   {
@@ -1641,14 +1653,18 @@ top:15px;
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 .adv-card-list{
-    border-bottom: 1px solid #ddd;
+    /*border-bottom: 1px solid #ddd;*/
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     padding: 1rem;
     background-color: rgba(255, 255, 255, 0.8);
     background: rgba(255, 255, 255, 0.8);
     color: rgba(255, 255, 255, 0.8);
-    margin-top: 6px;
+    /*margin-top: 6px;*/
+}
+.recent-panel
+{
+    height: 550px;
 }
 .collapsible-body {
     display: none;
@@ -1906,6 +1922,10 @@ margin: 0 auto;
     z-index: 4;
     color:#000;
 }
+.overlap-error-content h2
+{
+    font-weight: 300;
+}
 .address i{
     font-size: 20px;
     color: white;
@@ -1940,4 +1960,8 @@ margin: 0 auto;
 .max-height-400
 {
     max-height: 400px;
+}
+.cls-page-header h3{
+    font-size: 20px;
+    margin-top: -20px;
 }

@@ -122,4 +122,12 @@ export class AddDetails {
     deletePromptNo() {
         this.deletePrompt = false;
     }
+
+    isNumber(val) {
+        if (val != null) {
+            return !isNaN(Number(val));
+        }
+        return false;
+    }
+
 }

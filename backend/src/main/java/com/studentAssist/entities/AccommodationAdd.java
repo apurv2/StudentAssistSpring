@@ -1,19 +1,9 @@
 package com.studentAssist.entities;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Entity
 public class AccommodationAdd {
@@ -21,7 +11,7 @@ public class AccommodationAdd {
 	private String vacancies;
 	private String gender;
 	private String noOfRooms;
-	private String cost;
+	private int cost;
 	private String fbId;
 	private String notes;
 	private boolean delete_sw;
@@ -74,8 +64,8 @@ public class AccommodationAdd {
 	public AccommodationAdd() {
 	}
 
-	public AccommodationAdd(String vacancies, String gender, String noOfRooms, String cost, String fbId, String notes,
-			Date datePosted, List<String> apartmentPictureId) {
+	public AccommodationAdd(String vacancies, String gender, String noOfRooms, int cost, String fbId, String notes,
+							Date datePosted, List<String> apartmentPictureId) {
 		this.vacancies = vacancies;
 		this.gender = gender;
 		this.noOfRooms = noOfRooms;
@@ -131,11 +121,11 @@ public class AccommodationAdd {
 		this.noOfRooms = noOfRooms;
 	}
 
-	public String getCost() {
+	public int getCost() {
 		return this.cost;
 	}
 
-	public void setCost(String cost) {
+	public void setCost(int cost) {
 		this.cost = cost;
 	}
 

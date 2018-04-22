@@ -6,6 +6,7 @@ import { AccommodationAdd } from '../shared/models/accommodation.model';
 import { AccommodationSearchModel } from '../shared/models/accommodation.filter.model';
 import { AdvanceSearchService } from './accommodation.advanced.search.service';
 import { AdvancedSearchFilters } from './filters/advanced.search.filters';
+import { AddsList } from '../shared/adsList/ads.list';
 
 @Component({
     selector: 'advanced-search',
@@ -21,6 +22,8 @@ export class AdvancedSearch {
     @ViewChild("filters")
     filters: AdvancedSearchFilters;
 
+    @ViewChild("addsList")
+    addsList: AddsList;
 
     constructor(private sharedDataservice: SharedDataService,
         private advancedSearchService: AdvanceSearchService) {
@@ -33,8 +36,9 @@ export class AdvancedSearch {
     }
 
     subscribeToAccommodationAddsFilters() {
-        this.accommodationFiltersObservable = this.sharedDataservice.observeAccommomdationSearchFilters().
-            switchMap(filters => this.getAdvancedSearchAdds(filters)).
+        this.accommodationFiltersObservable = this.sharedDataservice.observeAccommomdationSearchFilters()
+            .do(e => this.filters.loading = true)
+            .switchMap(filters => this.getAdvancedSearchAdds(filters)).
             subscribe(accommodationAdds => {
                 this.accommodationAdds = accommodationAdds;
                 this.filters.loading = false;
@@ -43,7 +47,6 @@ export class AdvancedSearch {
     }
 
     getAdvancedSearchAdds(filters: AccommodationSearchModel) {
-        this.filters.loading = true;
         return this.advancedSearchService.getAdvancedSearchAdds(filters);
     }
 
@@ -57,6 +60,20 @@ export class AdvancedSearch {
 
         this.accommodationAddSubscription.unsubscribe();
         this.accommodationFiltersObservable.unsubscribe();
+    }
+
+    paginationEvent(paginationCount: number) {
+
+        let filters: AccommodationSearchModel = this.filters.getCurrentFilters();
+        filters.paginationPosition = paginationCount;
+
+        this.getAdvancedSearchAdds(filters)
+            .subscribe(accommodationAdds => {
+                accommodationAdds.forEach(add => this.accommodationAdds.push(add));
+                this.addsList.paginating = false;
+                this.addsList.stopPagination = accommodationAdds.length < 10;
+
+            });
     }
 
 }

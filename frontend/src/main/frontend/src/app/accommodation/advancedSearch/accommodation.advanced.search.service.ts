@@ -13,11 +13,7 @@ export class AdvanceSearchService {
     }
 
     getAdvancedSearchAdds(filters: AccommodationSearchModel) {
-        console.log(JSON.stringify(filters));
-        console.log(environment.getAdvancedSearchAdds);
-
         return this.http.post(environment.getAdvancedSearchAdds, filters)
             .map(res => res.json());
     }
-
 }

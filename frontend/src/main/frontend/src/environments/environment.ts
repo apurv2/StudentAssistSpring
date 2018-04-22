@@ -115,8 +115,9 @@ export const environment = {
   createAccommodationAddFromFacebook: 'profile/createAccommodationAddFromFacebook',
   getAccommodationFromAddId: 'getAccommodationFromAddId',
   noDataGif: '',
-  getAccommodationNotifications : 'profile/getAccommodationNotifications',
-  getRecentlyViewedAdds : 'profile/getRecentlyViewed'
+  getAccommodationNotifications: 'profile/getAccommodationNotifications',
+  getRecentlyViewedAdds: 'profile/getRecentlyViewed',
+  searchLearned: 'searchLearned'
 
-  
+
 }

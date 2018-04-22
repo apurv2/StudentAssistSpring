@@ -1,18 +1,17 @@
 package com.studentAssist.response;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Date;
-
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @XmlRootElement(name = "AccommodationAdd")
 public class RAccommodationAdd {
 	private String vacancies;
 	private String gender;
 	private String noOfRooms;
-	private String cost;
+	private int cost;
 	private String fbId;
 	private String notes;
 	private long userId;
@@ -33,11 +32,21 @@ public class RAccommodationAdd {
 	private int zip;
 	private int apartmentId;
 	private Date postedTill;
+	private String addrLine;
 
-	public RAccommodationAdd(String vacancies, String gender, String noOfRooms, String cost, String fbId, String notes,
-			long userId, String apartmentName, String firstName, String lastName, String emailId, String phoneNumber,
-			long addId, boolean userVisitedSw, String createDate, List<String> apartmentPictureId, int universityId,
-			String universityName, String universityPhotoUrl, String univAcronym, String city, String state, int zip) {
+	public String getAptAddress() {
+		return addrLine;
+	}
+
+	public void setAptAddress(String aptAddress) {
+		this.addrLine = aptAddress;
+	}
+
+	public RAccommodationAdd(String vacancies, String gender, String noOfRooms, int cost, String fbId, String notes,
+							 long userId, String apartmentName, String firstName, String lastName, String emailId, String phoneNumber,
+							 long addId, boolean userVisitedSw, String createDate, List<String> apartmentPictureId, int universityId,
+							 String universityName, String universityPhotoUrl, String univAcronym, String city, String state, int zip,
+							 String addrLine) {
 		super();
 		this.vacancies = vacancies;
 		this.gender = gender;
@@ -62,13 +71,14 @@ public class RAccommodationAdd {
 		this.city = city;
 		this.state = state;
 		this.zip = zip;
+		this.addrLine = addrLine;
 
 	}
 
-	public RAccommodationAdd(String vacancies, String gender, String noOfRooms, String cost, String fbId, String notes,
-			long userId, String apartmentName, String firstName, String lastName, String emailId, String phoneNumber,
-			long addId, boolean userVisitedSw, String createDate, List<String> apartmentPictureId, int universityId,
-			String universityName, String universityPhotoUrl, String univAcronym) {
+	public RAccommodationAdd(String vacancies, String gender, String noOfRooms, int cost, String fbId, String notes,
+							 long userId, String apartmentName, String firstName, String lastName, String emailId, String phoneNumber,
+							 long addId, boolean userVisitedSw, String createDate, List<String> apartmentPictureId, int universityId,
+							 String universityName, String universityPhotoUrl, String univAcronym) {
 		super();
 		this.vacancies = vacancies;
 		this.gender = gender;
@@ -237,12 +247,12 @@ public class RAccommodationAdd {
 		this.noOfRooms = noOfRooms;
 	}
 
-	public String getCost() {
+	public int getCost() {
 		return this.cost;
 	}
 
 	@XmlElement
-	public void setCost(String cost) {
+	public void setCost(int cost) {
 		this.cost = cost;
 	}
 

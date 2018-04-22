@@ -23,12 +23,12 @@
                     <span class="input-group-addon padding-0">
                         <a href="javascript:void(0)" [class.disabled]="selectedUniversities.length == 0" (click)="onEnterClicked()">
                             <div matTooltip="{{selectedUniversities.length==0? 'Add Universities To Search' : 'Click to launch Search'}}" [matTooltipPosition]=" toolTipPosition ">
-                                <i [class.bounce]="selectedUniversities.length>0" class="fa fa-search" aria-hidden="true"></i>
+                                <i [class.bounce]="selectedUniversities.length>0 && searchLearned" class="fa fa-search" aria-hidden="true"></i>
                             </div>
                         </a>
                     </span>
 
-                    <ul [class.reveal-hide]="searchDropdownToggle" class="search-list search-dropdown-transition">
+                    <ul [class.reveal-hide]="searchDropdownToggle" class. class="search-list search-dropdown-transition">
                         <li *ngFor="let university of universityResults | slice:0:9" (click)="addChip(university)">
                             <a target="_blank">
                                 {{ university.universityName }}

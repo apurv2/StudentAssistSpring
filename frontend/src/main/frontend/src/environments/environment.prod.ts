@@ -111,5 +111,7 @@ export const environment = {
   getAccommodationFromAddId: 'getAccommodationFromAddId',
   noDataGif: '',
   getAccommodationNotifications: 'profile/getAccommodationNotifications',
-  getRecentlyViewedAdds: 'profile/getRecentlyViewed'
+  getRecentlyViewedAdds: 'profile/getRecentlyViewed',
+  searchLearned: 'searchLearned'
+
 };

@@ -7,8 +7,8 @@
 
         <div *ngIf="deletePrompt" class="overlap-error-content">
             <h2 class="pull-left margin-top-0">Are you sure you want to delete this listing?</h2>
-            <button (click)="deleteAdd()" class="btn primary-btn btn-lg btn-block">Yes</button>
-            <button (click)="deletePromptNo()" class="btn primary-btn btn-lg btn-block">No</button>
+            <button (click)="deleteAdd()" class="btn confirm-btn">Yes</button>
+            <button (click)="deletePromptNo()" class="btn confirm-btn">No</button>
             <!-- TODO : put YES NO buttons here -->
             <!-- <span class="label price-label pull-right dark-bg font-size-18">${{selectedAccommodationAdd?.cost}}</span> -->
         </div>
@@ -21,20 +21,30 @@
                 <p class="text-muted address">
                     <b>Mapple road, taxes North main road</b>
                 </p>
-                <p class="text-muted ">
+              <!--  <p class="text-muted ">
                     <b>Posted By: {{selectedAccommodationAdd?.firstName}}</b>
                 </p>
 
                 <p class="text-muted">
                     <b>Posted On:</b>
                     <label>{{selectedAccommodationAdd?.createDate}}</label>
-                </p>
+                </p> -->
                 <p class="text-muted address">
                     <i class="fa fa-building"></i>On-Campus
-
-                    <i class="fa fa-bed"></i>{{selectedAccommodationAdd?.noOfRooms | slice:0:1}} Bedroom(s)
-                    <i class="fa fa-bath"></i>{{selectedAccommodationAdd?.noOfRooms | slice:5:6}} Bathroom(s)
                 </p>
+                <div *ngIf="isNumber(selectedAccommodationAdd?.noOfRooms[0])">
+                    <p class="text-muted address">
+
+                        <i class="fa fa-bed"></i>{{selectedAccommodationAdd?.noOfRooms | slice:0:1}} Bedroom(s)
+                        <i class="fa fa-bath"></i>{{selectedAccommodationAdd?.noOfRooms | slice:5:6}} Bathroom(s)
+                    </p>
+                </div>
+                <div *ngIf="!isNumber(selectedAccommodationAdd?.noOfRooms[0])">
+                    <p class="text-muted address">
+                        <i class="fa fa-bed"></i>{{selectedAccommodationAdd?.noOfRooms}}
+                    </p>
+                </div>
+
                 <div class="text-muted address">
                     <div *ngIf="selectedAccommodationAdd?.gender=='Male'">
                         <i [ngClass]="selectedAccommodationAdd?.gender=='Male'? 'fa-male' : 'fa-female'" class="fa">
@@ -70,7 +80,14 @@
                         </a>
                     </span>
                 </div>
-                <p class="text-muted posted-by">{{selectedAccommodationAdd?.notes}}</p>
+                <p class="text-muted small">
+                    Posted by:<b> {{selectedAccommodationAdd?.firstName}}</b> 
+                </p>
+
+                <p class="text-muted small">
+                    Posted on:
+                    <b>{{selectedAccommodationAdd?.createDate}}</b>
+                </p>
             </div>
         </div>
     </div>

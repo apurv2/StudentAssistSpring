@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { AccommodationAdd } from "../../shared/models/accommodation.model";
 import { UniversityAccommodationAdds } from "../../shared/models/university.accommodation.adds.model";
 import { SharedDataService } from "../../../shared/data/shared.data.service";
@@ -20,8 +20,9 @@ export class AddsList {
 
     selectedItemId: number;
     paginating: boolean = false;
-
-
+    @Output() paginationEvent = new EventEmitter<number>();
+    stopPagination: boolean;
+    
     constructor(private sharedDataService: SharedDataService,
         private adsListService: AdsListService) { }
     ngOnInit() {
@@ -30,6 +31,7 @@ export class AddsList {
     ngOnChanges() {
         if (this.accommodationAdds != null && this.accommodationAdds.length > 0) {
             this.addClick(this.accommodationAdds[0]);
+            this.paginating = false;
         }
     }
 
@@ -48,10 +50,7 @@ export class AddsList {
 
     paginationClick() {
         this.paginating = true;
-
-
-
-
-        // selectedUniversity.stopPagination = data.length < 10;
+        let position: number = this.accommodationAdds.length + 1;
+        this.paginationEvent.emit(position);
     }
 }

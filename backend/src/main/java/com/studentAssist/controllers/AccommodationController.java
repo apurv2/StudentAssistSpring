@@ -122,7 +122,7 @@ public class AccommodationController extends AbstractController {
 			HttpServletRequest request) throws Exception {
 
 		return accommodationService.getAdvancedAdvertisements(searchParams.getApartmentName(), searchParams.getGender(),
-				searchParams.getSelectedUniversityId(), 0);
+				searchParams.getSelectedUniversityId(), searchParams.getPaginationPosition());
 
 	}
 

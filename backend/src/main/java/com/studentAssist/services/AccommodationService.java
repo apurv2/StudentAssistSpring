@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class AccommodationService {
@@ -153,14 +154,7 @@ public class AccommodationService {
 		}
 
 		List<UniversityAccommodationDTO> univAddsList = new ArrayList();
-		Iterator it = perUnivListing.entrySet().iterator();
-		while (it.hasNext()) {
-			Map.Entry pair = (Map.Entry) it.next();
-
-			UniversityAccommodationDTO dto = perUnivListing.get(pair.getKey());
-			univAddsList.add(dto);
-		}
-
+		perUnivListing.entrySet().stream().forEach(listing -> univAddsList.add(listing.getValue()));
 		return univAddsList;
 
 	}
@@ -254,14 +248,11 @@ public class AccommodationService {
 
 			String universityPhoto = SAConstants.EmptyText;
 			List<UniversityPhotos> photos = add.getUniversity().getUniversityPhotos();
-			if (photoPriority != -1) {
-				for (UniversityPhotos photo : photos) {
-					if (photo.getPhotoPriority() == photoPriority) {
-						universityPhoto = photo.getPhotoUrl();
-						break;
-					}
 
-				}
+			if (photoPriority != -1) {
+				universityPhoto = photos.stream().filter(photo -> photo.getPhotoPriority() == photoPriority).findFirst()
+						.map(photo -> photo.getPhotoUrl()).get();
+
 			}
 
 			Users user = add.getUser();
@@ -276,7 +267,8 @@ public class AccommodationService {
 							add.getApartment().getUniversity().getUniversityId(),
 							add.getApartment().getUniversity().getUniversityName(), universityPhoto,
 							add.getApartment().getUniversity().getUnivAcronym(), add.getApartment().getCity(),
-							add.getApartment().getState(), add.getApartment().getZip()));
+							add.getApartment().getState(), add.getApartment().getZip(),
+							add.getApartment().getAddr_line()));
 				} else {
 					rAdds.add(new RAccommodationAdd(add.getVacancies(), add.getGender(), add.getNoOfRooms(),
 							add.getCost(), add.getFbId(), add.getNotes(), user.getUserId(),
@@ -286,7 +278,8 @@ public class AccommodationService {
 							add.getApartment().getUniversity().getUniversityId(),
 							add.getApartment().getUniversity().getUniversityName(), universityPhoto,
 							add.getApartment().getUniversity().getUnivAcronym(), add.getApartment().getCity(),
-							add.getApartment().getState(), add.getApartment().getZip()));
+							add.getApartment().getState(), add.getApartment().getZip(),
+							add.getApartment().getAddr_line()));
 				}
 			} else {
 
@@ -297,7 +290,7 @@ public class AccommodationService {
 						add.getApartment().getUniversity().getUniversityId(),
 						add.getApartment().getUniversity().getUniversityName(), universityPhoto,
 						add.getApartment().getUniversity().getUnivAcronym(), add.getApartment().getCity(),
-						add.getApartment().getState(), add.getApartment().getZip()));
+						add.getApartment().getState(), add.getApartment().getZip(), add.getApartment().getAddr_line()));
 
 			}
 
@@ -334,7 +327,7 @@ public class AccommodationService {
 			throw new BadStudentRequestException();
 		}
 
-		if (Integer.parseInt(advertisement.getCost()) < 1) {
+		if (advertisement.getCost() < 1) {
 			throw new BadStudentRequestException();
 		}
 

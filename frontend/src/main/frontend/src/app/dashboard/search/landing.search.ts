@@ -40,6 +40,7 @@ export class LandingSearch {
   selectable: boolean = true;
   removable: boolean = true;
   toolTipPosition: string = "right";
+  searchLearned: boolean;
 
   ngOnInit() {
 
@@ -48,7 +49,7 @@ export class LandingSearch {
         this.universityResults = results;
         this.searchDropdownToggle = this.universityResults.length > 0 ? true : false;
       });
-
+    this.searchLearned = localStorage.getItem(environment.searchLearned) != 'true';
     this.getUserUnivsFromDataService();
     this.subscribeForDBChips();
   }
@@ -73,7 +74,7 @@ export class LandingSearch {
       this.sharedDataService.openSnackBar(this.snackBar, "you can select a max of 4 univs", 'Dismiss');
     }
     else
-      if (this.selectedUniversities.indexOf(university) != -1) {
+      if (this.selectedUniversities.findIndex(univ => univ.universityId == university.universityId) != -1) {
         this.sharedDataService.openSnackBar(this.snackBar, "Already Selected", university.univAcronym);
       }
       else {
@@ -109,8 +110,10 @@ export class LandingSearch {
 
   }
   onEnterClicked() {
-    if (this.selectedUniversities.length > 0)
+    if (this.selectedUniversities.length > 0) {
+      localStorage.setItem(environment.searchLearned, 'true');
       this.router.navigate(['/simple-search']);
+    }
   }
 
   @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(evt: KeyboardEvent) {

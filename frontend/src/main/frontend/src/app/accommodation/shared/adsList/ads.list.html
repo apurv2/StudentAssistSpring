@@ -28,9 +28,8 @@
             </div>
         </div>
     </div>
-
-    <!-- <div *ngIf="accommodationAdds.length >= 10 && !stopPagination">
-        <a class="load-more" *ngIf="!paginating" href="javascript:void(0)" (click)="paginationClick(university)">Load More</a>
+    <div class="col-xs-12 col-sm-6 col-md-12" *ngIf="accommodationAdds?.length >= 10 && !stopPagination">
+        <a class="load-more" *ngIf="!paginating" href="javascript:void(0)" (click)="paginationClick()">Load More</a>
         <mat-spinner class="load-more" [diameter]="40" *ngIf="paginating"></mat-spinner>
-    </div> -->
+    </div>
 </div>
