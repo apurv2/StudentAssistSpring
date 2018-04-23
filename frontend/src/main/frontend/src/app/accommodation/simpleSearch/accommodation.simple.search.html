@@ -5,7 +5,7 @@
     </div>
     <div *ngIf="!noData">
         <simple-search-list id="simpleSearchList" [accommodationSearchResults]="universityAccommodationAdds" [filters]="filters"></simple-search-list>
-        <accommodation-details *ngIf="!filters.loading || loadedFirstTime" [selectedAccommodationAdd]="selectedAccommodationAdd"
+        <accommodation-details *ngIf="loadedFirstTime" [selectedAccommodationAdd]="selectedAccommodationAdd"
             [enableSubscription]="true"></accommodation-details>
     </div>
 </div>

@@ -24,7 +24,7 @@ export class SimpleSearch {
     accommodationAddSubscription: Subscription;
     loadedFirstTime: boolean = false;
     noData: boolean = false;
-    
+
     @ViewChild('filters') filters: SimpleSearchAddsFilters;
 
     constructor(private simpleSearchService: SimpleSearchService,
@@ -49,14 +49,15 @@ export class SimpleSearch {
             switchMap(filters => this.getSimpleSearchAdds(filters)).
             subscribe(universityAccommodationAdds => {
                 this.universityAccommodationAdds = universityAccommodationAdds;
-
-                if (this.universityAccommodationAdds.length == 0) {
-                    this.filters.stopLoding();
-                    this.noData = true;
-                }
+                this.noData = this.universityAccommodationAdds.length == 0;
+                this.filters.stopLoding();
                 this.loadedFirstTime = true;
-
-            });
+            },
+                err => {
+                    this.noData = true;
+                    this.filters.stopLoding();
+                    this.loadedFirstTime = true;
+                });
     }
 
     getSimpleSearchAdds(filters: AccommodationSearchModel): Observable<any> {

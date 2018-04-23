@@ -29,4 +29,5 @@ export class AccommodationAdd {
     channel: string;
     feature: string;
     stage: string;
+    apartmentType: string;
 }

@@ -8,321 +8,337 @@ import java.util.List;
 
 @XmlRootElement(name = "AccommodationAdd")
 public class RAccommodationAdd {
-	private String vacancies;
-	private String gender;
-	private String noOfRooms;
-	private int cost;
-	private String fbId;
-	private String notes;
-	private long userId;
-	private String apartmentName;
-	private String firstName;
-	private String lastName;
-	private String emailId;
-	private String phoneNumber;
-	private long addId;
-	private boolean userVisitedSw;
-	private String createDate;
-	private int universityId;
-	private String universityName;
-	private String univAcronym;
-	private String universityPhotoUrl;
-	private String city;
-	private String state;
-	private int zip;
-	private int apartmentId;
-	private Date postedTill;
-	private String addrLine;
+    private String vacancies;
+    private String gender;
+    private String noOfRooms;
+    private int cost;
+    private String fbId;
+    private String notes;
+    private long userId;
+    private String apartmentName;
+    private String firstName;
+    private String lastName;
+    private String emailId;
+    private String phoneNumber;
+    private long addId;
+    private boolean userVisitedSw;
+    private String createDate;
+    private int universityId;
+    private String universityName;
+    private String univAcronym;
+    private String universityPhotoUrl;
+    private String city;
+    private String state;
+    private int zip;
+    private int apartmentId;
+    private Date postedTill;
+    private String addrLine;
+    private String apartmentType;
 
-	public String getAptAddress() {
-		return addrLine;
-	}
+    public RAccommodationAdd(String vacancies, String gender, String noOfRooms, int cost, String fbId, String notes,
+                             long userId, String apartmentName, String firstName, String lastName, String emailId, String phoneNumber,
+                             long addId, boolean userVisitedSw, String createDate, List<String> apartmentPictureId, int universityId,
+                             String universityName, String universityPhotoUrl, String univAcronym, String city, String state, int zip,
+                             String addrLine, String apartmentType) {
+        super();
+        this.vacancies = vacancies;
+        this.gender = gender;
+        this.noOfRooms = noOfRooms;
+        this.cost = cost;
+        this.fbId = fbId;
+        this.notes = notes;
+        this.userId = userId;
+        this.apartmentName = apartmentName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.emailId = emailId;
+        this.phoneNumber = phoneNumber;
+        this.addId = addId;
+        this.userVisitedSw = userVisitedSw;
+        this.createDate = createDate;
+        this.addPhotoIds = apartmentPictureId;
+        this.universityId = universityId;
+        this.universityName = universityName;
+        this.universityPhotoUrl = universityPhotoUrl;
+        this.univAcronym = univAcronym;
+        this.city = city;
+        this.state = state;
+        this.zip = zip;
+        this.addrLine = addrLine;
+        this.apartmentType = apartmentType;
 
-	public void setAptAddress(String aptAddress) {
-		this.addrLine = aptAddress;
-	}
+    }
 
-	public RAccommodationAdd(String vacancies, String gender, String noOfRooms, int cost, String fbId, String notes,
-							 long userId, String apartmentName, String firstName, String lastName, String emailId, String phoneNumber,
-							 long addId, boolean userVisitedSw, String createDate, List<String> apartmentPictureId, int universityId,
-							 String universityName, String universityPhotoUrl, String univAcronym, String city, String state, int zip,
-							 String addrLine) {
-		super();
-		this.vacancies = vacancies;
-		this.gender = gender;
-		this.noOfRooms = noOfRooms;
-		this.cost = cost;
-		this.fbId = fbId;
-		this.notes = notes;
-		this.userId = userId;
-		this.apartmentName = apartmentName;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.emailId = emailId;
-		this.phoneNumber = phoneNumber;
-		this.addId = addId;
-		this.userVisitedSw = userVisitedSw;
-		this.createDate = createDate;
-		this.addPhotoIds = apartmentPictureId;
-		this.universityId = universityId;
-		this.universityName = universityName;
-		this.universityPhotoUrl = universityPhotoUrl;
-		this.univAcronym = univAcronym;
-		this.city = city;
-		this.state = state;
-		this.zip = zip;
-		this.addrLine = addrLine;
+    public RAccommodationAdd(String vacancies, String gender, String noOfRooms, int cost, String fbId, String notes,
+                             long userId, String apartmentName, String firstName, String lastName, String emailId, String phoneNumber,
+                             long addId, boolean userVisitedSw, String createDate, List<String> apartmentPictureId, int universityId,
+                             String universityName, String universityPhotoUrl, String univAcronym) {
+        super();
+        this.apartmentType = apartmentType;
+        this.vacancies = vacancies;
+        this.gender = gender;
+        this.noOfRooms = noOfRooms;
+        this.cost = cost;
+        this.fbId = fbId;
+        this.notes = notes;
+        this.userId = userId;
+        this.apartmentName = apartmentName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.emailId = emailId;
+        this.phoneNumber = phoneNumber;
+        this.addId = addId;
+        this.userVisitedSw = userVisitedSw;
+        this.createDate = createDate;
+        this.addPhotoIds = apartmentPictureId;
+        this.universityId = universityId;
+        this.universityName = universityName;
+        this.universityPhotoUrl = universityPhotoUrl;
+    }
 
-	}
+    public String getCity() {
+        return city;
+    }
 
-	public RAccommodationAdd(String vacancies, String gender, String noOfRooms, int cost, String fbId, String notes,
-							 long userId, String apartmentName, String firstName, String lastName, String emailId, String phoneNumber,
-							 long addId, boolean userVisitedSw, String createDate, List<String> apartmentPictureId, int universityId,
-							 String universityName, String universityPhotoUrl, String univAcronym) {
-		super();
-		this.vacancies = vacancies;
-		this.gender = gender;
-		this.noOfRooms = noOfRooms;
-		this.cost = cost;
-		this.fbId = fbId;
-		this.notes = notes;
-		this.userId = userId;
-		this.apartmentName = apartmentName;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.emailId = emailId;
-		this.phoneNumber = phoneNumber;
-		this.addId = addId;
-		this.userVisitedSw = userVisitedSw;
-		this.createDate = createDate;
-		this.addPhotoIds = apartmentPictureId;
-		this.universityId = universityId;
-		this.universityName = universityName;
-		this.universityPhotoUrl = universityPhotoUrl;
-		this.univAcronym = univAcronym;
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-	}
+    public String getState() {
+        return state;
+    }
 
-	public String getCity() {
-		return city;
-	}
+    public void setState(String state) {
+        this.state = state;
+    }
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+    public int getZip() {
+        return zip;
+    }
 
-	public String getState() {
-		return state;
-	}
+    public void setZip(int zip) {
+        this.zip = zip;
+    }
 
-	public void setState(String state) {
-		this.state = state;
-	}
+    public String getUnivAcronym() {
+        return univAcronym;
+    }
 
-	public int getZip() {
-		return zip;
-	}
+    public void setUnivAcronym(String univAcronym) {
+        this.univAcronym = univAcronym;
+    }
 
-	public void setZip(int zip) {
-		this.zip = zip;
-	}
+    public int getUniversityId() {
+        return universityId;
+    }
 
-	public String getUnivAcronym() {
-		return univAcronym;
-	}
+    public void setUniversityId(int universityId) {
+        this.universityId = universityId;
+    }
 
-	public void setUnivAcronym(String univAcronym) {
-		this.univAcronym = univAcronym;
-	}
+    public String getUniversityName() {
+        return universityName;
+    }
 
-	public int getUniversityId() {
-		return universityId;
-	}
+    public void setUniversityName(String universityName) {
+        this.universityName = universityName;
+    }
 
-	public void setUniversityId(int universityId) {
-		this.universityId = universityId;
-	}
+    private List<String> addPhotoIds = new ArrayList<String>();
 
-	public String getUniversityName() {
-		return universityName;
-	}
+    public List<String> getAddPhotoIds() {
+        return addPhotoIds;
+    }
 
-	public void setUniversityName(String universityName) {
-		this.universityName = universityName;
-	}
+    public void setAddPhotoIds(List<String> addPhotoIds) {
+        this.addPhotoIds = addPhotoIds;
+    }
 
-	private List<String> addPhotoIds = new ArrayList<String>();
+    public String getCreateDate() {
+        return createDate;
+    }
 
-	public List<String> getAddPhotoIds() {
-		return addPhotoIds;
-	}
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
+    }
 
-	public void setAddPhotoIds(List<String> addPhotoIds) {
-		this.addPhotoIds = addPhotoIds;
-	}
+    public boolean getUserVisitedSw() {
+        return userVisitedSw;
+    }
 
-	public String getCreateDate() {
-		return createDate;
-	}
+    public void setUserVisitedSw(boolean userVisitedSw) {
+        this.userVisitedSw = userVisitedSw;
+    }
 
-	public void setCreateDate(String createDate) {
-		this.createDate = createDate;
-	}
+    public RAccommodationAdd(long addId) {
+        this.addId = addId;
+    }
 
-	public boolean getUserVisitedSw() {
-		return userVisitedSw;
-	}
+    public String getFirstName() {
+        return this.firstName;
+    }
 
-	public void setUserVisitedSw(boolean userVisitedSw) {
-		this.userVisitedSw = userVisitedSw;
-	}
+    @XmlElement
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-	public RAccommodationAdd(long addId) {
-		this.addId = addId;
-	}
+    public String getLastName() {
+        return this.lastName;
+    }
 
-	public String getFirstName() {
-		return this.firstName;
-	}
+    @XmlElement
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-	@XmlElement
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    public String getEmailId() {
+        return this.emailId;
+    }
 
-	public String getLastName() {
-		return this.lastName;
-	}
+    @XmlElement
+    public void setEmailId(String emailId) {
+        this.emailId = emailId;
+    }
 
-	@XmlElement
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    public String getPhoneNumber() {
+        return this.phoneNumber;
+    }
 
-	public String getEmailId() {
-		return this.emailId;
-	}
+    @XmlElement
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
-	@XmlElement
-	public void setEmailId(String emailId) {
-		this.emailId = emailId;
-	}
+    public String getVacancies() {
+        return this.vacancies;
+    }
 
-	public String getPhoneNumber() {
-		return this.phoneNumber;
-	}
+    public RAccommodationAdd() {
+    }
 
-	@XmlElement
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
+    @XmlElement
+    public void setVacancies(String vacancies) {
+        this.vacancies = vacancies;
+    }
 
-	public String getVacancies() {
-		return this.vacancies;
-	}
+    public String getGender() {
+        return this.gender;
+    }
 
-	public RAccommodationAdd() {
-	}
+    @XmlElement
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 
-	@XmlElement
-	public void setVacancies(String vacancies) {
-		this.vacancies = vacancies;
-	}
+    public String getNoOfRooms() {
+        return this.noOfRooms;
+    }
 
-	public String getGender() {
-		return this.gender;
-	}
+    @XmlElement
+    public void setNoOfRooms(String noOfRooms) {
+        this.noOfRooms = noOfRooms;
+    }
 
-	@XmlElement
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
+    public int getCost() {
+        return this.cost;
+    }
 
-	public String getNoOfRooms() {
-		return this.noOfRooms;
-	}
+    @XmlElement
+    public void setCost(int cost) {
+        this.cost = cost;
+    }
 
-	@XmlElement
-	public void setNoOfRooms(String noOfRooms) {
-		this.noOfRooms = noOfRooms;
-	}
+    public String getFbId() {
+        return this.fbId;
+    }
 
-	public int getCost() {
-		return this.cost;
-	}
+    @XmlElement
+    public void setFbId(String fbId) {
+        this.fbId = fbId;
+    }
 
-	@XmlElement
-	public void setCost(int cost) {
-		this.cost = cost;
-	}
+    public String getNotes() {
+        return this.notes;
+    }
 
-	public String getFbId() {
-		return this.fbId;
-	}
+    @XmlElement
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
 
-	@XmlElement
-	public void setFbId(String fbId) {
-		this.fbId = fbId;
-	}
+    public long getUserId() {
+        return this.userId;
+    }
 
-	public String getNotes() {
-		return this.notes;
-	}
+    @XmlElement
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
 
-	@XmlElement
-	public void setNotes(String notes) {
-		this.notes = notes;
-	}
+    public long getAddId() {
+        return this.addId;
+    }
 
-	public long getUserId() {
-		return this.userId;
-	}
+    @XmlElement
+    public void setAddId(long addId) {
+        this.addId = addId;
+    }
 
-	@XmlElement
-	public void setUserId(long userId) {
-		this.userId = userId;
-	}
+    public String getApartmentName() {
+        return this.apartmentName;
+    }
 
-	public long getAddId() {
-		return this.addId;
-	}
+    @XmlElement
+    public void setApartmentName(String apartmentName) {
+        this.apartmentName = apartmentName;
+    }
 
-	@XmlElement
-	public void setAddId(long addId) {
-		this.addId = addId;
-	}
+    public String getUniversityPhotoUrl() {
+        return universityPhotoUrl;
+    }
 
-	public String getApartmentName() {
-		return this.apartmentName;
-	}
+    public void setUniversityPhotoUrl(String universityPhotoUrl) {
+        this.universityPhotoUrl = universityPhotoUrl;
+    }
 
-	@XmlElement
-	public void setApartmentName(String apartmentName) {
-		this.apartmentName = apartmentName;
-	}
+    public int getApartmentId() {
+        return apartmentId;
+    }
 
-	public String getUniversityPhotoUrl() {
-		return universityPhotoUrl;
-	}
+    public void setApartmentId(int apartmentId) {
+        this.apartmentId = apartmentId;
+    }
 
-	public void setUniversityPhotoUrl(String universityPhotoUrl) {
-		this.universityPhotoUrl = universityPhotoUrl;
-	}
+    public Date getPostedTill() {
+        return postedTill;
+    }
 
-	public int getApartmentId() {
-		return apartmentId;
-	}
+    public void setPostedTill(Date postedTill) {
+        this.postedTill = postedTill;
+    }
 
-	public void setApartmentId(int apartmentId) {
-		this.apartmentId = apartmentId;
-	}
+    public String getAddrLine() {
+        return addrLine;
+    }
 
-	public Date getPostedTill() {
-		return postedTill;
-	}
+    public void setAddrLine(String addrLine) {
+        this.addrLine = addrLine;
+    }
 
-	public void setPostedTill(Date postedTill) {
-		this.postedTill = postedTill;
-	}
+    public String getApartmentType() {
+        return apartmentType;
+    }
 
+    public void setApartmentType(String apartmentType) {
+        this.apartmentType = apartmentType;
+    }
+
+    public String getAptAddress() {
+        return addrLine;
+    }
+
+    public void setAptAddress(String aptAddress) {
+        this.addrLine = aptAddress;
+    }
 }

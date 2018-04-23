@@ -21,16 +21,8 @@
                 <p class="text-muted address">
                     <b>Mapple road, taxes North main road</b>
                 </p>
-              <!--  <p class="text-muted ">
-                    <b>Posted By: {{selectedAccommodationAdd?.firstName}}</b>
-                </p>
-
-                <p class="text-muted">
-                    <b>Posted On:</b>
-                    <label>{{selectedAccommodationAdd?.createDate}}</label>
-                </p> -->
                 <p class="text-muted address">
-                    <i class="fa fa-building"></i>On-Campus
+                    <i class="fa fa-building"></i>{{selectedAccommodationAdd?.apartmentType}}
                 </p>
                 <div *ngIf="isNumber(selectedAccommodationAdd?.noOfRooms[0])">
                     <p class="text-muted address">
@@ -81,7 +73,8 @@
                     </span>
                 </div>
                 <p class="text-muted small">
-                    Posted by:<b> {{selectedAccommodationAdd?.firstName}}</b> 
+                    Posted by:
+                    <b> {{selectedAccommodationAdd?.firstName}}</b>
                 </p>
 
                 <p class="text-muted small">

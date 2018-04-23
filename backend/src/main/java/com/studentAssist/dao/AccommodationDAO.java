@@ -125,17 +125,10 @@ public class AccommodationDAO extends AbstractDao {
 			int position) throws Exception {
 		List<AccommodationAdd> adds = null;
 
-		AccommodationAdd add = new AccommodationAdd();
-		Apartments apartment = new Apartments();
-		apartment.setApartmentName(apartmentName);
-		this.addAccommodationAddToApartment(apartment, add);
-		add.setGender(gender);
-		Example example = Example.create((Object) add);
-		// getCriteria(AccommodationAdd.class)
-		Criteria criteria = getCriteria(AccommodationAdd.class, "add").add((Criterion) example)
-				.setFetchMode("apartment", FetchMode.JOIN).createAlias("apartment", "a")
-				.add((Criterion) Restrictions.eq("university.universityId", universityId))
-				.add((Criterion) Restrictions.eq((String) "a.apartmentName", (Object) apartmentName));
+		Criteria criteria = getCriteria(AccommodationAdd.class, "add").setFetchMode("apartment", FetchMode.JOIN)
+				.createAlias("apartment", "a").add((Criterion) Restrictions.eq("university.universityId", universityId))
+				.add((Criterion) Restrictions.eq((String) "a.apartmentName", apartmentName))
+				.add(Restrictions.eq("add.gender", gender));
 
 		criteria.add(Restrictions.eq("add.delete_sw", false));
 		criteria.add(Restrictions.or(Restrictions.gt("add.postedTill", Utilities.getDate()),
@@ -165,31 +158,24 @@ public class AccommodationDAO extends AbstractDao {
 	public List<AccommodationAdd> getSimpleSearchAdds(String leftSpinner, String rightSpinner,
 			List<Integer> universityIds) throws Exception {
 
-		Apartments apt = new Apartments();
 		String secondParameter = "";
-		AccommodationAdd exampleAccAdd = new AccommodationAdd();
 		List list1 = new ArrayList<>();
 
 		List<AccommodationAdd> accommodationAddsList = new ArrayList<>();
 
 		if (SAConstants.APARTMENT_TYPE.equals(leftSpinner)) {
-			apt.setApartmentType(rightSpinner);
 			secondParameter = "a.apartmentType";
 		} else if (SAConstants.APARTMENT_NAME.equals(leftSpinner)) {
-			apt.setApartmentName(rightSpinner);
 			secondParameter = "a.apartmentName";
-		} else if (leftSpinner.equals("gender")) {
-			exampleAccAdd.setGender(rightSpinner);
 		}
 
-		this.addAccommodationAddToApartment(apt, exampleAccAdd);
-		Example example = Example.create((Object) exampleAccAdd);
-
 		for (int universityId : universityIds) {
-			Criteria criteria = getCriteria(AccommodationAdd.class, "add").add((Criterion) example);
+			Criteria criteria = getCriteria(AccommodationAdd.class, "add");
+
 			if (leftSpinner.equals("gender")) {
 				criteria.setFetchMode("apartment", FetchMode.SELECT).createAlias("apartment", "a")
-						.add(Restrictions.eq("a.university.universityId", universityId));
+						.add(Restrictions.eq("a.university.universityId", universityId))
+						.add(Restrictions.eq("add.gender", rightSpinner));
 			} else {
 				criteria.setFetchMode("apartment", FetchMode.SELECT).createAlias("apartment", "a")
 						.add(Restrictions.eq(secondParameter, rightSpinner)).createAlias("a.university", "b")
@@ -212,71 +198,6 @@ public class AccommodationDAO extends AbstractDao {
 		}
 		accommodationAddsList.addAll(list1);
 		lazyLoadAdds(accommodationAddsList);
-		return accommodationAddsList;
-	}
-
-	/**
-	 * 1. here apartment is name of join column in AccommodationAdd JOINS
-	 * Apartments table
-	 * 
-	 * @param leftSpinner
-	 * @param rightSpinner
-	 * @param session
-	 * @return
-	 */
-	public List<AccommodationAdd> getSimpleSearchAddsUnregisteredUser(String leftSpinner, String rightSpinner,
-			List<Universities> universities) throws Exception {
-
-		Apartments apt = new Apartments();
-		String secondParameter = "";
-		AccommodationAdd exampleAccAdd = new AccommodationAdd();
-		List list1 = new ArrayList<>();
-
-		List<AccommodationAdd> accommodationAddsList = new ArrayList<>();
-
-		if (SAConstants.APARTMENT_TYPE.equals(leftSpinner)) {
-			apt.setApartmentType(rightSpinner);
-			secondParameter = "a.apartmentType";
-		} else if (SAConstants.APARTMENT_NAME.equals(leftSpinner)) {
-			apt.setApartmentName(rightSpinner);
-			secondParameter = "a.apartmentName";
-		} else if (leftSpinner.equals("gender")) {
-			exampleAccAdd.setGender(rightSpinner);
-		}
-
-		this.addAccommodationAddToApartment(apt, exampleAccAdd);
-		Example example = Example.create((Object) exampleAccAdd);
-
-		// we want the join to Apartments table only for "Apt type" and "Apt
-		// Name"
-		for (Universities university : universities) {
-			Criteria criteria = getCriteria(AccommodationAdd.class, "add").add((Criterion) example);
-			if (leftSpinner.equals("gender")) {
-				criteria.setFetchMode("apartment", FetchMode.SELECT).createAlias("apartment", "a")
-						.add(Restrictions.eq("a.university.universityId", university.getUniversityId()));
-			} else {
-				criteria.setFetchMode("apartment", FetchMode.SELECT).createAlias("apartment", "a")
-						.add(Restrictions.eq(secondParameter, rightSpinner)).createAlias("a.university", "b")
-						.add(Restrictions.eq("b.universityId", university.getUniversityId()));
-
-			}
-			criteria.add(Restrictions.eq("add.delete_sw", false));
-			criteria.add(Restrictions.or(Restrictions.gt("add.postedTill", Utilities.getDate()),
-					Restrictions.isNull("add.postedTill")));
-
-			criteria.addOrder(Order.desc("add.datePosted"));
-			criteria.setFirstResult(0);
-			criteria.setMaxResults(SAConstants.PAGE_SIZE);
-			list1.addAll(criteria.list());
-
-			if (!list1.isEmpty() && SAConstants.APARTMENT_NAME.equals(leftSpinner)) {
-				break;
-			}
-
-		}
-		accommodationAddsList.addAll(list1);
-		lazyLoadAdds(accommodationAddsList);
-
 		return accommodationAddsList;
 	}
 
@@ -457,32 +378,23 @@ public class AccommodationDAO extends AbstractDao {
 	public List<AccommodationAdd> getSimpleSearchAddsPagination(String leftSpinner, String rightSpinner, int position,
 			int universityId) {
 
-		Apartments apt = new Apartments();
 		String secondParameter = "";
-		AccommodationAdd exampleAccAdd = new AccommodationAdd();
 		List simpleSearchAddsList = new ArrayList<>();
 
 		List<AccommodationAdd> accommodationAddsList = new ArrayList<>();
 
 		if (SAConstants.APARTMENT_TYPE.equals(leftSpinner)) {
-			apt.setApartmentType(rightSpinner);
 			secondParameter = "a.apartmentType";
 		} else if (SAConstants.APARTMENT_NAME.equals(leftSpinner)) {
-			apt.setApartmentName(rightSpinner);
 			secondParameter = "a.apartmentName";
-		} else if (leftSpinner.equals("gender")) {
-			exampleAccAdd.setGender(rightSpinner);
 		}
 
-		this.addAccommodationAddToApartment(apt, exampleAccAdd);
-		Example example = Example.create((Object) exampleAccAdd);
-
-		// we want the join to Apartments table only for "Apt type" and "Apt
-		// Name"
-		Criteria criteria = getCriteria(AccommodationAdd.class, "add").add((Criterion) example);
+		Criteria criteria = getCriteria(AccommodationAdd.class, "add");
 		if (leftSpinner.equals("gender")) {
 			criteria.setFetchMode("apartment", FetchMode.SELECT).createAlias("apartment", "a")
-					.add(Restrictions.eq("a.university.universityId", universityId));
+					.add(Restrictions.eq("a.university.universityId", universityId))
+					.add(Restrictions.eq("add.gender", rightSpinner));
+
 		} else {
 			criteria.setFetchMode("apartment", FetchMode.SELECT).createAlias("apartment", "a")
 					.add(Restrictions.eq(secondParameter, rightSpinner)).createAlias("a.university", "b")

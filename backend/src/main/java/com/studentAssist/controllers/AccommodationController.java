@@ -1,6 +1,5 @@
 package com.studentAssist.controllers;
 
-
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -64,8 +63,7 @@ public class AccommodationController extends AbstractController {
 		AccommodationAdd add = mapper.map(rAccommodationAdd, AccommodationAdd.class);
 		Users user = mapper.map(rAccommodationAdd, Users.class);
 
-		return null;
-//		return accommodationService.createAccommodationAddFromFacebook(add, user, rAccommodationAdd.getApartmentId());
+		return accommodationService.createAccommodationAddFromFacebook(add, user, rAccommodationAdd.getApartmentId());
 
 	}
 
@@ -128,6 +126,7 @@ public class AccommodationController extends AbstractController {
 
 	/**
 	 * Pagination for returning additional accommodation Adds
+	 * 
 	 * @param request
 	 * @return
 	 * @throws Exception
@@ -212,8 +211,8 @@ public class AccommodationController extends AbstractController {
 
 	@RequestMapping(method = RequestMethod.POST, value = "/getSimpleSearchAdds", headers = {
 			"content-type=application/json" }, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public List<UniversityAccommodationDTO> getSimpleSearchAdds(
-			@RequestBody AccommodationSearchDTO accommodationSearch, HttpServletRequest request) throws Exception {
+	public List<UniversityAccommodationDTO> getSimpleSearchAdds(@RequestBody AccommodationSearchDTO accommodationSearch,
+			HttpServletRequest request) throws Exception {
 
 		return accommodationService.getSimpleSearchAdds(accommodationSearch, getUserFromToken(request));
 	}
