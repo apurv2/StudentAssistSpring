@@ -30,4 +30,5 @@ export class AccommodationAdd {
     feature: string;
     stage: string;
     apartmentType: string;
+    addrLine : string;
 }

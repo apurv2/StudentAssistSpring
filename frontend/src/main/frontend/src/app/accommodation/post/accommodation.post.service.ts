@@ -12,7 +12,7 @@ export class PostAccommodationService {
             .map(res => res.json());
     }
 
-    postAccommodation(url, accommodationAdd: AccommodationAdd ) {
+    postAccommodation(url, accommodationAdd: AccommodationAdd) {
         console.log(accommodationAdd.postedTill);
         return this.http.put(url, accommodationAdd)
             .map(res => res.json());
@@ -21,6 +21,11 @@ export class PostAccommodationService {
     addApartment(url, params) {
         return this.http.post(url, params)
             .map(res => res.text());
+    }
+
+    getUniversityDetails(url) {
+        return this.http.get(url)
+            .map(res => res.json());
     }
 
 }

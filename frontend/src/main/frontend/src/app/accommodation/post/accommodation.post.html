@@ -40,24 +40,23 @@
 
                             <div class="form-group col-md-6">
                                 <mat-form-field>
-                                    <mat-select placeholder="Gender" [(ngModel)]="genderSpinnerSelectedItem.code" (ngModelChange)="spinnerClick1($event)" [ngModelOptions]="{standalone: true}"
-                                        required>
+                                    <mat-select placeholder="Gender" [(ngModel)]="genderSpinnerSelectedItem.code" [ngModelOptions]="{standalone: true}" required>
                                         <mat-option *ngFor="let spinnerValue of genderSpinnerValues" [value]="spinnerValue?.code">{{spinnerValue.description}}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </div>
                             <div class="form-group col-md-6">
                                 <mat-form-field>
-                                    <mat-select placeholder="No Of Rooms" [(ngModel)]="noOfRoomsSpinnerSelectedItem.code" (ngModelChange)="spinnerClick1($event)"
-                                        [ngModelOptions]="{standalone: true}" required>
+                                    <mat-select placeholder="No Of Rooms" [(ngModel)]="noOfRoomsSpinnerSelectedItem.code" [ngModelOptions]="{standalone: true}"
+                                        required>
                                         <mat-option *ngFor="let spinnerValue of noOfRoomsSpinnerValues" [value]="spinnerValue?.code">{{spinnerValue.description}}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </div>
                             <div class="form-group col-md-6">
                                 <mat-form-field>
-                                    <mat-select placeholder="Vacancies" [(ngModel)]="vacanciesSpinnerSelectedItem.code" (ngModelChange)="spinnerClick1($event)"
-                                        [ngModelOptions]="{standalone: true}" required>
+                                    <mat-select placeholder="Vacancies" [(ngModel)]="vacanciesSpinnerSelectedItem.code" [ngModelOptions]="{standalone: true}"
+                                        required>
                                         <mat-option *ngFor="let spinnerValue of vacanciesSpinnerValues" [value]="spinnerValue?.code">{{spinnerValue.description}}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
@@ -65,8 +64,8 @@
                             <div class="form-group col-md-6">
                                 <mat-form-field>
                                     <span matPrefix>$&nbsp;</span>
-                                    <input type="number" pattern="\d*" size="4" matInput placeholder="Cost" [formControl]="numberFormControl" [(ngModel)]="cost" [attr.maxLength]="4"
-                                        required>
+                                    <input type="number" pattern="\d*" size="4" matInput placeholder="Cost" [formControl]="numberFormControl" [(ngModel)]="cost"
+                                        [attr.maxLength]="4" required>
                                     <mat-error *ngIf="numberFormControl.invalid && !numberFormControl.hasError('required')">
                                         Please enter a valid amount between 0 to 2000$
                                     </mat-error>
@@ -115,11 +114,11 @@
                                 </li>
                             </ul>
                             <a href="javascript:void(0)" (click)="deleteAllPhotos()">
-                            <i *ngIf="photos?.length>0" aria-hidden="true" class="fa fa-trash"></i>
+                                <i *ngIf="photos?.length>0" aria-hidden="true" class="fa fa-trash"></i>
                             </a>
                             <div class="form-group col-md-4 col-md-push-8">
                                 <mat-spinner [diameter]="40" *ngIf="loading"></mat-spinner>
-                                <button *ngIf="!loading" type="submit" class="btn primary-btn btn-lg btn-block" (click)="submit()" [disabled]="numberFormControl.invalid || dateAvailableTill.invalid">Save post</button>
+                                <button *ngIf="!loading" type="submit" class="btn primary-btn btn-lg btn-block" (click)="submit()" [disabled]="numberFormControl.invalid || dateAvailableTill.invalid">{{saveOrUpdate}}</button>
                             </div>
                         </form>
                     </div>

@@ -112,6 +112,12 @@ export const environment = {
   noDataGif: '',
   getAccommodationNotifications: 'profile/getAccommodationNotifications',
   getRecentlyViewedAdds: 'profile/getRecentlyViewed',
-  searchLearned: 'searchLearned'
+  searchLearned: 'searchLearned',
+  edtAddId: 'editAddId',
+  editUnivId: 'editUnivId',
+  getUniversityDetails: 'profile/getUniversityDetails',
+  savePost: "Save Post",
+  updatePost: "Update Post",
+  editAccommodationAdd: 'profile/editAccommodationAdd'
 
 };

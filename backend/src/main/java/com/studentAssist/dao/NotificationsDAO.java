@@ -150,20 +150,16 @@ public class NotificationsDAO extends AbstractDao {
 		if (!notificationSet.isEmpty()) {
 			PushNotification pushNotification = new PushNotification();
 
-			pushNotification
-					.processData(
-							new RAccommodationAdd(advertisement.getVacancies(), advertisement.getGender(),
-									advertisement.getNoOfRooms(), advertisement.getCost(), advertisement.getFbId(),
-									advertisement.getNotes(), user.getUserId(), apartmentName, user.getFirstName(),
-									user.getLastName(), user.getEmail(), user.getPhoneNumber(),
-									advertisement.getAddId(), false,
-									new SimpleDateFormat("dd MMM").format(advertisement.getDatePosted()),
-									advertisement.getAddPhotoIds(),
-									advertisement.getApartment().getUniversity().getUniversityId(),
-									advertisement.getApartment().getUniversity().getUniversityName(),
-									advertisement.getApartment().getUniversity().getUnivAcronym(), advertisement
-											.getApartment().getUniversity().getUniversityPhotos().get(0).getPhotoUrl()),
-							notificationSet);
+			pushNotification.processData(new RAccommodationAdd(advertisement.getVacancies(), advertisement.getGender(),
+					advertisement.getNoOfRooms(), advertisement.getCost(), advertisement.getFbId(),
+					advertisement.getNotes(), user.getUserId(), apartmentName, user.getFirstName(), user.getLastName(),
+					user.getEmail(), user.getPhoneNumber(), advertisement.getAddId(), false,
+					new SimpleDateFormat("dd MMM").format(advertisement.getDatePosted()),
+					advertisement.getAddPhotoIds(), advertisement.getApartment().getUniversity().getUniversityId(),
+					advertisement.getApartment().getUniversity().getUniversityName(),
+					advertisement.getApartment().getUniversity().getUnivAcronym(),
+					advertisement.getApartment().getUniversity().getUniversityPhotos().get(0).getPhotoUrl(),
+					advertisement.getApartment().getId(), advertisement.getPostedTill()), notificationSet);
 		}
 
 	}

@@ -130,4 +130,12 @@ export class AddDetails {
         return false;
     }
 
+    editCLicked() {
+
+        this.router.navigate(['/post/', {
+            editAddId: this.selectedAccommodationAdd.addId,
+            editUnivId: this.selectedAccommodationAdd.universityId
+        }]);
+    }
+
 }
