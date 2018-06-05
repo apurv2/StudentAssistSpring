@@ -513,8 +513,11 @@ public class AccommodationDAO extends AbstractDao {
 
     }
 
-    public String updateAccommodationAdd(AccommodationAdd add) {
-        saveOrUpdate(add);
+    public String updateAccommodationAdd(AccommodationAdd advertisement, int apartmentId) {
+        Apartments apartment = getByKey(Apartments.class, apartmentId);
+        this.addAccommodationAddToApartment(apartment, advertisement);
+        addUniversityToAdd(apartment.getUniversity(), advertisement);
+        saveOrUpdate(advertisement);
         return SAConstants.RESPONSE_SUCCESS;
     }
 }

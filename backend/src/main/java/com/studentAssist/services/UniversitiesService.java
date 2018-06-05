@@ -109,9 +109,11 @@ public class UniversitiesService {
 
     }
 
-    public List<String> getAllUniversityNames() {
+    public List<RUniversity> getAllUniversities() {
 
-        return universitiesDAO.getAllUniversityNames();
+        List<RUniversity> univs = new ArrayList<>();
+        universitiesDAO.getAllUniversities().stream().forEach(univ -> univs.add(mapper.map(univ, RUniversity.class)));
+        return univs;
     }
 
     public List<RUniversity> getUniversityNamesWithId(Users user) {

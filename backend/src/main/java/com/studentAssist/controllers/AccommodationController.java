@@ -206,7 +206,7 @@ public class AccommodationController extends AbstractController {
     @RequestMapping(method = RequestMethod.GET, value = "/getAccommodationFromAddId/{addId}")
     public RAccommodationAdd getAccommodationFromAddId(@PathVariable int addId, HttpServletRequest request)
             throws Exception {
-
+        System.out.println("apurv first time");
         return accommodationService.getAccommodationFromId(addId);
     }
 

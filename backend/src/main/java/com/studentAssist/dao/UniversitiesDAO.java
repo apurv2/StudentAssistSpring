@@ -103,14 +103,8 @@ public class UniversitiesDAO extends AbstractDao {
     }
 
     @SuppressWarnings("unchecked")
-    public List<String> getAllUniversityNames() {
-
-        List<String> universities;
-
-        universities = getCriteria(Universities.class).setProjection(Projections.property("universityName")).list();
-
-        return universities;
-
+    public List<Universities> getAllUniversities() {
+        return getSession().createQuery("from Universities").list();
     }
 
     @SuppressWarnings("unchecked")

@@ -22,11 +22,9 @@ public class UniversitiesController extends AbstractController {
      *
      * @return List<String>
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/getAllUniversityNames")
-    public List<String> getAllUniversityNames() {
-
-        return universitiesService.getAllUniversityNames();
-
+    @RequestMapping(method = RequestMethod.GET, value = "/universities/all")
+    public List<RUniversity> getAllUniversities() {
+        return universitiesService.getAllUniversities();
     }
 
     /**
