@@ -124,7 +124,6 @@ export const environment = {
   getUniversityDetails: 'profile/getUniversityDetails',
   savePost: "Save Post",
   updatePost: "Update Post",
-  editAccommodationAdd:'profile/editAccommodationAdd'
-
-
+  editAccommodationAdd: 'profile/editAccommodationAdd',
+  allUniversities: '/universities/all'
 }

@@ -6,6 +6,7 @@ import { AdvancedSearch } from './accommodation/advancedSearch/accommodation.adv
 import { AddDetails } from './accommodation/shared/adDetails/accommodation.details.add';
 import { AccommodationNotifications } from './notifications/accommodation/notifications.accommodation';
 import { RecentlyViewedAccommodations } from './accommodation/recentlyViewed/accommodation.recently.viewed';
+import { SimpleSearchGuard } from './shared/utilities/simple.search.guard';
 
 const appRoutes: Routes = [
     {
@@ -14,7 +15,8 @@ const appRoutes: Routes = [
     },
     {
         path: 'simple-search',
-        component: SimpleSearch
+        component: SimpleSearch,
+        canDeactivate: [SimpleSearchGuard]
     }, {
         path: 'post',
         component: PostAccommodation

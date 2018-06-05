@@ -118,6 +118,7 @@ export class PostAccommodation implements ErrorHandler {
     initializeSpinners() {
 
         this.aptNameSpinnerSelectedItem = new AccommodationDropdown();
+        this.universityNameSpinnerSelectedItem = new AccommodationDropdown();
 
         this.aptTypeSpinnerValues = environment.apartmentTypes;
         this.genderSpinnerValues = environment.GENDER_CODES;
@@ -137,38 +138,29 @@ export class PostAccommodation implements ErrorHandler {
                 editUnivId = (params[environment.editUnivId]);
             });
 
-        let temp: University[] = this.sharedDataService.getUserSelectedUniversitiesList();
-        let universities = Object.assign([], temp);
-
         if (editAddId && editUnivId > 0) {
             this.saveOrUpdate = environment.updatePost;
-            let univUrl = environment.getUniversityDetails + "/" + editUnivId;
             Observable.forkJoin(this.addDetailService.getAddDetailsFromAddId(editAddId),
-                this.postAccommodationService.getUniversityDetails(univUrl))
+                this.getAllUniversities())
                 .subscribe(response => {
                     this.isUpdate = true;
                     let accommodationAdd: AccommodationAdd = response[0];
-                    let university: University = response[1];
+                    let universities: University[] = response[1];
 
-                    if (universities == null) {
-                        universities = new Array();
-                    }
-                    let univIndex: number = universities.findIndex(univ => university.universityId == univ.universityId);
+                    let univIndex: number = universities.findIndex(univ => editUnivId == univ.universityId);
                     this.populateEditAdd(accommodationAdd, universities);
-                    if (univIndex > 0) {
-                        this.initializeUniversityNames(universities, univIndex);
-                    } else {
-                        universities.push(university);
-                        this.initializeUniversityNames(universities, universities.length - 1);
-                    }
-
+                    this.initializeUniversityNames(universities, univIndex);
 
                 });
         }
         else {
-            this.initializtApartmentNames(universities).subscribe();
+
+            this.getAllUniversities()
+                .flatMap(universities => {
+                    this.initializeUniversityNames(universities, 0);
+                    return this.initializtApartmentNames(universities)
+                }).subscribe();
         }
-        this.initializeUniversityNames(universities, 0);
     }
 
     initializeUniversityNames(universities: University[], position: number) {
@@ -369,7 +361,7 @@ export class PostAccommodation implements ErrorHandler {
             .afterClosed()
             .filter((apartmentInfo: Apartment) => apartmentInfo != null)
             .flatMap((apartmentInfo: Apartment) => this.postAccommodationService.addApartment(environment.addNewApartment, apartmentInfo))
-            .filter(response => parseInt(response) > 0)
+            .filter(apartmentId => parseInt(apartmentId) > 0)
             .switchMap(apartmentId => this.initializtApartmentNames(this.sharedDataService.getUserSelectedUniversitiesList(), +apartmentId))
             .subscribe(() => {
                 this.showAddApartment = false
@@ -427,5 +419,9 @@ export class PostAccommodation implements ErrorHandler {
     handleError(error) {
         // exception occured in some service class method.
         console.log('Error in MyErrorhandler - %s', error);
+    }
+
+    getAllUniversities() {
+        return this.postAccommodationService.getUniversityDetails(environment.allUniversities)
     }
 }

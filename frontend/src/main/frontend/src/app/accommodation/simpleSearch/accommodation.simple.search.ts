@@ -10,6 +10,8 @@ import { Subscription } from "rxjs/Subscription";
 import { LoginResponse } from "ngx-facebook/dist/esm/models/login-response";
 import { UserService } from "app/shared/userServices/user.service";
 import { SimpleSearchAddsFilters } from "./filters/simple.search.filters";
+import { SimpleSearchAddsList } from "./adsList/simple.search.adds.list";
+import { PlatformLocation } from "@angular/common";
 
 
 @Component({
@@ -24,14 +26,17 @@ export class SimpleSearch {
     accommodationAddSubscription: Subscription;
     loadedFirstTime: boolean = false;
     noData: boolean = false;
+    backPressed: boolean = false;
 
     @ViewChild('filters') filters: SimpleSearchAddsFilters;
+    @ViewChild('simpleSearchList') simpleSearchList: SimpleSearchAddsList;
 
     constructor(private simpleSearchService: SimpleSearchService,
         private facebookService: FacebookService,
         private sharedDataservice: SharedDataService,
-        private userService: UserService) {
-
+        private userService: UserService,
+        private location: PlatformLocation) {
+        location.onPopState(() => this.backPressed = true);
     }
     ngOnInit() {
         this.subscribeToAccommodationAddsFilters();
@@ -63,6 +68,7 @@ export class SimpleSearch {
     getSimpleSearchAdds(filters: AccommodationSearchModel): Observable<any> {
         return this.simpleSearchService.getSimpleSearchAdds(filters);
     }
+
     ngOnDestroy() {
 
         this.accommodationAddSubscription.unsubscribe();

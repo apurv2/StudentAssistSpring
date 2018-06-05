@@ -28,6 +28,7 @@ export class SimpleSearchAddsList {
     filters: SimpleSearchAddsFilters;
     selectedItemId: number;
     timerObservable: Subscription;
+    showingDetails: boolean = false;
 
 
     constructor(private sharedDataService: SharedDataService,
@@ -40,7 +41,10 @@ export class SimpleSearchAddsList {
 
     ngOnChanges() {
         if (this.accommodationSearchResults != null && this.accommodationSearchResults.length > 0) {
-            this.addClick(this.accommodationSearchResults[0].accommodationAdds[0]);
+
+            if (window.innerWidth > 767) {
+                this.addClick(this.accommodationSearchResults[0].accommodationAdds[0]);
+            }
 
             this.timerObservable = Observable
                 .interval(300)
@@ -58,7 +62,6 @@ export class SimpleSearchAddsList {
 
 
     addClick(accommodationAdd: AccommodationAdd) {
-
         if (!accommodationAdd.userVisitedSw) {
             this.adsListService.setUserVisitedAdd(accommodationAdd)
                 .subscribe(e => {
@@ -69,6 +72,7 @@ export class SimpleSearchAddsList {
         this.sharedDataService.emitAccommodationAdd(accommodationAdd);
 
         if (window.innerWidth < 767) {
+            this.showingDetails = true;
             document.getElementById("detailCard").style.display = 'block';
             document.getElementById("simpleSearchList").style.display = 'none';
         }
@@ -96,24 +100,18 @@ export class SimpleSearchAddsList {
             });
     }
 
-    @HostListener('window:popstate', ['$event'])
-    onPopState(event) {
-
-        event.preventDefault();
-        event.stopPropagation();
+    showList() {
 
         if (window.innerWidth < 767) {
+            this.showingDetails = false;
             document.getElementById("detailCard").style.display = 'none';
             document.getElementById("simpleSearchList").style.display = 'block';
         }
-        console.log('Back button pressed');
-
-        return false;
     }
 
     ngOnDestroy() {
-        if(this.timerObservable!=null)
-        this.timerObservable.unsubscribe();
+        if (this.timerObservable != null)
+            this.timerObservable.unsubscribe();
     }
 
 }
