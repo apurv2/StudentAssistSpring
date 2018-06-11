@@ -60,15 +60,16 @@ export const environment = {
   userSelectedUnivs: 'userSelectedUnivs',
   getAllApartmentsWithType: 'getAllApartmentsWithType',
   getAdvancedSearchAdds: 'getAdvancedSearchAdds',
-  noOfRooms: [{ code: "	1 bhk/1 bath	", description: "	1 bhk/1 bath	" },
-  { code: "1 bhk/2 bath", description: "1 bhk/2 bath" },
-  { code: "2 bhk/1 bath", description: "2 bhk/1 bath" },
-  { code: "2 bhk/2 bath", description: "2 bhk/2 bath" },
-  { code: "3 bhk/1 bath", description: "3 bhk/1 bath" },
-  { code: "3 bhk/2 bath", description: "3 bhk/2 bath" },
-  { code: "3 bhk/3 bath", description: "3 bhk/3 bath" },
-  { code: "Shared	", description: "Shared" },
-  { code: "Other	", description: "Other" }],
+  noOfRooms: [
+    { code: "1 bhk/1 bath", description: "1 bhk/1 bath" },
+    { code: "1 bhk/2 bath", description: "1 bhk/2 bath" },
+    { code: "2 bhk/1 bath", description: "2 bhk/1 bath" },
+    { code: "2 bhk/2 bath", description: "2 bhk/2 bath" },
+    { code: "3 bhk/1 bath", description: "3 bhk/1 bath" },
+    { code: "3 bhk/2 bath", description: "3 bhk/2 bath" },
+    { code: "3 bhk/3 bath", description: "3 bhk/3 bath" },
+    { code: "Shared	", description: "Shared" },
+    { code: "Other	", description: "Other" }],
   vacancies:
     [{ code: "1", description: "1" },
     { code: "2", description: "2" },
@@ -118,6 +119,6 @@ export const environment = {
   getUniversityDetails: 'profile/getUniversityDetails',
   savePost: "Save Post",
   updatePost: "Update Post",
-  editAccommodationAdd: 'profile/editAccommodationAdd'
-
+  editAccommodationAdd: 'profile/editAccommodationAdd',
+  allUniversities: '/universities/all'
 };
