@@ -14,10 +14,7 @@ import org.springframework.stereotype.Service;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class AccommodationService {
@@ -135,7 +132,7 @@ public class AccommodationService {
 
         List<RAccommodationAdd> accommodationAdds = getRAccommodationAdds(simpleSearchAdds, userVisitedAdds, 2);
 
-        Map<Integer, UniversityAccommodationDTO> perUnivListing = new HashMap<Integer, UniversityAccommodationDTO>();
+        Map<Integer, UniversityAccommodationDTO> perUnivListing = new HashMap<>();
 
         for (RAccommodationAdd add : accommodationAdds) {
 
@@ -145,7 +142,7 @@ public class AccommodationService {
                 univAdd.getAccommodationAdds().add(add);
 
             } else {
-                List<RAccommodationAdd> addsList = new ArrayList<RAccommodationAdd>();
+                List<RAccommodationAdd> addsList = new ArrayList<>();
                 UniversityAccommodationDTO univAcc = new UniversityAccommodationDTO();
 
                 addsList.add(add);
@@ -217,7 +214,7 @@ public class AccommodationService {
         return accommmodationDAO.setUserVisitedAdds(userVisitedAdds);
     }
 
-    public List<Long> getUserVisitedAdds(Users user) throws Exception {
+    private List<Long> getUserVisitedAdds(Users user) throws Exception {
 
         return accommmodationDAO.getUserVisitedAdds(user);
 
@@ -243,11 +240,13 @@ public class AccommodationService {
     public List<RAccommodationAdd> getRAccommodationAdds(List<AccommodationAdd> accommodationAdds, List<Long> addIds,
                                                          int photoPriority) {
 
-        List<RAccommodationAdd> rAdds = new ArrayList<RAccommodationAdd>();
+        List<RAccommodationAdd> rAdds = new ArrayList<>();
+        Set<Long> addIdsSet = new HashSet<>();
+        if (addIds != null)
+            addIdsSet.addAll(addIds);
 
         for (AccommodationAdd add : accommodationAdds) {
 
-            System.out.println("apurv here hereeererere");
             if (add.getNoOfRooms() != null) {
                 add.setNoOfRooms(add.getNoOfRooms().replaceAll("\\s+", ""));
             }
@@ -257,55 +256,23 @@ public class AccommodationService {
 
             if (photoPriority != -1) {
                 universityPhoto = photos.stream().filter(photo -> photo.getPhotoPriority() == photoPriority).findFirst()
-                        .map(photo -> photo.getPhotoUrl()).orElse(null);// get();
-
+                        .map(UniversityPhotos::getPhotoUrl).orElse(null);
             }
+            boolean userVisited = addIdsSet.contains(add.getAddId());
 
             Users user = add.getUser();
-            if (addIds != null) {
-
-                if (addIds.contains(add.getAddId())) {
-                    rAdds.add(new RAccommodationAdd(add.getVacancies(), add.getGender(), add.getNoOfRooms(),
-                            add.getCost(), add.getFbId(), add.getNotes(), user.getUserId(),
-                            add.getApartment().getApartmentName(), user.getFirstName(), user.getLastName(),
-                            user.getEmail(), user.getPhoneNumber(), add.getAddId(), true,
-                            new SimpleDateFormat("dd MMM").format(add.getDatePosted()), add.getAddPhotoIds(),
-                            add.getApartment().getUniversity().getUniversityId(),
-                            add.getApartment().getUniversity().getUniversityName(), universityPhoto,
-                            add.getApartment().getUniversity().getUnivAcronym(), add.getApartment().getCity(),
-                            add.getApartment().getState(), add.getApartment().getZip(),
-                            add.getApartment().getAddr_line(),
-                            SAConstants.apartmentTypeCodeMap.get(add.getApartment().getApartmentType()),
-                            add.getApartment().getId(), add.getPostedTill()));
-                } else {
-                    rAdds.add(new RAccommodationAdd(add.getVacancies(), add.getGender(), add.getNoOfRooms(),
-                            add.getCost(), add.getFbId(), add.getNotes(), user.getUserId(),
-                            add.getApartment().getApartmentName(), user.getFirstName(), user.getLastName(),
-                            user.getEmail(), user.getPhoneNumber(), add.getAddId(), false,
-                            new SimpleDateFormat("dd MMM").format(add.getDatePosted()), add.getAddPhotoIds(),
-                            add.getApartment().getUniversity().getUniversityId(),
-                            add.getApartment().getUniversity().getUniversityName(), universityPhoto,
-                            add.getApartment().getUniversity().getUnivAcronym(), add.getApartment().getCity(),
-                            add.getApartment().getState(), add.getApartment().getZip(),
-                            add.getApartment().getAddr_line(),
-                            SAConstants.apartmentTypeCodeMap.get(add.getApartment().getApartmentType()),
-                            add.getApartment().getId(), add.getPostedTill()));
-                }
-            } else {
-
-                rAdds.add(new RAccommodationAdd(add.getVacancies(), add.getGender(), add.getNoOfRooms(), add.getCost(),
-                        add.getFbId(), add.getNotes(), user.getUserId(), add.getApartment().getApartmentName(),
-                        user.getFirstName(), user.getLastName(), user.getEmail(), user.getPhoneNumber(), add.getAddId(),
-                        false, new SimpleDateFormat("dd MMM").format(add.getDatePosted()), add.getAddPhotoIds(),
-                        add.getApartment().getUniversity().getUniversityId(),
-                        add.getApartment().getUniversity().getUniversityName(), universityPhoto,
-                        add.getApartment().getUniversity().getUnivAcronym(), add.getApartment().getCity(),
-                        add.getApartment().getState(), add.getApartment().getZip(), add.getApartment().getAddr_line(),
-                        SAConstants.apartmentTypeCodeMap.get(add.getApartment().getApartmentType()),
-                        add.getApartment().getId(), add.getPostedTill()));
-
-            }
-
+            rAdds.add(new RAccommodationAdd(add.getVacancies(), add.getGender(), add.getNoOfRooms(),
+                    add.getCost(), add.getFbId(), add.getNotes(), user.getUserId(),
+                    add.getApartment().getApartmentName(), user.getFirstName(), user.getLastName(),
+                    user.getEmail(), user.getPhoneNumber(), add.getAddId(), userVisited,
+                    new SimpleDateFormat("dd MMM").format(add.getDatePosted()), add.getAddPhotoIds(),
+                    add.getApartment().getUniversity().getUniversityId(),
+                    add.getApartment().getUniversity().getUniversityName(), universityPhoto,
+                    add.getApartment().getUniversity().getUnivAcronym(), add.getApartment().getCity(),
+                    add.getApartment().getState(), add.getApartment().getZip(),
+                    add.getApartment().getAddr_line(),
+                    SAConstants.apartmentTypeCodeMap.get(add.getApartment().getApartmentType()),
+                    add.getApartment().getId(), add.getPostedTill()));
         }
 
         return rAdds;
@@ -360,8 +327,6 @@ public class AccommodationService {
     }
 
     public RAccommodationAdd getAccommodationFromId(int addId) {
-        System.out.println("apurv came here second place");
-
         List<AccommodationAdd> adds = new ArrayList<>();
         adds.add(accommmodationDAO.getAccommodationFromId(addId));
 
@@ -376,6 +341,10 @@ public class AccommodationService {
 
         AccommodationAdd dbAdd = accommmodationDAO.getAccommodationFromId(add.getAddId());
         dbAdd = mapper.map(add, AccommodationAdd.class);
+        add.setUser(dbAdd.getUser());
+        add.setApartment(dbAdd.getApartment());
+        add.setUniversity(dbAdd.getUniversity());
+
         return accommmodationDAO.updateAccommodationAdd(dbAdd, apartmentId);
     }
 }

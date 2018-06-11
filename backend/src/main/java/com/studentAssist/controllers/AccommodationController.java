@@ -91,7 +91,6 @@ public class AccommodationController extends AbstractController {
     @RequestMapping(method = RequestMethod.GET, value = "profile/getUserPosts")
     public List<RAccommodationAdd> getUserPosts(@RequestParam("position") int position, HttpServletRequest request)
             throws Exception {
-
         return accommodationService.getUserPosts(getUserFromRequest(request).getUserId(), position);
     }
 
@@ -206,7 +205,6 @@ public class AccommodationController extends AbstractController {
     @RequestMapping(method = RequestMethod.GET, value = "/getAccommodationFromAddId/{addId}")
     public RAccommodationAdd getAccommodationFromAddId(@PathVariable int addId, HttpServletRequest request)
             throws Exception {
-        System.out.println("apurv first time");
         return accommodationService.getAccommodationFromId(addId);
     }
 

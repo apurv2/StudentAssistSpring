@@ -1,19 +1,17 @@
 package com.studentAssist.interceptor;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
-
+import com.studentAssist.entities.Users;
+import com.studentAssist.util.FBGraph;
+import com.studentAssist.util.SAConstants;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.studentAssist.entities.Users;
-import com.studentAssist.util.FBGraph;
-import com.studentAssist.util.SAConstants;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponseWrapper;
+import java.io.IOException;
 
 @Configuration
 public class ExecuteInterceptor extends HandlerInterceptorAdapter {

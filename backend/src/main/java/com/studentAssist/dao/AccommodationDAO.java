@@ -1,40 +1,21 @@
 
 package com.studentAssist.dao;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.studentAssist.entities.*;
+import com.studentAssist.response.AccommodationSearchDTO;
+import com.studentAssist.util.SAConstants;
+import com.studentAssist.util.Utilities;
 import org.apache.commons.lang.StringUtils;
-import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
-import org.hibernate.Hibernate;
-import org.hibernate.Query;
-import org.hibernate.SQLQuery;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Example;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
-import org.hibernate.criterion.Subqueries;
+import org.hibernate.*;
+import org.hibernate.criterion.*;
 import org.hibernate.type.StandardBasicTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.studentAssist.entities.AccommodationAdd;
-import com.studentAssist.entities.Apartments;
-import com.studentAssist.entities.NotificationSettings;
-import com.studentAssist.entities.Universities;
-import com.studentAssist.entities.UserAccommodationNotifications;
-import com.studentAssist.entities.UserVisitedAdds;
-import com.studentAssist.entities.Users;
-import com.studentAssist.response.AccommodationSearchDTO;
-import com.studentAssist.util.SAConstants;
-import com.studentAssist.util.Utilities;
-
-import javassist.bytecode.stackmap.TypeData.ClassName;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 @Transactional
@@ -46,9 +27,8 @@ public class AccommodationDAO extends AbstractDao {
     /**
      * @param user
      * @param advertisement
-     * @param apartmentName
      * @return
-     * @throws Exception
+     * @throws Exception 
      */
     public String createAccommodationAddFromFacebook(Users user, AccommodationAdd advertisement, int apartmentId)
             throws Exception {
@@ -90,7 +70,7 @@ public class AccommodationDAO extends AbstractDao {
 
     public List<AccommodationAdd> getUserPosts(long userId, int position) throws Exception {
         Query query = getSession().createQuery("from AccommodationAdd where user.userId=" + userId
-                + " and delete_sw= 0 and (postedTill > sysdate()" + " or postedTill is null)");
+                + " and delete_sw= 0 and (postedTill > sysdate()" + " or postedTill is null) order by datePosted desc");
 
         // for pagination
         query.setFirstResult(position);
@@ -151,7 +131,6 @@ public class AccommodationDAO extends AbstractDao {
      *
      * @param leftSpinner
      * @param rightSpinner
-     * @param session
      * @return
      */
     public List<AccommodationAdd> getSimpleSearchAdds(String leftSpinner, String rightSpinner,
@@ -281,7 +260,6 @@ public class AccommodationDAO extends AbstractDao {
      * not a Rest endpoint method. Only used for the tick mark on
      * searchAccommodation page
      *
-     * @param session
      * @param user
      * @return
      * @throws Exception
@@ -319,7 +297,7 @@ public class AccommodationDAO extends AbstractDao {
         query.setMaxResults(SAConstants.PAGE_SIZE);
 
         list = query.list();
-        List<AccommodationAdd> userVisited_AccommodationAdds = new ArrayList<AccommodationAdd>();
+        List<AccommodationAdd> userVisited_AccommodationAdds = new ArrayList<>();
 
         for (Object[] obj : list) {
             userVisited_AccommodationAdds.add((AccommodationAdd) obj[1]);
@@ -479,8 +457,7 @@ public class AccommodationDAO extends AbstractDao {
 
         List<AccommodationAdd> adds = crit.list();
 
-        AccommodationAdd add = adds.get(0);
-        return add;
+        return adds.get(0);
 
     }
 
@@ -514,9 +491,6 @@ public class AccommodationDAO extends AbstractDao {
     }
 
     public String updateAccommodationAdd(AccommodationAdd advertisement, int apartmentId) {
-        Apartments apartment = getByKey(Apartments.class, apartmentId);
-        this.addAccommodationAddToApartment(apartment, advertisement);
-        addUniversityToAdd(apartment.getUniversity(), advertisement);
         saveOrUpdate(advertisement);
         return SAConstants.RESPONSE_SUCCESS;
     }
