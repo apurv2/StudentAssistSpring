@@ -28,7 +28,7 @@ public class AccommodationDAO extends AbstractDao {
      * @param user
      * @param advertisement
      * @return
-     * @throws Exception 
+     * @throws Exception
      */
     public String createAccommodationAddFromFacebook(Users user, AccommodationAdd advertisement, int apartmentId)
             throws Exception {
