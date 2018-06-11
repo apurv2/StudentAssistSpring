@@ -3,7 +3,7 @@
         <img src="./assets/images/nodatafound.png" alt="" title="">
     </div>
     <div *ngIf="!noData">
-        <div class="col-xs-12 col-sm-12 col-md-4 height-400 overflow-auto adv-card-list">
+        <div id="addsListId" class="col-xs-12 col-sm-12 col-md-4 height-400 overflow-auto adv-card-list">
             <adds-list [accommodationAdds]="accommodationAdds" [showVisited]="true"></adds-list>
         </div>
         <accommodation-details [selectedAccommodationAdd]="selectedAccommodationAdd"></accommodation-details>

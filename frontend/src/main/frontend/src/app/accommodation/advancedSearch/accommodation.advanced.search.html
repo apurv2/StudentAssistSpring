@@ -6,7 +6,7 @@
     </div>
     <!-- End Div for no record found-->
     <div *ngIf="!noData">
-        <div class="col-xs-12 col-sm-12 col-md-4 height-400 overflow-auto adv-card-list">
+        <div id="addsListId" class="col-xs-12 col-sm-12 col-md-4 height-400 overflow-auto adv-card-list">
             <adds-list #addsList [accommodationAdds]="accommodationAdds" [showVisited]="true" (paginationEvent)="paginationEvent($event)"></adds-list>
         </div>
         <accommodation-details [selectedAccommodationAdd]="selectedAccommodationAdd" [enableSubscription]="true"></accommodation-details>

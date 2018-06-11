@@ -4,7 +4,7 @@
         <img src="./assets/images/nodatafound.png" alt="" title="">
     </div>
     <div *ngIf="!noData">
-        <simple-search-list #simpleSearchList id="simpleSearchList" [accommodationSearchResults]="universityAccommodationAdds" [filters]="filters"></simple-search-list>
+        <simple-search-list #addsList id="addsListId" [accommodationSearchResults]="universityAccommodationAdds" [filters]="filters"></simple-search-list>
         <accommodation-details *ngIf="loadedFirstTime" [selectedAccommodationAdd]="selectedAccommodationAdd" [enableSubscription]="true"></accommodation-details>
     </div>
 </div>

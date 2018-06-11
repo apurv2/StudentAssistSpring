@@ -61,7 +61,7 @@ import { AccommodationNotificationService } from './notifications/accommodation/
 import { AccommodationNotifications } from './notifications/accommodation/notifications.accommodation';
 import { RecentlyViewedAccommodations } from './accommodation/recentlyViewed/accommodation.recently.viewed';
 import { RecentlyViewedService } from './accommodation/recentlyViewed/accommodation.recently.viewed.service';
-import { SimpleSearchGuard } from './shared/utilities/simple.search.guard';
+import { AccommodationGuard } from './shared/utilities/guards/accommodation.guard';
 
 @NgModule({
   imports: [AgmCoreModule.forRoot({
@@ -142,7 +142,7 @@ import { SimpleSearchGuard } from './shared/utilities/simple.search.guard';
     AdsListService,
     AccommodationNotificationService,
     RecentlyViewedService,
-    SimpleSearchGuard,
+    AccommodationGuard,
     {
       provide: Http,
       useFactory: httpFactory,

@@ -8,17 +8,23 @@ import { MatDialog } from '@angular/material';
 import { SharedDataService } from 'app/shared/data/shared.data.service';
 import { AddDetailsModal } from 'app/accommodation/shared/adDetails/accommodation.details.modal';
 import { Subscription } from 'rxjs/Subscription';
+import { Accommodation } from '../../accommodation';
+import { PlatformLocation } from '@angular/common';
 
 @Component({
     selector: 'user-post',
     templateUrl: 'user.posts.html'
 })
-export class UserPosts {
+export class UserPosts extends Accommodation {
 
     constructor(private userPostsService: UserPostsService,
         private userService: UserService,
         private dialog: MatDialog,
-        private sharedDataService: SharedDataService) {
+        private sharedDataService: SharedDataService,
+        private location: PlatformLocation) {
+        super();
+        location.onPopState(() => this.backPressed = true);
+
     }
 
     accommodationAdds: AccommodationAdd[] = [];

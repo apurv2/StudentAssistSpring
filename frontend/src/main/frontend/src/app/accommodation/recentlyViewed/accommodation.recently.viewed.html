@@ -1,15 +1,15 @@
 <div class="container">
-    <div class="cls-page-header">  
+    <div class="cls-page-header">
         <h3 class="text-center">
             <b>Recently visited posts</b>
         </h3>
-    </div>    
+    </div>
     <div class="no-record" *ngIf="noData">
         <img src="./assets/images/nodatafound.png" alt="" title="">
     </div>
     <div *ngIf="!noData">
 
-        <div class="col-xs-12 col-sm-12 col-md-4 overflow-auto adv-card-list recent-panel">
+        <div id="addsListId" class="col-xs-12 col-sm-12 col-md-4 overflow-auto adv-card-list recent-panel">
             <adds-list #addsList [accommodationAdds]="accommodationAdds" [showVisited]="false" (paginationEvent)="paginationEvent($event)"></adds-list>
         </div>
         <accommodation-details [selectedAccommodationAdd]="selectedAccommodationAdd"></accommodation-details>

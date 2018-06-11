@@ -6,7 +6,7 @@ import { AdvancedSearch } from './accommodation/advancedSearch/accommodation.adv
 import { AddDetails } from './accommodation/shared/adDetails/accommodation.details.add';
 import { AccommodationNotifications } from './notifications/accommodation/notifications.accommodation';
 import { RecentlyViewedAccommodations } from './accommodation/recentlyViewed/accommodation.recently.viewed';
-import { SimpleSearchGuard } from './shared/utilities/simple.search.guard';
+import { AccommodationGuard } from './shared/utilities/guards/accommodation.guard';
 
 const appRoutes: Routes = [
     {
@@ -16,14 +16,16 @@ const appRoutes: Routes = [
     {
         path: 'simple-search',
         component: SimpleSearch,
-        canDeactivate: [SimpleSearchGuard]
+        canDeactivate: [AccommodationGuard]
     }, {
         path: 'post',
-        component: PostAccommodation
+        component: PostAccommodation,
+        canDeactivate: [AccommodationGuard]
     },
     {
         path: 'advanced-search',
-        component: AdvancedSearch
+        component: AdvancedSearch,
+        canDeactivate: [AccommodationGuard]
     },
     {
         path: 'adDetails',
@@ -34,11 +36,13 @@ const appRoutes: Routes = [
     },
     {
         path: 'accommodationNotifications',
-        component: AccommodationNotifications
+        component: AccommodationNotifications,
+        canDeactivate: [AccommodationGuard]
     },
     {
         path: 'recentlyViewed',
-        component: RecentlyViewedAccommodations
+        component: RecentlyViewedAccommodations,
+        canDeactivate: [AccommodationGuard]
     },
     { path: '**', redirectTo: 'dashboard' }
 

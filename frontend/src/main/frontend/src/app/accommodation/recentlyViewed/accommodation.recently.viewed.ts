@@ -6,6 +6,8 @@ import { AccommodationSearchModel } from "../shared/models/accommodation.filter.
 import { AddsList } from "../shared/adsList/ads.list";
 import { Subscription } from "rxjs";
 import { SharedDataService } from "../../shared/data/shared.data.service";
+import { Accommodation } from "../accommodation";
+import { PlatformLocation } from "@angular/common";
 
 
 @Component({
@@ -13,19 +15,20 @@ import { SharedDataService } from "../../shared/data/shared.data.service";
     templateUrl: 'accommodation.recently.viewed.html'
 })
 
-export class RecentlyViewedAccommodations {
+export class RecentlyViewedAccommodations extends Accommodation {
 
     accommodationAdds: AccommodationAdd[];
     noData: boolean = false;
-
-    @ViewChild("addsList")
-    addsList: AddsList;
     accommodationAddSubscription: Subscription;
     selectedAccommodationAdd: AccommodationAdd;
 
     constructor(private recentlyViewedService: RecentlyViewedService,
         private sharedDataservice: SharedDataService,
-        private userService: UserService) { }
+        private userService: UserService,
+        private location: PlatformLocation) {
+        super();
+        location.onPopState(() => this.backPressed = true);
+    }
 
     ngOnInit() {
         this.getRecentlyViewedAdds(0);

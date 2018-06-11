@@ -12,6 +12,7 @@ import { UserService } from "app/shared/userServices/user.service";
 import { SimpleSearchAddsFilters } from "./filters/simple.search.filters";
 import { SimpleSearchAddsList } from "./adsList/simple.search.adds.list";
 import { PlatformLocation } from "@angular/common";
+import { Accommodation } from "../accommodation";
 
 
 @Component({
@@ -19,24 +20,24 @@ import { PlatformLocation } from "@angular/common";
     templateUrl: 'accommodation.simple.search.html'
 })
 
-export class SimpleSearch {
+export class SimpleSearch extends Accommodation {
     selectedAccommodationAdd: AccommodationAdd;
     universityAccommodationAdds: UniversityAccommodationAdds[];
     accommodationFiltersObservable: Subscription;
     accommodationAddSubscription: Subscription;
     loadedFirstTime: boolean = false;
     noData: boolean = false;
-    backPressed: boolean = false;
 
     @ViewChild('filters') filters: SimpleSearchAddsFilters;
-    @ViewChild('simpleSearchList') simpleSearchList: SimpleSearchAddsList;
 
     constructor(private simpleSearchService: SimpleSearchService,
         private facebookService: FacebookService,
         private sharedDataservice: SharedDataService,
         private userService: UserService,
         private location: PlatformLocation) {
+        super();
         location.onPopState(() => this.backPressed = true);
+
     }
     ngOnInit() {
         this.subscribeToAccommodationAddsFilters();

@@ -7,12 +7,14 @@ import { AccommodationSearchModel } from '../shared/models/accommodation.filter.
 import { AdvanceSearchService } from './accommodation.advanced.search.service';
 import { AdvancedSearchFilters } from './filters/advanced.search.filters';
 import { AddsList } from '../shared/adsList/ads.list';
+import { Accommodation } from '../accommodation';
+import { PlatformLocation } from '@angular/common';
 
 @Component({
     selector: 'advanced-search',
     templateUrl: 'accommodation.advanced.search.html'
 })
-export class AdvancedSearch {
+export class AdvancedSearch extends Accommodation {
     accommodationFiltersObservable: Subscription;
     accommodationAdds: AccommodationAdd[];
     selectedAccommodationAdd: AccommodationAdd;
@@ -22,11 +24,11 @@ export class AdvancedSearch {
     @ViewChild("filters")
     filters: AdvancedSearchFilters;
 
-    @ViewChild("addsList")
-    addsList: AddsList;
-
     constructor(private sharedDataservice: SharedDataService,
-        private advancedSearchService: AdvanceSearchService) {
+        private advancedSearchService: AdvanceSearchService,
+        private location: PlatformLocation) {
+        super();
+        location.onPopState(() => this.backPressed = true);
 
     }
 

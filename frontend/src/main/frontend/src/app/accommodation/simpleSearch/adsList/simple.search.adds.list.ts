@@ -11,6 +11,7 @@ import { Observable } from 'rxjs/Rx';
 import { Subscription } from 'rxjs/Subscription';
 import { AdsListService } from "../../shared/adsList/ads.list.service";
 import { UserService } from "../../../shared/userServices/user.service";
+import { AccommodationAddsList } from "../../accommodation.adds.list";
 
 
 declare var $: any;
@@ -20,7 +21,7 @@ declare var $: any;
     templateUrl: 'simple.search.ads.list.html'
 })
 
-export class SimpleSearchAddsList {
+export class SimpleSearchAddsList extends AccommodationAddsList {
 
     @Input()
     accommodationSearchResults: UniversityAccommodationAdds[];
@@ -28,12 +29,12 @@ export class SimpleSearchAddsList {
     filters: SimpleSearchAddsFilters;
     selectedItemId: number;
     timerObservable: Subscription;
-    showingDetails: boolean = false;
-
 
     constructor(private sharedDataService: SharedDataService,
         private simpleSearchService: SimpleSearchFilterService,
-        private adsListService: AdsListService) { }
+        private adsListService: AdsListService) {
+        super();
+    }
 
     ngOnInit() {
         $('.collapsible').collapsible();
@@ -70,12 +71,7 @@ export class SimpleSearchAddsList {
         }
         this.selectedItemId = accommodationAdd.addId;
         this.sharedDataService.emitAccommodationAdd(accommodationAdd);
-
-        if (window.innerWidth < 767) {
-            this.showingDetails = true;
-            document.getElementById("detailCard").style.display = 'block';
-            document.getElementById("simpleSearchList").style.display = 'none';
-        }
+        this.addClickMobile();
     }
 
     paginationClick(selectedUniversity: UniversityAccommodationAdds) {
@@ -98,15 +94,6 @@ export class SimpleSearchAddsList {
                 selectedUniversity.stopPagination = data.length < 10;
 
             });
-    }
-
-    showList() {
-
-        if (window.innerWidth < 767) {
-            this.showingDetails = false;
-            document.getElementById("detailCard").style.display = 'none';
-            document.getElementById("simpleSearchList").style.display = 'block';
-        }
     }
 
     ngOnDestroy() {
