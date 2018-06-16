@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 @Transactional
@@ -218,11 +219,7 @@ public class AccommodationDAO extends AbstractDao {
         return adds;
     }
 
-    public int addNewApartment(Apartments apartment, int universityId) throws Exception {
-        Universities univ = new Universities();
-        univ.setUniversityId(universityId);
-        apartment.setUniversity(univ);
-        apartment.setAddedDate(Utilities.getDate());
+    public int addNewApartment(Apartments apartment) throws Exception {
         return save(apartment);
     }
 
@@ -332,14 +329,14 @@ public class AccommodationDAO extends AbstractDao {
     }
 
     @SuppressWarnings("unchecked")
-    public List<Apartments> getApartmentNamesWithTypeAndUniv(Users currentUser) {
+    public List<Apartments> getApartmentNamesWithTypeAndUniv(Users currentUser, int universityId) {
 
         Users dbUser = getByKey(Users.class, currentUser.getUserId());
+        List<Integer> universityIds = dbUser.getUniversities().stream().map(univ -> univ.getUniversityId())
+                .collect(Collectors.toList());
 
-        List<Integer> universityIds = new ArrayList();
-        for (Universities university : dbUser.getUniversities()) {
-
-            universityIds.add(university.getUniversityId());
+        if (universityId > 0) {
+            universityIds.add(universityId);
         }
 
         if (universityIds.isEmpty()) {
@@ -490,8 +487,12 @@ public class AccommodationDAO extends AbstractDao {
 
     }
 
-    public String updateAccommodationAdd(AccommodationAdd advertisement, int apartmentId) {
+    public String updateAccommodationAdd(AccommodationAdd advertisement) {
         saveOrUpdate(advertisement);
         return SAConstants.RESPONSE_SUCCESS;
+    }
+
+    public List<Apartments> getApartmentsByUser(Users user) {
+        return ((Users) getByKey(Users.class, user.getUserId())).getApartments();
     }
 }

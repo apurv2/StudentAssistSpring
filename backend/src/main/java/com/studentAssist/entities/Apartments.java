@@ -1,120 +1,124 @@
 package com.studentAssist.entities;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 @Entity
 @Table(name = "Apartments")
 public class Apartments {
-	@Id
-	@GeneratedValue
-	@Column(name = "ID")
-	int id;
-	String apartmentName;
-	String apartmentType;
-	Date addedDate;
-	@OneToMany(mappedBy = "apartment")
-	private List<AccommodationAdd> accommodationAdd = new ArrayList<>();
+    @Id
+    @GeneratedValue
+    @Column(name = "ID")
+    int id;
+    String apartmentName;
+    String apartmentType;
+    Date addedDate;
+    @OneToMany(mappedBy = "apartment")
+    private List<AccommodationAdd> accommodationAdd = new ArrayList<>();
 
-	@ManyToOne
-	@JoinColumn(name = "universityId")
-	private Universities university;
+    @ManyToOne
+    @JoinColumn(name = "create_user_id")
+    private Users createdUser;
 
-	private String addr_line;
+    @ManyToOne
+    @JoinColumn(name = "universityId")
+    private Universities university;
 
-	private String city;
+    private String addr_line;
 
-	private String state;
+    private String city;
 
-	private int zip;
+    private String state;
 
-	public String getAddr_line() {
-		return addr_line;
-	}
+    private int zip;
 
-	public void setAddr_line(String addr_line) {
-		this.addr_line = addr_line;
-	}
+    public String getAddr_line() {
+        return addr_line;
+    }
 
-	public String getCity() {
-		return city;
-	}
+    public void setAddr_line(String addr_line) {
+        this.addr_line = addr_line;
+    }
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+    public String getCity() {
+        return city;
+    }
 
-	public String getState() {
-		return state;
-	}
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-	public void setState(String state) {
-		this.state = state;
-	}
+    public String getState() {
+        return state;
+    }
 
-	public int getZip() {
-		return zip;
-	}
+    public void setState(String state) {
+        this.state = state;
+    }
 
-	public void setZip(int zip) {
-		this.zip = zip;
-	}
+    public int getZip() {
+        return zip;
+    }
 
-	public Universities getUniversity() {
-		return university;
-	}
+    public void setZip(int zip) {
+        this.zip = zip;
+    }
 
-	public void setUniversity(Universities university) {
-		this.university = university;
-	}
+    public Universities getUniversity() {
+        return university;
+    }
 
-	public List<AccommodationAdd> getAccommodationAdd() {
-		return this.accommodationAdd;
-	}
+    public void setUniversity(Universities university) {
+        this.university = university;
+    }
 
-	public void setAccommodationAdd(List<AccommodationAdd> accommodationAdd) {
-		this.accommodationAdd = accommodationAdd;
-	}
+    public List<AccommodationAdd> getAccommodationAdd() {
+        return this.accommodationAdd;
+    }
 
-	public int getId() {
-		return this.id;
-	}
+    public void setAccommodationAdd(List<AccommodationAdd> accommodationAdd) {
+        this.accommodationAdd = accommodationAdd;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public int getId() {
+        return this.id;
+    }
 
-	public String getApartmentName() {
-		return this.apartmentName;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setApartmentName(String apartmentName) {
-		this.apartmentName = apartmentName;
-	}
+    public String getApartmentName() {
+        return this.apartmentName;
+    }
 
-	public String getApartmentType() {
-		return this.apartmentType;
-	}
+    public void setApartmentName(String apartmentName) {
+        this.apartmentName = apartmentName;
+    }
 
-	public void setApartmentType(String apartmentType) {
-		this.apartmentType = apartmentType;
-	}
+    public String getApartmentType() {
+        return this.apartmentType;
+    }
 
-	public Date getAddedDate() {
-		return this.addedDate;
-	}
+    public void setApartmentType(String apartmentType) {
+        this.apartmentType = apartmentType;
+    }
 
-	public void setAddedDate(Date addedDate) {
-		this.addedDate = addedDate;
-	}
+    public Date getAddedDate() {
+        return this.addedDate;
+    }
+
+    public void setAddedDate(Date addedDate) {
+        this.addedDate = addedDate;
+    }
+
+    public Users getCreatedUser() {
+        return createdUser;
+    }
+
+    public void setCreatedUser(Users createdUser) {
+        this.createdUser = createdUser;
+    }
 }

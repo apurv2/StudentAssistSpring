@@ -1,17 +1,16 @@
 package com.studentAssist.services;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.studentAssist.dao.UserDAO;
 import com.studentAssist.entities.GCMIds;
 import com.studentAssist.entities.Universities;
 import com.studentAssist.entities.Users;
 import com.studentAssist.exception.BadStudentRequestException;
 import com.studentAssist.util.Utilities;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -51,7 +50,7 @@ public class UserService {
 	public boolean checkAdminUserId(long userId) {
 
 		List<Users> users = userDAO.checkAdminUserId(userId);
-		return (users != null && !users.isEmpty()) ? true : false;
+		return (users != null && !users.isEmpty());
 
 	}
 	

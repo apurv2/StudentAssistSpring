@@ -1,168 +1,168 @@
 package com.studentAssist.entities;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-
 @Entity
 public class Users {
-	private String firstName;
-	private String lastName;
-	private String email;
-	private String phoneNumber;
-	private boolean sup;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String phoneNumber;
+    private boolean sup;
 
-	@Column(insertable = true, updatable = false)
-	private Date registeredDate;
+    @Column(insertable = true, updatable = false)
+    private Date registeredDate;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<GCMIds> gcmIds = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<GCMIds> gcmIds = new ArrayList<>();
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<UserVisitedAdds> userVisitedAdds = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<UserVisitedAdds> userVisitedAdds = new ArrayList<>();
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<UserAccommodationNotifications> userNotifications = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<UserAccommodationNotifications> userNotifications = new ArrayList<>();
 
-	@Id
-	private long userId;
+    @Id
+    private long userId;
 
-	@OneToOne
-	private UserDummy user_Id;
+    @OneToOne
+    private UserDummy user_Id;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<AccommodationAdd> accommodationAdd = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<AccommodationAdd> accommodationAdd = new ArrayList<>();
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<NotificationSettings> notificationSettings = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<NotificationSettings> notificationSettings = new ArrayList<>();
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "user_university", joinColumns = {
-			@JoinColumn(name = "userId", nullable = false, updatable = false) }, inverseJoinColumns = {
-					@JoinColumn(name = "universityId", nullable = false, updatable = false) })
-	private List<Universities> universities = new ArrayList<>();
+    @OneToMany(mappedBy = "createdUser", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Apartments> apartments = new ArrayList<>();
 
-	public List<Universities> getUniversities() {
-		return universities;
-	}
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_university", joinColumns = {
+            @JoinColumn(name = "userId", nullable = false, updatable = false)}, inverseJoinColumns = {
+            @JoinColumn(name = "universityId", nullable = false, updatable = false)})
+    private List<Universities> universities = new ArrayList<>();
 
-	public UserDummy getUserDummy() {
-		return user_Id;
-	}
+    public List<Universities> getUniversities() {
+        return universities;
+    }
 
-	public void setUserDummy(UserDummy userDummy) {
-		this.user_Id = userDummy;
-	}
+    public UserDummy getUserDummy() {
+        return user_Id;
+    }
 
-	public void setUniversities(List<Universities> universities) {
-		this.universities = universities;
-	}
+    public void setUserDummy(UserDummy userDummy) {
+        this.user_Id = userDummy;
+    }
 
-	public List<UserAccommodationNotifications> getUserNotifications() {
-		return userNotifications;
-	}
+    public void setUniversities(List<Universities> universities) {
+        this.universities = universities;
+    }
 
-	public void setUserNotifications(List<UserAccommodationNotifications> userNotifications) {
-		this.userNotifications = userNotifications;
-	}
+    public List<UserAccommodationNotifications> getUserNotifications() {
+        return userNotifications;
+    }
 
-	public List<NotificationSettings> getNotificationSettings() {
-		return notificationSettings;
-	}
+    public void setUserNotifications(List<UserAccommodationNotifications> userNotifications) {
+        this.userNotifications = userNotifications;
+    }
 
-	public void setNotificationSettings(List<NotificationSettings> notificationSettings) {
-		this.notificationSettings = notificationSettings;
-	}
+    public List<NotificationSettings> getNotificationSettings() {
+        return notificationSettings;
+    }
 
-	public Date getRegisteredDate() {
-		return this.registeredDate;
-	}
+    public void setNotificationSettings(List<NotificationSettings> notificationSettings) {
+        this.notificationSettings = notificationSettings;
+    }
 
-	public void setRegisteredDate(Date registeredDate) {
-		this.registeredDate = registeredDate;
-	}
+    public Date getRegisteredDate() {
+        return this.registeredDate;
+    }
 
-	public List<AccommodationAdd> getAccommodationAdd() {
-		return this.accommodationAdd;
-	}
+    public void setRegisteredDate(Date registeredDate) {
+        this.registeredDate = registeredDate;
+    }
 
-	public void setAccommodationAdd(List<AccommodationAdd> accommodationAdd) {
-		this.accommodationAdd = accommodationAdd;
-	}
+    public List<AccommodationAdd> getAccommodationAdd() {
+        return this.accommodationAdd;
+    }
 
-	public String getFirstName() {
-		return this.firstName;
-	}
+    public void setAccommodationAdd(List<AccommodationAdd> accommodationAdd) {
+        this.accommodationAdd = accommodationAdd;
+    }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    public String getFirstName() {
+        return this.firstName;
+    }
 
-	public String getLastName() {
-		return this.lastName;
-	}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    public String getLastName() {
+        return this.lastName;
+    }
 
-	public String getEmail() {
-		return this.email;
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getEmail() {
+        return this.email;
+    }
 
-	public String getPhoneNumber() {
-		return this.phoneNumber;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
+    public String getPhoneNumber() {
+        return this.phoneNumber;
+    }
 
-	public List<GCMIds> getGcmIds() {
-		return gcmIds;
-	}
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
-	public void setGcmIds(List<GCMIds> gcmIds) {
-		this.gcmIds = gcmIds;
-	}
+    public List<GCMIds> getGcmIds() {
+        return gcmIds;
+    }
 
-	public List<UserVisitedAdds> getUserVisitedAdds() {
-		return userVisitedAdds;
-	}
+    public void setGcmIds(List<GCMIds> gcmIds) {
+        this.gcmIds = gcmIds;
+    }
 
-	public void setUserVisitedAdds(List<UserVisitedAdds> userVisitedAdds) {
-		this.userVisitedAdds = userVisitedAdds;
-	}
+    public List<UserVisitedAdds> getUserVisitedAdds() {
+        return userVisitedAdds;
+    }
 
-	public long getUserId() {
-		return userId;
-	}
+    public void setUserVisitedAdds(List<UserVisitedAdds> userVisitedAdds) {
+        this.userVisitedAdds = userVisitedAdds;
+    }
 
-	public void setUserId(long userId) {
-		this.userId = userId;
-	}
+    public long getUserId() {
+        return userId;
+    }
 
-	public boolean isSup() {
-		return sup;
-	}
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
 
-	public void setSup(boolean sup) {
-		this.sup = sup;
-	}
+    public boolean isSup() {
+        return sup;
+    }
 
+    public void setSup(boolean sup) {
+        this.sup = sup;
+    }
+
+    public List<Apartments> getApartments() {
+        return apartments;
+    }
+
+    public void setApartments(List<Apartments> apartments) {
+        this.apartments = apartments;
+    }
 }

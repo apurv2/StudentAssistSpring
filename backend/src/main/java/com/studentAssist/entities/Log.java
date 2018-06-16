@@ -1,81 +1,79 @@
 package com.studentAssist.entities;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 @Entity
 @Table(name = "Log")
 public class Log {
-	@Id
-	@GeneratedValue
-	int logId;
-	@Column(name = "logDetail", length = 5000)
-	String logDetail;
+    @Id
+    @GeneratedValue
+    int logId;
+    @Column(name = "logDetail", length = 5000)
+    String logDetail;
+    Date createDate;
+    String userId;
+    int exceptionType;
 
-	Date createDate;
 
-	String userId;
+    @ElementCollection
+    private List<String> queryParameters = new ArrayList<String>();
 
-	@ElementCollection
-	private List<String> queryParameters = new ArrayList<String>();
+    public Log(String logDetail, Date createDate, String userId, int exceptionType, List<String> queryParameters) {
+        this.logDetail = logDetail;
+        this.createDate = createDate;
+        this.userId = userId;
+        this.exceptionType = exceptionType;
+        this.queryParameters = queryParameters;
+    }
 
-	public Log() {
-	}
+    public List<String> getQueryParameters() {
+        return queryParameters;
+    }
 
-	public Log(String logDetail, Date createDate, String userId, List<String> queryParameters) {
-		super();
-		this.logDetail = logDetail;
-		this.createDate = createDate;
-		this.userId = userId;
-		this.queryParameters = queryParameters;
-	}
+    public void setQueryParameters(List<String> queryParameters) {
+        this.queryParameters = queryParameters;
+    }
 
-	public List<String> getQueryParameters() {
-		return queryParameters;
-	}
+    public int getLogId() {
+        return logId;
+    }
 
-	public void setQueryParameters(List<String> queryParameters) {
-		this.queryParameters = queryParameters;
-	}
+    public void setLogId(int logId) {
+        this.logId = logId;
+    }
 
-	public int getLogId() {
-		return logId;
-	}
+    public String getLogDetail() {
+        return logDetail;
+    }
 
-	public void setLogId(int logId) {
-		this.logId = logId;
-	}
+    public void setLogDetail(String logDetail) {
+        this.logDetail = logDetail;
+    }
 
-	public String getLogDetail() {
-		return logDetail;
-	}
+    public Date getCreateDate() {
+        return createDate;
+    }
 
-	public void setLogDetail(String logDetail) {
-		this.logDetail = logDetail;
-	}
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
 
-	public Date getCreateDate() {
-		return createDate;
-	}
+    public String getUserId() {
+        return userId;
+    }
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
-	public String getUserId() {
-		return userId;
-	}
+    public int getExceptionType() {
+        return exceptionType;
+    }
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
+    public void setExceptionType(int exceptionType) {
+        this.exceptionType = exceptionType;
+    }
 }

@@ -2,28 +2,35 @@ package com.studentAssist.exception;
 
 public class BadStudentRequestException extends Exception {
 
-	String msg;
-	int code;
+    String msg;
+    int code;
 
-	public int getCode() {
-		return code;
-	}
+    public BadStudentRequestException(String exception) {
+        this.msg = exception;
+    }
 
-	public void setCode(int code) {
-		this.code = code;
-	}
+    public BadStudentRequestException() {
+    }
 
-	public String getMsg() {
-		return msg;
-	}
+    public int getCode() {
+        return code;
+    }
 
-	public void setMsg(String msg) {
-		this.msg = msg;
-	}
+    public void setCode(int code) {
+        this.code = code;
+    }
 
-	public String toString(String msg, int code) {
-		return msg + code;
+    public String getMsg() {
+        return msg;
+    }
 
-	}
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public String toString(String msg, int code) {
+        return msg + code;
+
+    }
 
 }

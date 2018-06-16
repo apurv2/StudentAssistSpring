@@ -106,7 +106,12 @@
 			<artifactId>dozer</artifactId>
 			<version>5.4.0</version>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>RELEASE</version>
+        </dependency>
+    </dependencies>
 
 	<build>
 		<plugins>

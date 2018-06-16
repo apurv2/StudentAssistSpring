@@ -279,17 +279,16 @@ public class AccommodationService {
 
     }
 
-    public List<UniversityAccommodationDTO> getSimpleSearchAddsNg(AccommodationSearchDTO accommodationSearch) {
+    public int addNewApartment(ApartmentDTO apartmentDto, Users user) throws Exception {
 
-        accommmodationDAO.getSimpleSearchAddsNg(accommodationSearch);
-
-        return null;
-    }
-
-    public int addNewApartment(Apartments apartment, int universityId) throws Exception {
-
-        validateNewApartment(apartment, universityId);
-        return accommmodationDAO.addNewApartment(apartment, universityId);
+        Apartments apartment = mapper.map(apartmentDto, Apartments.class);
+        apartment.setUniversity(new Universities() {{
+            setUniversityId(apartmentDto.getUniversityId());
+        }});
+        validateNewApartment(apartment, user);
+        apartment.setAddedDate(Utilities.getDate());
+        apartment.setCreatedUser(user);
+        return accommmodationDAO.addNewApartment(apartment);
     }
 
     private void validatePostAccommodation(long userId, AccommodationAdd advertisement, int apartmentId)
@@ -315,36 +314,47 @@ public class AccommodationService {
         }
     }
 
-    private void validateNewApartment(Apartments apartment, int universityId) throws BadStudentRequestException {
+    private void validateNewApartment(Apartments apartment, Users user) throws BadStudentRequestException {
 
-        if (apartment == null || universityId < 1) {
+        if (apartment == null || apartment.getUniversity().getUniversityId() < 1) {
             throw new BadStudentRequestException();
         }
 
         if (apartment.getZip() < 1 || apartment.getApartmentName() == null || apartment.getApartmentName().isEmpty()) {
             throw new BadStudentRequestException();
         }
+        List<Apartments> apartments = getApartmentsByUser(user);
+        if (!userService.checkAdminUserId(user.getUserId()) && apartments.size() > 1) {
+            throw new BadStudentRequestException(SAConstants.APARTMENT_ALREADY_ADDED + apartments.get(0).getApartmentName());
+        }
     }
 
     public RAccommodationAdd getAccommodationFromId(int addId) {
-        List<AccommodationAdd> adds = new ArrayList<>();
-        adds.add(accommmodationDAO.getAccommodationFromId(addId));
-
-        return getRAccommodationAdds(adds, null, 2).get(0);
+        return getRAccommodationAdds(Arrays.asList(accommmodationDAO.getAccommodationFromId(addId)),
+                null, 2).get(0);
 
     }
 
-    public String editAccommodationAdd(AccommodationAdd add, long userId, int apartmentId) throws Exception {
+    private List<Apartments> getApartmentsByUser(Users user) {
+        return accommmodationDAO.getApartmentsByUser(user);
+    }
 
-        add.setDatePosted(Utilities.getDate());
-        validatePostAccommodation(userId, add, apartmentId);
+    public String editAccommodationAdd(RAccommodationAdd screenAdd, long userId) throws Exception {
 
-        AccommodationAdd dbAdd = accommmodationDAO.getAccommodationFromId(add.getAddId());
-        dbAdd = mapper.map(add, AccommodationAdd.class);
-        add.setUser(dbAdd.getUser());
-        add.setApartment(dbAdd.getApartment());
-        add.setUniversity(dbAdd.getUniversity());
+        AccommodationAdd accommodationAdd = mapper.map(screenAdd, AccommodationAdd.class);
 
-        return accommmodationDAO.updateAccommodationAdd(dbAdd, apartmentId);
+        accommodationAdd.setDatePosted(Utilities.getDate());
+        accommodationAdd.setUser(new Users() {{
+            setUserId(userId);
+        }});
+        accommodationAdd.setApartment(new Apartments() {{
+            setId(screenAdd.getApartmentId());
+        }});
+        accommodationAdd.setUniversity(new Universities() {{
+            screenAdd.getUniversityId();
+        }});
+        validatePostAccommodation(userId, accommodationAdd, screenAdd.getUniversityId());
+
+        return accommmodationDAO.updateAccommodationAdd(accommodationAdd);
     }
 }

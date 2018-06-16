@@ -1,7 +1,6 @@
 package com.studentAssist.controllers;
 
 import com.studentAssist.entities.AccommodationAdd;
-import com.studentAssist.entities.Apartments;
 import com.studentAssist.entities.Users;
 import com.studentAssist.exception.InvalidTokenException;
 import com.studentAssist.response.*;
@@ -134,25 +133,11 @@ public class AccommodationController extends AbstractController {
 
     }
 
-    /**
-     * Used to populate Spinners in advanced search
-     *
-     * @param request
-     * @return
-     */
-    @RequestMapping(method = RequestMethod.GET, value = "/getApartmentNamesByTypeAndUniv")
-    public List<RApartmentNamesInUnivs> getApartmentNamesByTypeAndUniv(HttpServletRequest request) {
-
-        return notificationService.getApartmentNamesWithTypeAndUniv(getUserFromRequest(request));
-
-    }
-
-    // code to be written in javascript
-    @RequestMapping(method = RequestMethod.POST, value = "/addNewApartment")
+    @RequestMapping(method = RequestMethod.POST, value = "profile/apartments")
     public int addNewApartment(@RequestBody ApartmentDTO apartmentDto, HttpServletRequest request) throws Exception {
 
-        Apartments apartment = mapper.map(apartmentDto, Apartments.class);
-        return accommodationService.addNewApartment(apartment, apartmentDto.getUniversityId());
+        Users user = getUserFromRequest(request);
+        return accommodationService.addNewApartment(apartmentDto, user);
 
     }
 
@@ -202,7 +187,7 @@ public class AccommodationController extends AbstractController {
         return accommodationService.getSimpleSearchAdds(accommodationSearch, getUserFromToken(request));
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/getAccommodationFromAddId/{addId}")
+    @RequestMapping(method = RequestMethod.GET, value = "/accommodationAdds/{addId}")
     public RAccommodationAdd getAccommodationFromAddId(@PathVariable int addId, HttpServletRequest request)
             throws Exception {
         return accommodationService.getAccommodationFromId(addId);
@@ -226,8 +211,7 @@ public class AccommodationController extends AbstractController {
 
         Users user = getUserFromRequest(request);
         long userId = user.getUserId();
-        AccommodationAdd add = mapper.map(rAccommodationAdd, AccommodationAdd.class);
-        return accommodationService.editAccommodationAdd(add, userId, rAccommodationAdd.getApartmentId());
+        return accommodationService.editAccommodationAdd(rAccommodationAdd, userId);
 
     }
 
