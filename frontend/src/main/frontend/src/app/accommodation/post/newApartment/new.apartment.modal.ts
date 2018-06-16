@@ -90,7 +90,6 @@ export class NewApartmentModal {
                         administrative_area_level_1: 'state',
                         postal_code: 'zip'
                     };
-
                     for (var i = 0; i < place.address_components.length; i++) {
                         var addressType = place.address_components[i].types[0];
                         if (componentForm[addressType]) {

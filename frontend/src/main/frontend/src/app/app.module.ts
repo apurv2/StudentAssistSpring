@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { AppComponent } from './app.component';
 import { FacebookModule, FacebookService, InitParams } from 'ngx-facebook';
 import { routing } from 'app/app.routing';
@@ -62,6 +62,8 @@ import { AccommodationNotifications } from './notifications/accommodation/notifi
 import { RecentlyViewedAccommodations } from './accommodation/recentlyViewed/accommodation.recently.viewed';
 import { RecentlyViewedService } from './accommodation/recentlyViewed/accommodation.recently.viewed.service';
 import { AccommodationGuard } from './shared/utilities/guards/accommodation.guard';
+import { ErrorLogService } from './shared/exceptionhandler/error.log.service';
+import { UIErrorHandler } from './shared/exceptionhandler/error.handler';
 
 @NgModule({
   imports: [AgmCoreModule.forRoot({
@@ -143,10 +145,15 @@ import { AccommodationGuard } from './shared/utilities/guards/accommodation.guar
     AccommodationNotificationService,
     RecentlyViewedService,
     AccommodationGuard,
+    ErrorLogService,
     {
       provide: Http,
       useFactory: httpFactory,
       deps: [XHRBackend, RequestOptions, FacebookService]
+    },
+    {
+      provide: ErrorHandler,
+      useClass: UIErrorHandler
     }
 
   ],
@@ -155,8 +162,7 @@ import { AccommodationGuard } from './shared/utilities/guards/accommodation.guar
 })
 export class AppModule {
 
-  constructor(private fb: FacebookService,
-    sharedDataService: SharedDataService) {
+  constructor(private fb: FacebookService) {
     let initParams: InitParams = {
       appId: environment.appId,
       xfbml: true,

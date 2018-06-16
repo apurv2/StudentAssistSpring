@@ -14,7 +14,7 @@
                   <img src="http://graph.facebook.com/{{accommodationAdd.userId}}/picture?type=normal" alt="" />
                 </div>
                 <div class="media-body panel-body">
-                  <h4 class="media-heading">
+                  <h4 class="media-heading" data-id = "{{accommodationAdd.addId}}">
                     <b>{{accommodationAdd.apartmentName}}</b>
                     <span *ngIf="accommodationAdd.userVisitedSw" class="tickmark">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" id="msg-dblcheck-ack" x="2063" y="2076">

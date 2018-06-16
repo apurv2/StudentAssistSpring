@@ -92,12 +92,12 @@ export const environment = {
   getUserPosts: 'profile/getUserPosts',
   login: 'Login',
   logout: 'Logout',
-  deleteAccommodationAdd: 'deleteAccommodationAdd',
+  deleteAccommodationAdd: 'profile/deleteAccommodationAdd',
   addId: 'addId',
   branchUrl: 'https://api.branch.io/v1/url',
   branchKey: 'key_live_ljvA7ojt1BPcO0zpTFFdEimoqqhfGSXF',
   other: 'Other',
-  addNewApartment: 'addNewApartment',
+  addNewApartment: 'profile/apartments',
   apartmentTooltipText: "Add New Apartment",
   apartmentAlreadyAdded: "New Apartment Already Added",
   apartmentSuccess: "Apartment Added Successfully",
@@ -109,7 +109,7 @@ export const environment = {
   me: 'me',
   getAdminUserIds: 'profile/supUser',
   createAccommodationAddFromFacebook: 'profile/createAccommodationAddFromFacebook',
-  getAccommodationFromAddId: 'getAccommodationFromAddId',
+  getAccommodationFromAddId: 'accommodationAdds',
   noDataGif: '',
   getAccommodationNotifications: 'profile/getAccommodationNotifications',
   getRecentlyViewedAdds: 'profile/getRecentlyViewed',
@@ -120,5 +120,6 @@ export const environment = {
   savePost: "Save Post",
   updatePost: "Update Post",
   editAccommodationAdd: 'profile/editAccommodationAdd',
-  allUniversities: '/universities/all'
+  allUniversities: '/universities/all',
+  errors: '/errors'
 };

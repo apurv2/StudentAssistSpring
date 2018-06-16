@@ -34,11 +34,9 @@ export class AddDetails {
     constructor(private dialog: MatDialog,
         private sharedDataService: SharedDataService,
         private userService: UserService,
-        private fb: FacebookService,
         private addDetailService: AddDetailsService,
         private route: ActivatedRoute,
-        private router: Router,
-        private http: Http) { }
+        private router: Router) { }
     ngOnInit() {
 
         this.getUserId();
@@ -47,9 +45,8 @@ export class AddDetails {
             .filter(params => params['addId'] > 0)
             .flatMap(data => this.addDetailService.getAddDetailsFromAddId(data.addId))
             .do(e => this.sharedLink = true)
-            .subscribe((params: AccommodationAdd) => {
-                this.selectedAccommodationAdd = params;
-            });
+            .subscribe((params: AccommodationAdd) => this.selectedAccommodationAdd = params,
+                err => console.log(err));
     }
 
     getUserId() {
@@ -94,8 +91,14 @@ export class AddDetails {
 
     subscribeNotifications(): void {
         this.dialog.open(SubscribeNotificationsModal).
-            afterClosed().subscribe(result => {
-            });
+            afterClosed().subscribe(
+                result => {
+                    if (result != null) {
+                        this.sharedDataService.openSuccessFailureDialog(result, this.dialog, "Successfully Subscribed to Push Notifications!!");
+                    }
+                },
+                error => this.sharedDataService.openSuccessFailureDialog(error, this.dialog, "There was some error, please try again!!")
+            );
     }
 
     login() {

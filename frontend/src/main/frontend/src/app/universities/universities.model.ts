@@ -11,4 +11,8 @@ export class University {
       univAcronym: string;
       isSelected: boolean;
 
+      public constructor(init?: Partial<University>) {
+            Object.assign(this, init);
+      }
+
 }

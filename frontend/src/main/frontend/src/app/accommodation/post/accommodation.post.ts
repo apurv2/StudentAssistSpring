@@ -362,7 +362,7 @@ export class PostAccommodation implements ErrorHandler {
             .filter((apartmentInfo: Apartment) => apartmentInfo != null)
             .flatMap((apartmentInfo: Apartment) => this.postAccommodationService.addApartment(environment.addNewApartment, apartmentInfo))
             .filter(apartmentId => parseInt(apartmentId) > 0)
-            .switchMap(apartmentId => this.initializtApartmentNames(this.sharedDataService.getUserSelectedUniversitiesList(), +apartmentId))
+            .switchMap(apartmentId => this.initializtApartmentNames(this.selectedUniversities, +apartmentId))
             .subscribe(() => {
                 this.showAddApartment = false
                 this.apartmentTooltipText = environment.apartmentAlreadyAdded;
@@ -371,6 +371,7 @@ export class PostAccommodation implements ErrorHandler {
                 err => {
                     this.loading = false;
                     this.sharedDataService.openSuccessFailureDialog("failure", this.dialog).subscribe();
+                    throw err;
                 });
 
     }

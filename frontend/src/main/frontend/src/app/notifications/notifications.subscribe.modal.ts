@@ -25,7 +25,7 @@ export class SubscribeNotificationsModal {
     selectedUniversityId: number;
     allUniversities: University[] = [];
     aptNameCheckboxes: CheckBoxModel[] = [];
-    aptTypeCheckboxes: string[] = [];
+    aptTypeCheckboxes: {} = {};
     genderValues = [
         'Male',
         'Female',
@@ -38,6 +38,8 @@ export class SubscribeNotificationsModal {
         off: false,
         dorms: false
     };
+    backPrompt: boolean;
+    isLoading: boolean;
 
     onNoClick(): void {
         this.dialogRef.close();
@@ -52,7 +54,7 @@ export class SubscribeNotificationsModal {
     }
 
     getNotificationSettings() {
-
+        this.isLoading = true;
         this.notificationService.getNotificationSettings().
             subscribe(notificationSettings => {
                 this.notificationSettings = notificationSettings;
@@ -66,28 +68,29 @@ export class SubscribeNotificationsModal {
                 }
                 setTimeout(() => {
                     this.populateCheckBoxNgModel();
+                    this.isLoading = false;
                 }, 500);
             });
 
     }
 
     extractUniversitynames() {
-        for (let university of this.notificationSettings.apartmentNames) {
 
-            let univ: University = new University();
-            univ.universityName = university.universityName;
-            univ.universityId = university.universityId;
-            this.allUniversities.push(univ);
-        }
+        this.notificationSettings.apartmentNames.map(university => {
+            return new University({
+                universityName: university.universityName,
+                universityId: university.universityId,
+            });
+        }).forEach(university => this.allUniversities.push(university));
     }
 
     setSelectedUnivAptNames() {
 
-        for (let university of this.notificationSettings.apartmentNames) {
-            if (university.universityId == this.selectedUniversityId) {
-                this.selectedUniversityDetails = university;
-            }
-        }
+        this.selectedUniversityDetails = this
+            .notificationSettings
+            .apartmentNames
+            .find(item => item.universityId == this.selectedUniversityId)
+
     }
 
     populateCheckBoxNgModel() {
@@ -108,7 +111,7 @@ export class SubscribeNotificationsModal {
 
                 this.aptTypeVisibility[aptType] = true;
                 let value = this.notificationSettings.apartmentType.
-                    indexOf(aptType) != -1 ? true : false;
+                    indexOf(aptType) != -1;
                 this.aptTypeCheckboxes[aptType] = value;
             }
             this.selectedGender = this.notificationSettings.gender;
@@ -137,8 +140,7 @@ export class SubscribeNotificationsModal {
         settings.gender = this.selectedGender;
         settings.universityId = this.selectedUniversityId;
         this.notificationService.
-            subscribeForNotifications(settings).subscribe(status => console.log(status));
-
+            subscribeForNotifications(settings).subscribe(status => this.dialogRef.close(status), err => this.dialogRef.close(err));
     }
 
     selectUniversity() {
@@ -146,7 +148,23 @@ export class SubscribeNotificationsModal {
         this.setSelectedUnivAptNames();
     }
     backClicked() {
+        this.backPrompt = true;
+    }
+
+    backConfirm() {
         this.showUnivs = true;
+        this.backPrompt = false;
+        this.checkUnCheckBoxes(environment.all);
+        this.aptTypeCheckboxes = {};
+        this.selectedGender = null;
+    }
+
+    backPromptNo() {
+        this.backPrompt = false;
+    }
+
+    close() {
+        this.dialogRef.close();
     }
 
     checkUnCheckBoxes(aptType: string) {
@@ -165,6 +183,16 @@ export class SubscribeNotificationsModal {
             }
         }
 
+    }
+
+    isEmptyObject(obj) {
+        let aptTypes: string[] = [];
+        for (let aptType in this.aptTypeCheckboxes) {
+            if (this.aptTypeCheckboxes[aptType]) {
+                aptTypes.push(aptType);
+            }
+        }
+        return aptTypes.length == 0;
     }
 }
 
