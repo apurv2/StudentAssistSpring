@@ -1,12 +1,8 @@
 import { Component, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 import { NotificationSettingsService } from 'app/notifications/notifications.subscribe.modal.service';
 import { NotificationSettings } from 'app/notifications/models/notification.settings.model';
-import { UniversityApartments } from 'app/accommodation/shared/models/university.apartments.model';
 import { SharedDataService } from 'app/shared/data/shared.data.service';
-import { CheckBoxModel } from 'app/shared/models/checkbox.model';
-import { Apartment } from 'app/accommodation/shared/models/apartment.names.model';
-import { checkAndUpdateBinding } from '@angular/core/src/view/util';
 import { environment } from 'environments/environment';
 import { University } from 'app/universities/universities.model';
 
@@ -21,10 +17,8 @@ export class SubscribeNotificationsModal {
         private sharedDataService: SharedDataService) { }
 
     notificationSettings: NotificationSettings;
-    selectedUniversityDetails: UniversityApartments;
+    selectedUniversityDetails: University;
     selectedUniversityId: number;
-    allUniversities: University[] = [];
-    aptNameCheckboxes: CheckBoxModel[] = [];
     aptTypeCheckboxes: {} = {};
     genderValues = [
         'Male',
@@ -47,10 +41,6 @@ export class SubscribeNotificationsModal {
 
     ngOnInit() {
         this.getNotificationSettings();
-
-        let userUniversities: University[] = this.sharedDataService.
-            getUserSelectedUniversitiesList();
-
     }
 
     getNotificationSettings() {
@@ -59,60 +49,39 @@ export class SubscribeNotificationsModal {
             subscribe(notificationSettings => {
                 this.notificationSettings = notificationSettings;
                 this.selectedUniversityId = this.notificationSettings.universityId;
+                this.showUnivs = notificationSettings.universityId == -1;
 
-                this.setSelectedUnivAptNames();
-                this.extractUniversitynames();
-
-                if (notificationSettings.universityId === -1) {
-                    this.showUnivs = true;
-                }
+                this.setDBselectedUniv();
                 setTimeout(() => {
-                    this.populateCheckBoxNgModel();
+                    this.prePopulateNotificationSettings();
                     this.isLoading = false;
                 }, 500);
             });
 
     }
 
-    extractUniversitynames() {
 
-        this.notificationSettings.apartmentNames.map(university => {
-            return new University({
-                universityName: university.universityName,
-                universityId: university.universityId,
-            });
-        }).forEach(university => this.allUniversities.push(university));
-    }
-
-    setSelectedUnivAptNames() {
-
+    setDBselectedUniv() {
         this.selectedUniversityDetails = this
             .notificationSettings
-            .apartmentNames
-            .find(item => item.universityId == this.selectedUniversityId)
-
+            .allUnivDetails
+            .find(item => item.universityId == this.selectedUniversityId);
     }
 
-    populateCheckBoxNgModel() {
+    prePopulateNotificationSettings() {
 
         if (this.selectedUniversityDetails) {
-            for (let aptName of this.selectedUniversityDetails.apartmentNames) {
 
-                let value = this.notificationSettings.apartmentName.
-                    indexOf(aptName.apartmentName) != -1 ? true : false;
-
-                let checkbox: CheckBoxModel = new CheckBoxModel();
-                checkbox.aptType = aptName.apartmentType;
-                checkbox.value = value;
-                this.aptNameCheckboxes[aptName.apartmentName] = checkbox;
-            }
+            this
+                .selectedUniversityDetails
+                .apartments
+                .filter(apartment => this.notificationSettings.apartmentName.indexOf(apartment.apartmentName) != -1)
+                .forEach(apartment => apartment.selected = true);
 
             for (let aptType of this.notificationSettings.apartmentType) {
-
                 this.aptTypeVisibility[aptType] = true;
-                let value = this.notificationSettings.apartmentType.
+                this.aptTypeCheckboxes[aptType] = this.notificationSettings.apartmentType.
                     indexOf(aptType) != -1;
-                this.aptTypeCheckboxes[aptType] = value;
             }
             this.selectedGender = this.notificationSettings.gender;
         }
@@ -124,11 +93,11 @@ export class SubscribeNotificationsModal {
         let aptNames: string[] = [];
         let aptTypes: string[] = [];
 
-        for (let aptName in this.aptNameCheckboxes) {
-            if (this.aptNameCheckboxes[aptName].value) {
-                aptNames.push(aptName);
-            }
-        }
+        aptNames = this.selectedUniversityDetails
+            .apartments
+            .filter(apartment => apartment.selected)
+            .map(apartment => apartment.apartmentName);
+
         for (let aptType in this.aptTypeCheckboxes) {
             if (this.aptTypeCheckboxes[aptType]) {
                 aptTypes.push(aptType);
@@ -145,7 +114,7 @@ export class SubscribeNotificationsModal {
 
     selectUniversity() {
         this.showUnivs = false;
-        this.setSelectedUnivAptNames();
+        this.setDBselectedUniv();
     }
     backClicked() {
         this.backPrompt = true;
@@ -157,6 +126,11 @@ export class SubscribeNotificationsModal {
         this.checkUnCheckBoxes(environment.all);
         this.aptTypeCheckboxes = {};
         this.selectedGender = null;
+        this.aptTypeVisibility = {
+            on: false,
+            off: false,
+            dorms: false
+        };
     }
 
     backPromptNo() {
@@ -170,17 +144,17 @@ export class SubscribeNotificationsModal {
     checkUnCheckBoxes(aptType: string) {
 
         if (aptType === environment.all) {
-            for (let aptName in this.aptNameCheckboxes) {
-                this.aptNameCheckboxes[aptName].value = false;
-            }
+            this.selectedUniversityDetails
+                .apartments
+                .forEach(apartment => apartment.selected = false);
+
         }
         else {
             this.aptTypeVisibility[aptType] = !this.aptTypeVisibility[aptType];
-            for (let aptName in this.aptNameCheckboxes) {
-                if (this.aptNameCheckboxes[aptName].aptType === aptType) {
-                    this.aptNameCheckboxes[aptName].value = false;
-                }
-            }
+            this.selectedUniversityDetails
+                .apartments
+                .filter(apartment => apartment.apartmentType == aptType)
+                .forEach(apartment => apartment.selected = false);
         }
 
     }

@@ -125,7 +125,7 @@ public class AccommodationController extends AbstractController {
                 getUserFromToken(request));
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/getApartmentNames")
+    @RequestMapping(method = RequestMethod.GET, value = "/getAllUnivDetails")
     public List<RApartmentNames> getApartmentNames(@RequestParam("apartmentType") String apartmentType,
                                                    HttpServletRequest request) throws Exception {
 
@@ -142,7 +142,7 @@ public class AccommodationController extends AbstractController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/getAllApartmentsWithType")
-    public List<RApartmentNamesWithType> getAllApartmentsWithType(HttpServletRequest request,
+    public List<ApartmentDTO> getAllApartmentsWithType(HttpServletRequest request,
                                                                   @RequestBody AccommodationSearchDTO aptNames) throws Exception {
 
         List<Integer> universityIds = aptNames.getUniversityIds();
@@ -213,6 +213,13 @@ public class AccommodationController extends AbstractController {
         long userId = user.getUserId();
         return accommodationService.editAccommodationAdd(rAccommodationAdd, userId);
 
+    }
+
+    @CrossOrigin
+    @GetMapping(value = "profile/validations/duplicates/{userId}")
+    public boolean validateActiveAccommodationByUser(@PathVariable long userId)
+            throws Exception {
+        return accommodationService.validateActiveAccommodationByUser(userId);
     }
 
 }

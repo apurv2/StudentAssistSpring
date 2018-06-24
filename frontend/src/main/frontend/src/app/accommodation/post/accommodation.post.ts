@@ -171,7 +171,7 @@ export class PostAccommodation implements ErrorHandler {
         let filterData: AccommodationSearchModel = new AccommodationSearchModel();
         filterData.universityIds = universities.map(university => university.universityId);
         return this.simpleSearchFilterService.getApartmentNames(filterData)
-            .map(apartmentNames => this.mapApartmentNames(apartmentNames, apartmentId))
+            .map(allUnivDetails => this.mapApartmentNames(allUnivDetails, apartmentId))
 
     }
     mapApartmentNames(apartments: Apartment[], apartmentId?: number) {

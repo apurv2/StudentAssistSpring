@@ -4,10 +4,11 @@ import com.studentAssist.dao.AccommodationDAO;
 import com.studentAssist.dao.NotificationsDAO;
 import com.studentAssist.entities.*;
 import com.studentAssist.exception.BadStudentRequestException;
-import com.studentAssist.response.RApartmentNamesInUnivs;
-import com.studentAssist.response.RApartmentNamesWithType;
+import com.studentAssist.response.ApartmentDTO;
 import com.studentAssist.response.RNotificationSettings;
+import com.studentAssist.response.UniversityDTO;
 import com.studentAssist.util.Utilities;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,13 +31,14 @@ public class NotificationsService {
 
         RNotificationSettings notificationSettings = null;
         List<NotificationSettings> notifications = notificationsDAO.getNotificationSettings(user.getUserId());
-        int selectedUnivId = notifications.get(0).getUniversityId().getUniversityId();
-        List<RApartmentNamesInUnivs> allApartmentNames = getApartmentNamesWithTypeAndUniv(user, selectedUnivId);
 
-        if (notifications != null && notifications.size() > 0) {
+        int selectedUnivId = CollectionUtils.isNotEmpty(notifications) ? notifications.get(0).getUniversity().getUniversityId() : 0;
+        List<UniversityDTO> allApartmentNames = getApartmentNamesWithTypeAndUniv(user, selectedUnivId);
+
+        if (CollectionUtils.isNotEmpty(notifications)) {
             for (NotificationSettings notificationSetting : notifications) {
                 notificationSettings = new RNotificationSettings(notificationSetting.getApartmentName(),
-                        notificationSetting.getGender(), notificationSetting.getUniversityId().getUniversityId(),
+                        notificationSetting.getGender(), notificationSetting.getUniversity().getUniversityId(),
                         notificationSetting.getApartmentType(), allApartmentNames);
 
             }
@@ -74,10 +76,10 @@ public class NotificationsService {
         return notificationsDAO.unSubscribeNotifications(user);
     }
 
-    public List<RApartmentNamesInUnivs> getApartmentNamesWithTypeAndUniv(Users user, int univId) {
+    public List<UniversityDTO> getApartmentNamesWithTypeAndUniv(Users user, int univId) {
 
         List<Apartments> apartments = accommodationDAO.getApartmentNamesWithTypeAndUniv(user, univId);
-        Map<Integer, List<RApartmentNamesWithType>> univApts = new HashMap<>();
+        Map<Integer, List<ApartmentDTO>> univApts = new HashMap<>();
         Map<Integer, String> univIdNameMap = new HashMap<>();
 
         apartments.forEach(apartment -> {
@@ -89,13 +91,16 @@ public class NotificationsService {
                 univApts.put(universityId, new ArrayList<>());
             } else {
                 univApts.get(universityId)
-                        .add(new RApartmentNamesWithType(apartment.getApartmentName(), apartment.getApartmentType()));
+                        .add(new ApartmentDTO() {{
+                            setApartmentName(apartment.getApartmentName());
+                            setApartmentType(apartment.getApartmentType());
+                        }});
             }
         });
 
         return univApts.entrySet().stream().
-                map(item -> new RApartmentNamesInUnivs() {{
-                    setApartmentNames(item.getValue());
+                map(item -> new UniversityDTO() {{
+                    setApartments(item.getValue());
                     setUniversityId(item.getKey());
                     setUniversityName(univIdNameMap.get(item.getKey()));
                 }}).collect(Collectors.toList());

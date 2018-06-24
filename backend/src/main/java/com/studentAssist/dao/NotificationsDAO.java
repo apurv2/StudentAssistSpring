@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.List;
 
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 import org.hibernate.Hibernate;
 import org.hibernate.SQLQuery;
 import org.springframework.stereotype.Repository;
@@ -29,7 +30,7 @@ public class NotificationsDAO extends AbstractDao {
 
 	/**
 	 * fetches Notifications settings
-	 * 
+	 *
 	 * @param userId
 	 * @param session
 	 * @return
@@ -38,6 +39,7 @@ public class NotificationsDAO extends AbstractDao {
 		List<NotificationSettings> settings = null;
 
 		Users user = getByKey(Users.class, userId);
+		user.getNotificationSettings();
 		if (user != null) {
 
 			for (NotificationSettings setting : user.getNotificationSettings()) {
@@ -58,7 +60,7 @@ public class NotificationsDAO extends AbstractDao {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param userId
 	 * @param notificationSettings
 	 * @param session
@@ -90,7 +92,7 @@ public class NotificationsDAO extends AbstractDao {
 
 	/**
 	 * Fetches the list of users to send notification and sends them.
-	 * 
+	 *
 	 * @param session
 	 * @param apartment
 	 * @param advertisement

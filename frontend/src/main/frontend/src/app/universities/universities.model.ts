@@ -1,3 +1,5 @@
+import { Apartment } from "../accommodation/shared/models/apartment.names.model";
+
 export class University {
 
       universityId: number;
@@ -10,6 +12,7 @@ export class University {
       noOfListings: number;
       univAcronym: string;
       isSelected: boolean;
+      apartments: Apartment[];
 
       public constructor(init?: Partial<University>) {
             Object.assign(this, init);

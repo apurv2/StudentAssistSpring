@@ -10,4 +10,5 @@ export class Apartment {
     city: string;
     state: string;
     zip: string;
+    selected : boolean;
 }

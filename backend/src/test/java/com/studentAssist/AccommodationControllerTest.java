@@ -7,6 +7,7 @@ import com.studentAssist.entities.Apartments;
 import com.studentAssist.entities.Universities;
 import com.studentAssist.entities.Users;
 import com.studentAssist.interceptor.ExecuteInterceptor;
+import com.studentAssist.response.RAccommodationAdd;
 import com.studentAssist.services.AccommodationService;
 import com.studentAssist.services.LoggingService;
 import com.studentAssist.services.NotificationsService;
@@ -66,6 +67,8 @@ public class AccommodationControllerTest {
 
     private AccommodationAdd add;
 
+    private RAccommodationAdd responseAdd;
+
 
     @Before
     public void setup() {
@@ -95,7 +98,7 @@ public class AccommodationControllerTest {
             setNoOfRooms("1bhk/1bath");
             setCost(123);
             setGender("Male");
-            setNotes("notes");
+            setNotes("notesssss");
             setAddId(1160);
             setDatePosted(new Date());
 //            setPostedTill(1528423455000L);
@@ -105,6 +108,9 @@ public class AccommodationControllerTest {
     @Test
     public void getAddFromAddId() throws Exception {
         given(this.dao.getAccommodationFromId(1160)).willReturn(add);
-//        assertThat(accommodationService.getAccommodationFromId(1160)).isEqualTo(add);
+//        Assert.assertThat(accommodationService.getAccommodationFromId(1160),
+//                new ReflectionEquals(responseAdd, ""));
+
+
     }
 }

@@ -1,15 +1,10 @@
 package com.studentAssist.entities;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class NotificationSettings implements Serializable {
@@ -21,7 +16,7 @@ public class NotificationSettings implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "UNIV_ID")
-	private Universities universityId;
+	private Universities university;
 
 	@ManyToOne
 	@JoinColumn(name = "USER_ID")
@@ -46,7 +41,7 @@ public class NotificationSettings implements Serializable {
 
 	public NotificationSettings(Users user, List<String> apartmentName, String gender, List<String> apartmentType,
 			Universities university) {
-		this.universityId = university;
+		this.university = university;
 		this.user = user;
 		this.apartmentName = apartmentName;
 		this.gender = gender;
@@ -64,12 +59,12 @@ public class NotificationSettings implements Serializable {
 		return user;
 	}
 
-	public Universities getUniversityId() {
-		return universityId;
+	public Universities getUniversity() {
+		return university;
 	}
 
-	public void setUniversityId(Universities universityId) {
-		this.universityId = universityId;
+	public void setUniversity(Universities university) {
+		this.university = university;
 	}
 
 	public void setUser(Users user) {

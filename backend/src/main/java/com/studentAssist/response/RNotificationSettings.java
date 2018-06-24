@@ -17,16 +17,16 @@ public class RNotificationSettings {
 
 	private List<String> apartmentType = new ArrayList<String>();
 
-	private List<RApartmentNamesInUnivs> apartmentNames = new ArrayList<RApartmentNamesInUnivs>();
+	private List<UniversityDTO> allUnivDetails = new ArrayList<UniversityDTO>();
 
 	public RNotificationSettings(List<String> apartmentName, String gender, int universityId,
-			List<String> apartmentType, List<RApartmentNamesInUnivs> apartmentNames) {
+			List<String> apartmentType, List<UniversityDTO> apartmentNames) {
 		super();
 		this.apartmentName = apartmentName;
 		this.gender = gender;
 		this.universityId = universityId;
 		this.apartmentType = apartmentType;
-		this.apartmentNames = apartmentNames;
+		this.allUnivDetails = apartmentNames;
 	}
 
 	public String getGcmId() {
@@ -61,12 +61,12 @@ public class RNotificationSettings {
 		this.gender = gender;
 	}
 
-	public List<RApartmentNamesInUnivs> getApartmentNames() {
-		return apartmentNames;
+	public List<UniversityDTO> getAllUnivDetails() {
+		return allUnivDetails;
 	}
 
-	public void setApartmentNames(List<RApartmentNamesInUnivs> apartmentNames) {
-		this.apartmentNames = apartmentNames;
+	public void setAllUnivDetails(List<UniversityDTO> allUnivDetails) {
+		this.allUnivDetails = allUnivDetails;
 	}
 
 	public List<String> getApartmentType() {

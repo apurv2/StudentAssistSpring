@@ -68,7 +68,7 @@ export class AdvancedSearchFilters {
 
             filterData.universityIds = universityIds;
             return this.simpleSearchFilterService.getApartmentNames(filterData).
-                map(apartmentNames => this.mapApartmentNames(apartmentNames));
+                map(allUnivDetails => this.mapApartmentNames(allUnivDetails));
         }
     }
 

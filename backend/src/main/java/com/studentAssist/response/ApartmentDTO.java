@@ -9,6 +9,7 @@ public class ApartmentDTO {
 	private String state;
 	private int zip;
 	private int universityId;
+	int apartmentId;
 
 	public int getUniversityId() {
 		return universityId;
@@ -66,4 +67,11 @@ public class ApartmentDTO {
 		this.zip = zip;
 	}
 
+	public int getApartmentId() {
+		return apartmentId;
+	}
+
+	public void setApartmentId(int apartmentId) {
+		this.apartmentId = apartmentId;
+	}
 }

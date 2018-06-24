@@ -225,14 +225,10 @@ public class AccommodationDAO extends AbstractDao {
 
     public List<Apartments> getApartmentNamesWithType(List<Integer> universityIds) throws Exception {
 
-        List apartmentNames = null;
         String univsList = StringUtils.join(universityIds.toArray(), ",");
-
-        Query query = getSession().createQuery("from Apartments where university.universityId in(" + univsList + ")");
-        apartmentNames = query.list();
-
-        return apartmentNames;
-
+        return getSession()
+                .createQuery("from Apartments where university.universityId in(" + univsList + ")")
+                .list();
     }
 
     public List<AccommodationAdd> recentListChecker(Integer[] accommodationAdds) throws Exception {
@@ -460,16 +456,12 @@ public class AccommodationDAO extends AbstractDao {
 
     public List<AccommodationAdd> getAccommodationCardsByUniversityId(int selectedUniversityID, int numberOfCards) {
 
-        AccommodationAdd add = new AccommodationAdd();
-        add.setUniversity(new Universities(selectedUniversityID));
-
         Criteria criteria = getCriteria(AccommodationAdd.class, "add")
                 .add(Restrictions.eq("add.university.universityId", selectedUniversityID)).addOrder(Order.asc("cost"))
                 .add(Restrictions.eq("add.delete_sw", false))
                 .add(Restrictions.or(Restrictions.gt("add.postedTill", Utilities.getDate()),
                         Restrictions.isNull("add.postedTill")))
                 .setMaxResults(numberOfCards);
-
         List adds = criteria.list();
         lazyLoadAdds(adds);
 
@@ -494,5 +486,12 @@ public class AccommodationDAO extends AbstractDao {
 
     public List<Apartments> getApartmentsByUser(Users user) {
         return ((Users) getByKey(Users.class, user.getUserId())).getApartments();
+    }
+
+    public boolean validateActiveAccommodationByUser(long userId) {
+
+        String newquery = "select count(1) " + "from AccommodationAdd where userId=" + userId; // assumption, your query ll be "from tablename where crieteria=1"
+        Integer count = (Integer) getSession().createQuery(newquery).uniqueResult();
+        return count > 0;
     }
 }

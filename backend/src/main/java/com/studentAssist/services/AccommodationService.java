@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class AccommodationService {
@@ -73,8 +74,7 @@ public class AccommodationService {
 
     public List<RAccommodationAdd> getUserPosts(long userId, int position) throws Exception {
 
-        List<AccommodationAdd> userAdds = accommmodationDAO.getUserPosts(userId, position);
-        return getRAccommodationAdds(userAdds, null, -1);
+        return getRAccommodationAdds(accommmodationDAO.getUserPosts(userId, position), null, -1);
 
     }
 
@@ -87,15 +87,11 @@ public class AccommodationService {
      * @throws Exception
      */
     public List<RApartmentNames> getAllApartmentNames(Users currentUser) throws Exception {
-
-        List<Apartments> apartments = accommmodationDAO.getAllApartmentNames(currentUser);
-
-        List<RApartmentNames> rApartments = new ArrayList<>();
-
-        for (Apartments apt : apartments) {
-            rApartments.add(new RApartmentNames(apt.getApartmentName()));
-        }
-        return rApartments;
+        return accommmodationDAO
+                .getAllApartmentNames(currentUser)
+                .stream()
+                .map(apartment -> new RApartmentNames(apartment.getApartmentName()))
+                .collect(Collectors.toList());
     }
 
     /**
@@ -176,25 +172,23 @@ public class AccommodationService {
     }
 
     public List<RApartmentNames> getApartmentNames(String apartmentType) throws Exception {
-
-        List<Apartments> apartments = accommmodationDAO.getApartmentNames(apartmentType);
-        List<RApartmentNames> rApartments = new ArrayList<>();
-        for (Apartments apt : apartments) {
-            rApartments.add(new RApartmentNames(apt.getApartmentName()));
-        }
-        return rApartments;
+        return accommmodationDAO.getApartmentNames(apartmentType)
+                .stream().map(apartment -> new RApartmentNames(apartment.getApartmentName()))
+                .collect(Collectors.toList());
     }
 
-    public List<RApartmentNamesWithType> getApartmentNamesWithType(List<Integer> universityIds) throws Exception {
+    public List<ApartmentDTO> getApartmentNamesWithType(List<Integer> universityIds) throws Exception {
 
-        List<Apartments> apartments = accommmodationDAO.getApartmentNamesWithType(universityIds);
-        List<RApartmentNamesWithType> rApartments = new ArrayList<>();
-
-        for (Apartments apartment : apartments) {
-            rApartments.add(new RApartmentNamesWithType(apartment.getApartmentName(), apartment.getApartmentType(),
-                    apartment.getUniversity().getUniversityId(), apartment.getId()));
-        }
-        return rApartments;
+        return accommmodationDAO
+                .getApartmentNamesWithType(universityIds)
+                .stream()
+                .map(apartment ->
+                        new ApartmentDTO() {{
+                            setApartmentName(apartment.getApartmentName());
+                            setApartmentType(apartment.getApartmentType());
+                            setUniversityId(apartment.getUniversity().getUniversityId());
+                            setApartmentId(apartment.getId());
+                        }}).collect(Collectors.toList());
     }
 
     public String setUserVisitedAdds(Users user, int addId) throws Exception {
@@ -245,7 +239,8 @@ public class AccommodationService {
         if (addIds != null)
             addIdsSet.addAll(addIds);
 
-        for (AccommodationAdd add : accommodationAdds) {
+
+        return accommodationAdds.stream().map(add -> {
 
             if (add.getNoOfRooms() != null) {
                 add.setNoOfRooms(add.getNoOfRooms().replaceAll("\\s+", ""));
@@ -261,21 +256,19 @@ public class AccommodationService {
             boolean userVisited = addIdsSet.contains(add.getAddId());
 
             Users user = add.getUser();
-            rAdds.add(new RAccommodationAdd(add.getVacancies(), add.getGender(), add.getNoOfRooms(),
+            return new RAccommodationAdd(add.getVacancies(), add.getGender(), add.getNoOfRooms(),
                     add.getCost(), add.getFbId(), add.getNotes(), user.getUserId(),
                     add.getApartment().getApartmentName(), user.getFirstName(), user.getLastName(),
                     user.getEmail(), user.getPhoneNumber(), add.getAddId(), userVisited,
                     new SimpleDateFormat("dd MMM").format(add.getDatePosted()), add.getAddPhotoIds(),
-                    add.getApartment().getUniversity().getUniversityId(),
-                    add.getApartment().getUniversity().getUniversityName(), universityPhoto,
-                    add.getApartment().getUniversity().getUnivAcronym(), add.getApartment().getCity(),
+                    add.getUniversity().getUniversityId(),
+                    add.getUniversity().getUniversityName(), universityPhoto,
+                    add.getUniversity().getUnivAcronym(), add.getApartment().getCity(),
                     add.getApartment().getState(), add.getApartment().getZip(),
                     add.getApartment().getAddr_line(),
                     SAConstants.apartmentTypeCodeMap.get(add.getApartment().getApartmentType()),
-                    add.getApartment().getId(), add.getPostedTill()));
-        }
-
-        return rAdds;
+                    add.getApartment().getId(), add.getPostedTill());
+        }).collect(Collectors.toList());
 
     }
 
@@ -356,5 +349,9 @@ public class AccommodationService {
         validatePostAccommodation(userId, accommodationAdd, screenAdd.getUniversityId());
 
         return accommmodationDAO.updateAccommodationAdd(accommodationAdd);
+    }
+
+    public boolean validateActiveAccommodationByUser(long userId) {
+        return accommmodationDAO.validateActiveAccommodationByUser(userId);
     }
 }

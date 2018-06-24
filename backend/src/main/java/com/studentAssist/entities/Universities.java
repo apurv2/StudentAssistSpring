@@ -1,17 +1,9 @@
 package com.studentAssist.entities;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 
 @Entity
 public class Universities {
@@ -39,7 +31,7 @@ public class Universities {
 	@OneToMany(mappedBy = "university")
 	private List<Airport> airportPickup = new ArrayList<>();
 
-	@OneToMany(mappedBy = "universityId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "university", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<NotificationSettings> notificationSettings = new ArrayList<>();
 
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "universities")

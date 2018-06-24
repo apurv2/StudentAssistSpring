@@ -24,7 +24,7 @@
                                     </mat-select>
                                 </mat-form-field>
                             </div>
-                            <div class="form-group col-md-5">
+                            <div class="form-group col-md-5 col-xs-10">
                                 <mat-form-field>
                                     <mat-select placeholder="Apartment Name" [(ngModel)]="aptNameSpinnerSelectedItem.code" [ngModelOptions]="{standalone: true}"
                                         required>
@@ -32,7 +32,7 @@
                                     </mat-select>
                                 </mat-form-field>
                             </div>
-                            <div class="form-group col-md-1 addbtn">
+                            <div class="form-group col-md-1 col-xs-2 addbtn">
                                 <button class="btn" [disabled]="!showAddApartment" (click)="apartmentNameClick()">
                                     <i class="material-icons">add</i>
                                 </button>

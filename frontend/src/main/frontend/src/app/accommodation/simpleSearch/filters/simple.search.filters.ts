@@ -81,8 +81,8 @@ export class SimpleSearchAddsFilters {
             filterData.universityIds = universityIds;
             if (apartmentName) {
                 this.simpleSearchFilterService.getApartmentNames(filterData).
-                    map(apartmentNames => {
-                        this.mapApartmentNames(apartmentNames);
+                    map(allUnivDetails => {
+                        this.mapApartmentNames(allUnivDetails);
                         filterData.rightSpinner = this.rightSpinnerSelectedItem.code;
                     }).
                     subscribe(data => this.sharedDataService.emitAccommomdationSearchFilters(filterData));

@@ -24,7 +24,7 @@ export class SharedDataService {
     accommodationAdd = new Subject<AccommodationAdd>();
     dbUnivChips = new Subject<University[]>();
     userInfo = new Subject<UserInfo>();
-    apartmentNames: Apartment[];
+    allUnivDetails: Apartment[];
     flashCardUniversityID: number;
     loginStatus = new Subject<boolean>();
 
@@ -52,11 +52,11 @@ export class SharedDataService {
         this.dbUnivChips.next(univChips);
     }
     getApartmentNames(): Apartment[] {
-        return this.apartmentNames;
+        return this.allUnivDetails;
     }
 
-    setApartmentNames(apartmentNames: Apartment[]) {
-        this.apartmentNames = apartmentNames
+    setApartmentNames(allUnivDetails: Apartment[]) {
+        this.allUnivDetails = allUnivDetails
     }
     emitAccommodationAdd(accommodationAdd: AccommodationAdd) {
         return this.accommodationAdd.next(accommodationAdd);
@@ -102,6 +102,6 @@ export class SharedDataService {
             this.emitDbUnivChips(chips);
         }
     }
-    
+
 
 }

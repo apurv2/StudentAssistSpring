@@ -1,12 +1,10 @@
-import { UniversityApartments } from "app/accommodation/shared/models/university.apartments.model";
+import { University } from "../../universities/universities.model";
 
 export class NotificationSettings {
 
     apartmentName: string[];
     gender: string;
     universityId: number;
-    gcmId: string;
-    instanceId: string;
     apartmentType: string[];
-    apartmentNames: UniversityApartments[];
+    allUnivDetails: University[];
 }

@@ -3,7 +3,6 @@ package com.studentAssist.services;
 import com.studentAssist.dao.AccommodationDAO;
 import com.studentAssist.dao.UniversitiesDAO;
 import com.studentAssist.entities.AccommodationAdd;
-import com.studentAssist.entities.Airport;
 import com.studentAssist.entities.Universities;
 import com.studentAssist.entities.Users;
 import com.studentAssist.response.*;
@@ -14,8 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UniversitiesService {
@@ -110,10 +109,11 @@ public class UniversitiesService {
     }
 
     public List<RUniversity> getAllUniversities() {
-
-        List<RUniversity> univs = new ArrayList<>();
-        universitiesDAO.getAllUniversities().stream().forEach(univ -> univs.add(mapper.map(univ, RUniversity.class)));
-        return univs;
+        return universitiesDAO
+                .getAllUniversities()
+                .stream()
+                .map(univ -> mapper.map(univ, RUniversity.class))
+                .collect(Collectors.toList());
     }
 
     public List<RUniversity> getUniversityNamesWithId(Users user) {
@@ -131,21 +131,19 @@ public class UniversitiesService {
 
     public List<RUniversity> getUniversitiesByName(String searchString) {
 
-        List<Universities> dbUnivs = universitiesDAO.getUniversitiesByName(searchString);
-        List<RUniversity> universities = new ArrayList();
+        return universitiesDAO
+                .getUniversitiesByName(searchString)
+                .stream()
+                .map(university ->
+                        new RUniversity() {
+                            {
+                                setUniversityId(university.getUniversityId());
+                                setUniversityName(university.getUniversityName());
+                                setUnivAcronym(university.getUnivAcronym());
+                            }
+                        }
+                ).collect(Collectors.toList());
 
-        RUniversity univDTO;
-        for (Universities univ : dbUnivs) {
-
-            univDTO = new RUniversity();
-            univDTO.setUniversityId(univ.getUniversityId());
-            univDTO.setUniversityName(univ.getUniversityName());
-            univDTO.setUnivAcronym(univ.getUnivAcronym());
-
-            universities.add(univDTO);
-        }
-
-        return universities;
     }
 
     public FlashCardsResponseDTO getFlashCards(FlashCardsRequestDTO flashCardsRequestDTO) {
@@ -169,22 +167,25 @@ public class UniversitiesService {
 
     private List<AirportDTO> getAirportCards(int selectedUniversityID) {
 
-        List<Airport> airports = airportService.getAirportServices(selectedUniversityID);
+        return airportService.
+                getAirportServices(selectedUniversityID)
+                .stream()
+                .map(x -> new AirportDTO() {{
+                            setUniversityId(selectedUniversityID);
+                            setUnivAcronym(x.getUniversity().getUnivAcronym());
+                            setUniversityName(x.getUniversity().getUniversityName());
+                            setUniversityPhotoUrl(x
+                                    .getUniversity()
+                                    .getUniversityPhotos()
+                                    .stream()
+                                    .filter(y -> y.getPhotoPriority() == 1)
+                                    .findFirst()
+                                    .get()
+                                    .getPhotoUrl());
+                            setUniversityPickupUrl(x.getGroupLink());
+                        }}
+                ).collect(Collectors.toList());
 
-        List<AirportDTO> airportDTOs = new LinkedList<AirportDTO>();
-
-        airports.forEach(x -> {
-            airportDTOs.add(new AirportDTO() {{
-                setUniversityId(selectedUniversityID);
-                setUnivAcronym(x.getUniversity().getUnivAcronym());
-                setUniversityName(x.getUniversity().getUniversityName());
-                setUniversityPhotoUrl(x.getUniversity().getUniversityPhotos().stream().filter(y -> y.getPhotoPriority() == 1).findFirst().get().getPhotoUrl());
-                setUniversityPickupUrl(x.getGroupLink());
-            }});
-        });
-
-
-        return airportDTOs;
     }
 
     private List<RAccommodationAdd> getAccomodationCardsofSelectedUniversity(int selectedUniversityID,
@@ -201,14 +202,10 @@ public class UniversitiesService {
     }
 
     private int getSelectedUniversityID(List<Integer> universitiesIDs, int currentUniversityID) {
-        if (currentUniversityID != 0) {
-            if (universitiesIDs.contains(currentUniversityID)) {
-                int currentUniversityIndex = universitiesIDs.indexOf(currentUniversityID);
-                if (currentUniversityIndex != universitiesIDs.size() - 1) {
-                    return universitiesIDs.get(currentUniversityIndex + 1);
-                } else {
-                    return universitiesIDs.get(0);
-                }
+        if (currentUniversityID > 0 && universitiesIDs.contains(currentUniversityID)) {
+            int currentUniversityIndex = universitiesIDs.indexOf(currentUniversityID);
+            if (currentUniversityIndex != universitiesIDs.size() - 1) {
+                return universitiesIDs.get(currentUniversityIndex + 1);
             } else {
                 return universitiesIDs.get(0);
             }
