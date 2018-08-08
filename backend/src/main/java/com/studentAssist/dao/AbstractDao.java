@@ -21,7 +21,7 @@ public abstract class AbstractDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T extends Object, Type extends Serializable> T getByKey(Class entity, Type key) {
+	public <T, Type extends Serializable> T getByKey(Class entity, Type key) {
 		return (T) getSession().get(entity, key);
 	}
 
@@ -29,7 +29,7 @@ public abstract class AbstractDao {
 		getSession().persist(entity);
 	}
 
-	public <T extends Object> T save(Object entity) {
+	public <T> T save(Object entity) {
 		return (T) getSession().save(entity);
 	}
 

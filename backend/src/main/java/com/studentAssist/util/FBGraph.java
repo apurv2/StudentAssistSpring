@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 
 import com.studentAssist.entities.Users;
 import com.studentAssist.exception.InvalidTokenException;
-import com.studentAssist.exception.StudenAssitException;
 
 @Component
 public class FBGraph {

@@ -1,5 +1,5 @@
 export const environment = {
-  url: 'http://localhost:8080/',
+  url: 'http://localhost:5000/',
   production: false,
   appId: '931333680308184',
   APARTMENT_NAME: "apartmentName",

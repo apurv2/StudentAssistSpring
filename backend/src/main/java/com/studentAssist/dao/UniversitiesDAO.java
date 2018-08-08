@@ -4,12 +4,9 @@ package com.studentAssist.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.TypedQuery;
-
 import org.hibernate.FetchMode;
 import org.hibernate.Query;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.studentAssist.entities.Apartments;
 import com.studentAssist.entities.Universities;
 import com.studentAssist.entities.Users;
-import com.studentAssist.response.RUniversity;
 
 @Repository
 @Transactional
@@ -81,11 +77,7 @@ public class UniversitiesDAO extends AbstractDao {
 
         Users user = getByKey(Users.class, currentUser.getUserId());
 
-        if (user != null && null != user.getUniversities() && !user.getUniversities().isEmpty()) {
-            return true;
-        } else {
-            return false;
-        }
+        return user != null && null != user.getUniversities() && !user.getUniversities().isEmpty();
 
     }
 

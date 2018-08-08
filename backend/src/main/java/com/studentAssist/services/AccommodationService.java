@@ -50,9 +50,7 @@ public class AccommodationService {
     public String createAccommodationAdd(AccommodationAdd add, long userId, int apartmentId) throws Exception {
 
         add.setDatePosted(Utilities.getDate());
-
         validatePostAccommodation(userId, add, apartmentId);
-
         return accommmodationDAO.createAccommodationAdd(userId, add, apartmentId);
     }
 
@@ -136,11 +134,9 @@ public class AccommodationService {
 
                 UniversityAccommodationDTO univAdd = perUnivListing.get(add.getUniversityId());
                 univAdd.getAccommodationAdds().add(add);
-
             } else {
                 List<RAccommodationAdd> addsList = new ArrayList<>();
                 UniversityAccommodationDTO univAcc = new UniversityAccommodationDTO();
-
                 addsList.add(add);
                 univAcc.setAccommodationAdds(addsList);
                 univAcc.setUniversityId(add.getUniversityId());
@@ -151,9 +147,11 @@ public class AccommodationService {
             }
         }
 
-        List<UniversityAccommodationDTO> univAddsList = new ArrayList();
-        perUnivListing.entrySet().stream().forEach(listing -> univAddsList.add(listing.getValue()));
-        return univAddsList;
+        return perUnivListing
+                .entrySet()
+                .stream()
+                .map(listing -> listing.getValue())
+                .collect(Collectors.toList());
 
     }
 
@@ -234,40 +232,51 @@ public class AccommodationService {
     public List<RAccommodationAdd> getRAccommodationAdds(List<AccommodationAdd> accommodationAdds, List<Long> addIds,
                                                          int photoPriority) {
 
-        List<RAccommodationAdd> rAdds = new ArrayList<>();
-        Set<Long> addIdsSet = new HashSet<>();
-        if (addIds != null)
-            addIdsSet.addAll(addIds);
-
-
+        Set<Long> addIdsSet = new HashSet<>(addIds != null ? addIds : Collections.emptyList());
         return accommodationAdds.stream().map(add -> {
 
             if (add.getNoOfRooms() != null) {
                 add.setNoOfRooms(add.getNoOfRooms().replaceAll("\\s+", ""));
             }
 
-            String universityPhoto = SAConstants.EmptyText;
-            List<UniversityPhotos> photos = add.getUniversity().getUniversityPhotos();
-
-            if (photoPriority != -1) {
-                universityPhoto = photos.stream().filter(photo -> photo.getPhotoPriority() == photoPriority).findFirst()
-                        .map(UniversityPhotos::getPhotoUrl).orElse(null);
-            }
-            boolean userVisited = addIdsSet.contains(add.getAddId());
-
             Users user = add.getUser();
-            return new RAccommodationAdd(add.getVacancies(), add.getGender(), add.getNoOfRooms(),
-                    add.getCost(), add.getFbId(), add.getNotes(), user.getUserId(),
-                    add.getApartment().getApartmentName(), user.getFirstName(), user.getLastName(),
-                    user.getEmail(), user.getPhoneNumber(), add.getAddId(), userVisited,
-                    new SimpleDateFormat("dd MMM").format(add.getDatePosted()), add.getAddPhotoIds(),
-                    add.getUniversity().getUniversityId(),
-                    add.getUniversity().getUniversityName(), universityPhoto,
-                    add.getUniversity().getUnivAcronym(), add.getApartment().getCity(),
-                    add.getApartment().getState(), add.getApartment().getZip(),
-                    add.getApartment().getAddr_line(),
-                    SAConstants.apartmentTypeCodeMap.get(add.getApartment().getApartmentType()),
-                    add.getApartment().getId(), add.getPostedTill());
+            return new RAccommodationAdd() {{
+                setVacancies(add.getVacancies());
+                setGender(add.getGender());
+                setNoOfRooms(add.getNoOfRooms());
+                setCost(add.getCost());
+                setFbId(add.getFbId());
+                setNotes(add.getNotes());
+                setAddId(add.getAddId());
+                setApartmentName(add.getApartment().getApartmentName());
+                setAddPhotoIds(add.getAddPhotoIds());
+                setUniversityId(add.getUniversity().getUniversityId());
+                setUniversityName(add.getUniversity().getUniversityName());
+                setUnivAcronym(add.getUniversity().getUnivAcronym());
+                setCity(add.getApartment().getCity());
+                setState(add.getApartment().getState());
+                setZip(add.getApartment().getZip());
+                setAddrLine(add.getApartment().getAddr_line());
+                setApartmentId(add.getApartment().getId());
+                setPostedTill(add.getPostedTill());
+                setUserVisitedSw(addIdsSet.contains(add.getAddId()));
+                setUniversityPhotoUrl(add
+                        .getUniversity()
+                        .getUniversityPhotos()
+                        .stream()
+                        .filter(photo -> photo.getPhotoPriority() == photoPriority)
+                        .findFirst()
+                        .map(UniversityPhotos::getPhotoUrl)
+                        .orElse(SAConstants.EmptyText));
+
+                setUserId(user.getUserId());
+                setFirstName(user.getFirstName());
+                setLastName(user.getLastName());
+                setEmailId(user.getEmail());
+                setPhoneNumber(user.getPhoneNumber());
+                setCreateDate(new SimpleDateFormat("dd MMM").format(add.getDatePosted()));
+                setApartmentType(SAConstants.apartmentTypeCodeMap.get(add.getApartment().getApartmentType()));
+            }};
         }).collect(Collectors.toList());
 
     }

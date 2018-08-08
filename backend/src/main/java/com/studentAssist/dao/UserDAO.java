@@ -3,7 +3,6 @@ package com.studentAssist.dao;
 
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.hibernate.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
