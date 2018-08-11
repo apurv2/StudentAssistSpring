@@ -11,6 +11,7 @@ import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -43,7 +44,7 @@ public class AccommodationService {
         List<AccommodationAdd> accommodationAdds;
         accommodationAdds = accommmodationDAO.getAccommodationNotifications(user, position);
 
-        List<Long> addIds = getUserVisitedAdds(user);
+        List<Integer> addIds = getUserVisitedAdds(user);
         return getRAccommodationAdds(accommodationAdds, addIds, -1);
     }
 
@@ -119,7 +120,7 @@ public class AccommodationService {
                 accommodationSearch.getLeftSpinner(), accommodationSearch.getRightSpinner(),
                 accommodationSearch.getUniversityIds());
 
-        List<Long> userVisitedAdds = null;
+        List<Integer> userVisitedAdds = null;
         if (user != null) {
             userVisitedAdds = getUserVisitedAdds(user);
         }
@@ -136,14 +137,13 @@ public class AccommodationService {
                 univAdd.getAccommodationAdds().add(add);
             } else {
                 List<RAccommodationAdd> addsList = new ArrayList<>();
-                UniversityAccommodationDTO univAcc = new UniversityAccommodationDTO();
                 addsList.add(add);
-                univAcc.setAccommodationAdds(addsList);
-                univAcc.setUniversityId(add.getUniversityId());
-                univAcc.setUniversityName(add.getUniversityName());
-                univAcc.setUrls(add.getUniversityPhotoUrl());
-
-                perUnivListing.put(add.getUniversityId(), univAcc);
+                perUnivListing.put(add.getUniversityId(), new UniversityAccommodationDTO() {{
+                    setUniversityId(add.getUniversityId());
+                    setUniversityName(add.getUniversityName());
+                    setUrls(add.getUniversityPhotoUrl());
+                    setAccommodationAdds(addsList);
+                }});
             }
         }
 
@@ -161,7 +161,7 @@ public class AccommodationService {
         List<AccommodationAdd> simpleSearchAdds = accommmodationDAO.getSimpleSearchAddsPagination(leftSpinner,
                 rightSpinner, position, universityId);
 
-        List<Long> userVisitedAdds = null;
+        List<Integer> userVisitedAdds = null;
         if (users != null) {
             userVisitedAdds = getUserVisitedAdds(users);
         }
@@ -206,7 +206,7 @@ public class AccommodationService {
         return accommmodationDAO.setUserVisitedAdds(userVisitedAdds);
     }
 
-    private List<Long> getUserVisitedAdds(Users user) throws Exception {
+    private List<Integer> getUserVisitedAdds(Users user) throws Exception {
 
         return accommmodationDAO.getUserVisitedAdds(user);
 
@@ -229,10 +229,10 @@ public class AccommodationService {
      * @param addIds
      * @return
      */
-    public List<RAccommodationAdd> getRAccommodationAdds(List<AccommodationAdd> accommodationAdds, List<Long> addIds,
+    public List<RAccommodationAdd> getRAccommodationAdds(List<AccommodationAdd> accommodationAdds, List<Integer> addIds,
                                                          int photoPriority) {
 
-        Set<Long> addIdsSet = new HashSet<>(addIds != null ? addIds : Collections.emptyList());
+        Set<Integer> addIdsSet = new HashSet<>(addIds != null ? addIds : Collections.emptyList());
         return accommodationAdds.stream().map(add -> {
 
             if (add.getNoOfRooms() != null) {

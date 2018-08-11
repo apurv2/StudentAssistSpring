@@ -258,7 +258,7 @@ public class AccommodationDAO extends AbstractDao {
      * @throws Exception
      */
     @SuppressWarnings("unchecked")
-    public List<Long> getUserVisitedAdds(Users user) throws Exception {
+    public List<Integer> getUserVisitedAdds(Users user) throws Exception {
 
         Criteria crit = getCriteria(UserVisitedAdds.class, "userVisited").createAlias("userVisited.user", "user")
                 .createAlias("userVisited.accommodationAdd", "accommodationAdd")

@@ -1,4 +1,4 @@
-package com.studentAssist;
+package com.studentAssist.services;
 
 import com.studentAssist.controllers.AccommodationController;
 import com.studentAssist.dao.AccommodationDAO;
@@ -10,10 +10,6 @@ import com.studentAssist.interceptor.ExecuteInterceptor;
 import com.studentAssist.response.AccommodationSearchDTO;
 import com.studentAssist.response.RAccommodationAdd;
 import com.studentAssist.response.UniversityAccommodationDTO;
-import com.studentAssist.services.AccommodationService;
-import com.studentAssist.services.LoggingService;
-import com.studentAssist.services.NotificationsService;
-import com.studentAssist.services.UserService;
 import com.studentAssist.util.FBGraph;
 import com.studentAssist.util.InsertApartmentDetails;
 import org.junit.Assert;
@@ -28,21 +24,17 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import sun.jvm.hotspot.utilities.AssertionFailure;
 
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.given;
 
-
 @RunWith(SpringRunner.class)
-public class AccommodationControllerTest {
-
-//    @Autowired
-//    private MockMvc mvc;
+public class AccommodationServiceTest {
 
     private MockMvc mockMvc;
 
@@ -212,8 +204,9 @@ public class AccommodationControllerTest {
 
     @Test
     public void verifyRAccAddsWithUserVisitedAdds() throws Exception {
-        RAccommodationAdd serviceAdd = accommodationService.getRAccommodationAdds(Arrays.asList(cooperChase), Arrays.asList(2L, 3L, 4L), -1).get(0);
+        RAccommodationAdd serviceAdd = accommodationService.getRAccommodationAdds(Arrays.asList(cooperChase), Arrays.asList(1160), -1).get(0);
         verifyAccommodationAddDetails(serviceAdd);
+        Assert.assertEquals(serviceAdd.getUserVisitedSw(), true);
 
     }
 
@@ -233,16 +226,14 @@ public class AccommodationControllerTest {
 
         given(this.dao.getSimpleSearchAdds("On", "male", Arrays.asList(1, 2, 3)))
                 .willReturn(addsList);
-
-        given(this.dao.getUserVisitedAdds(testUser)).willReturn(Arrays.asList(3L, 4L, 5L));
-
+        given(this.dao.getUserVisitedAdds(testUser)).willReturn(Arrays.asList(1160));
 
         List<UniversityAccommodationDTO> serviceAdds = accommodationService.getSimpleSearchAdds(
                 new AccommodationSearchDTO() {{
                     setLeftSpinner("On");
                     setRightSpinner("male");
                     setUniversityIds(Arrays.asList(1, 2, 3));
-                }},testUser);
+                }}, testUser);
 
         if (serviceAdds.isEmpty()) {
             throw new AssertionFailure();
@@ -257,7 +248,6 @@ public class AccommodationControllerTest {
                             .collect(Collectors.toList()).size(), univ.getAccommodationAdds().size());
 
                 });
-
     }
 
 
@@ -282,5 +272,75 @@ public class AccommodationControllerTest {
 
     }
 
+    @Test
+    public void createAccommodationAddFromFacebook() {
+    }
 
+    @Test
+    public void getAccommodationNotifications() {
+    }
+
+    @Test
+    public void createAccommodationAdd() {
+    }
+
+    @Test
+    public void deleteAccommodationAdd() {
+    }
+
+    @Test
+    public void getUserPosts() {
+    }
+
+    @Test
+    public void getAllApartmentNames() {
+    }
+
+    @Test
+    public void getAdvancedAdvertisements() {
+    }
+
+    @Test
+    public void getSimpleSearchAdds() {
+    }
+
+    @Test
+    public void getSimpleSearchAddsPagination() {
+    }
+
+    @Test
+    public void getApartmentNames() {
+    }
+
+    @Test
+    public void getApartmentNamesWithType() {
+    }
+
+    @Test
+    public void setUserVisitedAdds() {
+    }
+
+    @Test
+    public void getRecentlyViewed() {
+    }
+
+    @Test
+    public void getRAccommodationAdds() {
+    }
+
+    @Test
+    public void addNewApartment() {
+    }
+
+    @Test
+    public void getAccommodationFromId() {
+    }
+
+    @Test
+    public void editAccommodationAdd() {
+    }
+
+    @Test
+    public void validateActiveAccommodationByUser() {
+    }
 }
