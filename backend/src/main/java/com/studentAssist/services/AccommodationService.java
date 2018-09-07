@@ -18,6 +18,10 @@ import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.mapping;
+
 @Service
 public class AccommodationService {
 
@@ -41,8 +45,7 @@ public class AccommodationService {
 
     public List<RAccommodationAdd> getAccommodationNotifications(Users user, int position) throws Exception {
 
-        List<AccommodationAdd> accommodationAdds;
-        accommodationAdds = accommmodationDAO.getAccommodationNotifications(user, position);
+        List<AccommodationAdd> accommodationAdds = accommmodationDAO.getAccommodationNotifications(user, position);
 
         List<Integer> addIds = getUserVisitedAdds(user);
         return getRAccommodationAdds(accommodationAdds, addIds, -1);
@@ -125,33 +128,20 @@ public class AccommodationService {
             userVisitedAdds = getUserVisitedAdds(user);
         }
 
-        List<RAccommodationAdd> accommodationAdds = getRAccommodationAdds(simpleSearchAdds, userVisitedAdds, 2);
-
-        Map<Integer, UniversityAccommodationDTO> perUnivListing = new HashMap<>();
-
-        for (RAccommodationAdd add : accommodationAdds) {
-
-            if (perUnivListing.containsKey(add.getUniversityId())) {
-
-                UniversityAccommodationDTO univAdd = perUnivListing.get(add.getUniversityId());
-                univAdd.getAccommodationAdds().add(add);
-            } else {
-                List<RAccommodationAdd> addsList = new ArrayList<>();
-                addsList.add(add);
-                perUnivListing.put(add.getUniversityId(), new UniversityAccommodationDTO() {{
-                    setUniversityId(add.getUniversityId());
-                    setUniversityName(add.getUniversityName());
-                    setUrls(add.getUniversityPhotoUrl());
-                    setAccommodationAdds(addsList);
-                }});
-            }
-        }
-
-        return perUnivListing
-                .entrySet()
+        return getRAccommodationAdds(simpleSearchAdds, userVisitedAdds, 2)
                 .stream()
-                .map(listing -> listing.getValue())
-                .collect(Collectors.toList());
+                .collect(collectingAndThen(groupingBy(RAccommodationAdd::getUniversityId),
+                        m -> m.entrySet()
+                                .stream()
+                                .map(univ -> new UniversityAccommodationDTO() {
+                                    {
+                                        setUniversityId(univ.getKey());
+                                        setUniversityName(univ.getValue().get(0).getUniversityName());
+                                        setUrls(univ.getValue().get(0).getUniversityPhotoUrl());
+                                        setAccommodationAdds(univ.getValue());
+                                    }
+                                })
+                                .collect(Collectors.toList())));
 
     }
 
@@ -363,4 +353,8 @@ public class AccommodationService {
     public boolean validateActiveAccommodationByUser(long userId) {
         return accommmodationDAO.validateActiveAccommodationByUser(userId);
     }
+
+
+
+
 }

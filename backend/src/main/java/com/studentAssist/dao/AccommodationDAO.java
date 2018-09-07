@@ -5,6 +5,7 @@ import com.studentAssist.entities.*;
 import com.studentAssist.response.AccommodationSearchDTO;
 import com.studentAssist.util.SAConstants;
 import com.studentAssist.util.Utilities;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.*;
 import org.hibernate.criterion.*;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -86,19 +88,17 @@ public class AccommodationDAO extends AbstractDao {
     public List<Apartments> getAllApartmentNames(Users currentUser) throws Exception {
 
         Users dbUser = getByKey(Users.class, currentUser.getUserId());
+        List<Integer> universityIds = dbUser
+                .getUniversities()
+                .stream()
+                .map(university -> university.getUniversityId())
+                .collect(Collectors.toList());
 
-        List<Integer> universityIds = new ArrayList<Integer>();
-        for (Universities university : dbUser.getUniversities()) {
-
-            universityIds.add(university.getUniversityId());
-        }
-
-        if (universityIds.isEmpty()) {
-            return new ArrayList<>();
-        }
-
-        return getCriteria(Apartments.class).add(Restrictions.in("university.universityId", universityIds)).list();
-
+        return CollectionUtils.isNotEmpty(universityIds) ?
+                getCriteria(Apartments.class)
+                        .add(Restrictions.in("university.universityId", universityIds))
+                        .list() :
+                Collections.emptyList();
     }
 
     public List<AccommodationAdd> getAdvancedAdvertisements(String apartmentName, String gender, int universityId,

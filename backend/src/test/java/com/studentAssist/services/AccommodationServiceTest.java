@@ -9,9 +9,11 @@ import com.studentAssist.entities.Users;
 import com.studentAssist.interceptor.ExecuteInterceptor;
 import com.studentAssist.response.AccommodationSearchDTO;
 import com.studentAssist.response.RAccommodationAdd;
+import com.studentAssist.response.RApartmentNames;
 import com.studentAssist.response.UniversityAccommodationDTO;
 import com.studentAssist.util.FBGraph;
 import com.studentAssist.util.InsertApartmentDetails;
+import org.assertj.core.util.Lists;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,11 +27,12 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import sun.jvm.hotspot.utilities.AssertionFailure;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import static java.util.stream.Collectors.*;
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.given;
 
@@ -72,6 +75,8 @@ public class AccommodationServiceTest {
     private RAccommodationAdd responseAdd;
     private AccommodationAdd someOtherUniv;
     private List<AccommodationAdd> addsList;
+    Apartments mapleApt;
+    Apartments cooperApt;
 
 
     @Before
@@ -180,6 +185,14 @@ public class AccommodationServiceTest {
         }};
 
         addsList = Arrays.asList(mapleSqAdd, cooperChase, someOtherUniv);
+
+
+        mapleApt = new Apartments() {{
+            setApartmentName("Maple Square");
+        }};
+        cooperApt = new Apartments() {{
+            setApartmentName("Cooper Chase");
+        }};
     }
 
     @Test
@@ -245,7 +258,7 @@ public class AccommodationServiceTest {
                             .stream()
                             .filter(item -> item.getUniversity().getUniversityId() == univ.getUniversityId())
                             .map(item -> item.getApartment())
-                            .collect(Collectors.toList()).size(), univ.getAccommodationAdds().size());
+                            .collect(toList()).size(), univ.getAccommodationAdds().size());
 
                 });
     }
@@ -277,10 +290,6 @@ public class AccommodationServiceTest {
     }
 
     @Test
-    public void getAccommodationNotifications() {
-    }
-
-    @Test
     public void createAccommodationAdd() {
     }
 
@@ -289,11 +298,32 @@ public class AccommodationServiceTest {
     }
 
     @Test
-    public void getUserPosts() {
+    public void getUserPosts() throws Exception {
+        given(this.dao.getUserPosts(101, 0)).willReturn(Arrays.asList(cooperChase, mapleSqAdd));
+        accommodationService
+                .getUserPosts(101, 0)
+                .stream()
+                .forEach(add -> verifyAccommodationAddDetails(add));
     }
 
     @Test
-    public void getAllApartmentNames() {
+    public void getAllApartmentNames() throws Exception {
+
+        Users testUser = new Users() {{
+            setUserId(123);
+        }};
+
+        List<Apartments> testApts = Arrays.asList(mapleApt, cooperApt);
+
+        given(this.dao.getAllApartmentNames(testUser)).willReturn(testApts);
+
+        List<RApartmentNames> apts = accommodationService
+                .getAllApartmentNames(testUser);
+
+        testApts
+                .stream()
+                .forEach(apartment -> Assert.assertTrue(apts.contains(apartment)));
+
     }
 
     @Test
@@ -342,5 +372,21 @@ public class AccommodationServiceTest {
 
     @Test
     public void validateActiveAccommodationByUser() {
+    }
+
+    @Test
+    public void givenList_whenParitioningIntoSublistsUsingPartitionBy_thenCorrect() {
+        List<Integer> intList = Lists.newArrayList(1, 2, 3, 4, 5, 6, 7, 8);
+
+       List aa =  intList.stream()
+                .collect(collectingAndThen(partitioningBy(s -> s > 6),
+                        items -> Stream.of(items.get(true), items.get(false))
+                                .flatMap(Collection::stream)
+                                .collect(toList())));
+
+
+        System.out.println("came here" + aa);
+
+
     }
 }
